@@ -1,0 +1,179 @@
+{
+ "aircraft": "PC-6/B2-H2",
+ "engine": "PT6A-27",
+ "units": {
+  "weight": "kg",
+  "arm": "m"
+ },
+ "datum": "Plan vertical situé 3 m en avant de la tangente verticale au bord d'attaque de l'aile (TCDS FOCA F 56-10 § 2.45, identique pour tous les modèles).",
+ "leveling": "Rails en T du plancher cabine horizontaux ; repères de niveau de chaque côté du fuselage (TCDS F 56-10 § 2.46).",
+ "mac": {
+  "lemac_m": 3.0,
+  "length_m": 1.9,
+  "note": "Dérivé : corde constante 1.9 m ; cohérent avec 11 % = 3209 mm, 25 % = 3475 mm, 34 % = 3646 mm publiés. %MAC = (bras_mm - 3000) / 19.",
+  "derived": true
+ },
+ "weights_kg": {
+  "max_ramp": null,
+  "max_takeoff": 2200,
+  "max_landing": 2200,
+  "max_zero_fuel": null,
+  "max_cabin_load_behind_front_seats": null,
+  "max_floor_load_kg_per_m2": 488,
+  "max_load_trap_doors_total": 300,
+  "typical_empty_weight": null,
+  "source": "TCDS FOCA F 56-10 § 2.41, 2.42, 2.52 (MLW = MTOW pour tous les modèles sauf B2-H4). AFM B2-H2 non obtenu."
+ },
+ "envelopes": [
+  {
+   "name": "Normal category, tous modèles sauf B2-H4",
+   "vertices": [
+    [
+     1450,
+     3.209
+    ],
+    [
+     2200,
+     3.475
+    ],
+    [
+     2200,
+     3.646
+    ],
+    [
+     1450,
+     3.646
+    ]
+   ],
+   "vertices_pct_mac": [
+    [
+     1450,
+     11
+    ],
+    [
+     2200,
+     25
+    ],
+    [
+     2200,
+     34
+    ],
+    [
+     1450,
+     34
+    ]
+   ],
+   "below_min_weight": "En dessous de 1450 kg, limites constantes 3.209 m (11 %) et 3.646 m (34 %) ; variation linéaire entre les points donnés.",
+   "forward_limit_slope_mm_per_kg": 0.3547,
+   "source": "TCDS FOCA F 56-10 Issue 7 § 2.44 p. 18"
+  },
+  {
+   "name": "Configuration parachutage",
+   "vertices": null,
+   "source": "Aucune enveloppe spécifique trouvée (supplément AFM non obtenu)."
+  }
+ ],
+ "stations": [
+  {
+   "name": "Sièges avant (pilote, copilote), rangée 1",
+   "arm_m": 3.05,
+   "source": "TCDS F 56-10 § 2.51"
+  },
+  {
+   "name": "Rangée 2 (2 sièges ou banquette triple)",
+   "arm_m": 3.85,
+   "source": "TCDS F 56-10 § 2.51"
+  },
+  {
+   "name": "Rangée 3 (2 sièges ou banquette triple)",
+   "arm_m": 4.57,
+   "source": "TCDS F 56-10 § 2.51"
+  },
+  {
+   "name": "Rangée 4 (2 sièges ou banquette triple)",
+   "arm_m": 5.28,
+   "source": "TCDS F 56-10 § 2.51"
+  },
+  {
+   "name": "Rangement des 6 sièges derrière la cabine (cadre 6), 27 kg",
+   "arm_m": 6.63,
+   "source": "TCDS F 56-10 § 2.51"
+  },
+  {
+   "name": "Paras au plancher / positions largage",
+   "arm_m": null,
+   "source": "Non publié"
+  }
+ ],
+ "seat_mass_kg": 4.5,
+ "fuel": {
+  "wing_tanks": {
+   "count": 2,
+   "capacity_each_usgal_variants": [
+    63.5,
+    85
+   ],
+   "total_capacity_usgal_variants": [
+    130,
+    173
+   ],
+   "usable_capacity_usgal_variants": [
+    128,
+    170
+   ],
+   "usable_capacity_l_large_tanks": 644,
+   "arm_m": 3.79,
+   "source": "TCDS F 56-10 § 2.23 (modèles turbine) ; modification 1242 « Wing fuel tanks 644 ltrs » (TCDS p. 26)"
+  },
+  "booster_pump_tank": {
+   "capacity_usgal": 3,
+   "arm_m": 5.82,
+   "source": "TCDS F 56-10 § 2.23"
+  },
+  "underwing_tanks_option": {
+   "capacity_l_brochure": 487,
+   "arm_m": 3.42,
+   "source": "TCDS F 56-10 équipement 20 et modification 1347-4 (B2-H2, 487 L)"
+  },
+  "density_kg_per_l": null
+ },
+ "cabin": {
+  "volume_m3": null,
+  "length_m": null,
+  "width_m": null,
+  "height_m": null,
+  "floor": "Rails de sièges en T, trappes de plancher, charge max 488 kp/m²",
+  "sliding_doors": {
+   "description": "Portes coulissantes latérales (même fuselage que le B2-H4)",
+   "width_m": null,
+   "height_m": null,
+   "position_arm_m": null
+  },
+  "seat_rows_arm_m": [
+   3.05,
+   3.85,
+   4.57,
+   5.28
+  ],
+  "max_seats": 11,
+  "normal_seats": 8,
+  "parachutists_ffp_dt33": {
+   "max_with_static_line_student": 8,
+   "max_on_floor_besides_instructor": 1
+  }
+ },
+ "external_dimensions_m": {
+  "wing_span": 15.2,
+  "length": 10.9,
+  "height": 3.2,
+  "chord": 1.9,
+  "wing_area_m2": 28.5,
+  "main_gear_track": null,
+  "wheelbase": null,
+  "wing_leading_edge_arm": 3.0,
+  "main_gear_arm": null,
+  "tail_wheel_arm": null,
+  "source": "TCDS F 56-10 § 2.22 (colonne « all models except B2-H4 »)"
+ },
+ "notes_file": "avions/pc6-b2h4/notes.md (notes communes B2-H4 / B2-H2, sources et pages)"
+}

@@ -32,6 +32,23 @@ Un dossier par type. Chaque dossier contient :
 
 Voir le tableau du README racine et la section « Points ouverts » de chaque `notes.md`.
 
+Les `envelope.json` ont ete rediges avion par avion a partir de manuels de structure
+differente : le squelette est commun (`units`, `datum`, `mac`, `envelopes[].vertices`,
+`stations`, `fuel`, `cabin`) mais les cles de detail varient (`arm_in` pour le PAC, `arm`
+pour le DHC-6, `arm_m` pour le PC-6 ; masses par variante sous `weights` pour le Cessna).
+Lire le fichier avant d'ecrire un chargeur generique.
+
+## Ecarts entre planches club et manuels (a trancher)
+
+| Avion | Planches club | Manuel | Commentaire |
+|---|---|---|---|
+| C208B | MTOW 9062 lb, limite avant 199.15 in atteinte a 9062 lb | MTOW 8750 lb (POH, TCDS), 199.15 in a 8750 lb | le STC 9062 lb n'a pas ete retrouve ; l'enveloppe club prolonge la pente au-dela de 8750 lb, a verifier sur le supplement du STC |
+| C208B | enveloppe 179.60 / 193.37 / 199.15 / 204.35 in | identique (POH 2008, FAA rev. 22) | l'EASA TCDS 2025 donne 185.00 in a 6500 lb pour la limite avant, divergence notee dans `c208b/notes.md` |
+| C208B | bras carburant 200.0 a 203.1 in (table club) | 203.0 a 203.4 in (POH) | coherent, ecart maximal 3 in a faible quantite |
+| PC-6 B2-H4 | enveloppe 3.209 / 3.608 / 3.722 m | identique (TCDS F 56-10) | |
+| PC-6 B2-H4 | bras carburant 4.03 m (table club : 129.6 kg pour 522.3 kg.m) | +3.79 m (TCDS § 2.23) | ecart de 24 cm, soit environ 5 cm de CG au plein a 2800 kg : verifier la table club contre le rapport de pesee de PC6-A |
+| PC-6 B2-H4 | pilote 3.05 m, capacite 640 L | 3.05 m, 644 L utilisables | coherent |
+
 ## Regenerer les valeurs club
 
 ```bash

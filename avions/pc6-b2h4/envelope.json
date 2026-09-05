@@ -1,0 +1,243 @@
+{
+ "aircraft": "PC-6/B2-H4",
+ "engine": "PT6A-27 (550 shp flat rated)",
+ "units": {
+  "weight": "kg",
+  "arm": "m"
+ },
+ "datum": "Plan vertical situé 3 m en avant de la tangente verticale au bord d'attaque de l'aile (TCDS FOCA F 56-10 § 2.45). Bras positifs vers l'arrière.",
+ "leveling": "Rails en T du plancher cabine horizontaux ; repères de niveau de chaque côté du fuselage (TCDS F 56-10 § 2.46).",
+ "mac": {
+  "lemac_m": 3.0,
+  "length_m": 1.9,
+  "note": "Dérivé : corde constante 1.9 m (TCDS § 2.22) et bord d'attaque à 3.000 m du datum par définition ; cohérent avec 11 % = 3209 mm, 32 % = 3608 mm, 38 % = 3722 mm publiés. %MAC = (bras_mm - 3000) / 19.",
+  "derived": true
+ },
+ "weights_kg": {
+  "max_ramp": 2810,
+  "max_takeoff": 2800,
+  "max_landing": 2660,
+  "max_zero_fuel": 2400,
+  "max_cabin_load_behind_front_seats": 1000,
+  "max_floor_load_kg_per_m2": 488,
+  "max_load_per_trap_door": 150,
+  "basic_empty_weight_standard_ifr_brochure": 1395,
+  "basic_operating_weight_factsheet": 1250,
+  "typical_empty_weight_range_factsheet_fr": [
+   1250,
+   1400
+  ],
+  "source": "AFM/PIM 1820 Rev. 8 p. 1-6 (PDF 20) ; brochure 2019 p. 18 ; fiches 2019 et 2015"
+ },
+ "envelopes": [
+  {
+   "name": "Normal category (seule catégorie certifiée), décollage et vol",
+   "vertices": [
+    [
+     1450,
+     3.209
+    ],
+    [
+     2800,
+     3.608
+    ],
+    [
+     2800,
+     3.722
+    ],
+    [
+     1450,
+     3.722
+    ]
+   ],
+   "vertices_pct_mac": [
+    [
+     1450,
+     11
+    ],
+    [
+     2800,
+     32
+    ],
+    [
+     2800,
+     38
+    ],
+    [
+     1450,
+     38
+    ]
+   ],
+   "below_min_weight": "En dessous de 1450 kg, limites constantes 3.209 m (11 %) et 3.722 m (38 %) ; variation linéaire entre les points donnés.",
+   "forward_limit_slope_mm_per_kg": 0.2956,
+   "derived_points": {
+    "fwd_limit_at_MLW_2660_kg_m": 3.567,
+    "fwd_limit_at_MZFW_2400_kg_m": 3.49
+   },
+   "source": "TCDS FOCA F 56-10 Issue 7 § 2.44 p. 18 ; AFM/PIM 1820 Rev. 8 Section 1 H(9) p. 1-6 ; brochure 2019 p. 18"
+  },
+  {
+   "name": "Configuration parachutage (portes enlevées, supplément AFM 1824)",
+   "vertices": null,
+   "source": "Supplément 1824 « Operation with Cabin Doors Removed and Sliding Door/Hatch Open » listé dans AFM 1820 p. 4-1 et TCDS F 56-10 (modification 1824, catégorie Normal) ; contenu non obtenu, aucune enveloppe spécifique trouvée."
+  }
+ ],
+ "stations": [
+  {
+   "name": "Sièges avant (pilote, copilote), rangée 1",
+   "arm_m": 3.05,
+   "source": "TCDS F 56-10 § 2.51"
+  },
+  {
+   "name": "Rangée 2 (2 sièges ou banquette triple)",
+   "arm_m": 3.85,
+   "source": "TCDS F 56-10 § 2.51"
+  },
+  {
+   "name": "Rangée 3 (2 sièges ou banquette triple)",
+   "arm_m": 4.57,
+   "source": "TCDS F 56-10 § 2.51"
+  },
+  {
+   "name": "Rangée 4 (2 sièges ou banquette triple)",
+   "arm_m": 5.28,
+   "source": "TCDS F 56-10 § 2.51"
+  },
+  {
+   "name": "Rangement des 6 sièges derrière la cabine (cadre 6), 27 kg pour 6 sièges",
+   "arm_m": 6.63,
+   "source": "TCDS F 56-10 § 2.51 et équipement 02"
+  },
+  {
+   "name": "Trappes de plancher (équipement, 1.5 kg)",
+   "arm_m": 3.0,
+   "source": "TCDS F 56-10 équipement 06"
+  },
+  {
+   "name": "Civières (2) et supports, 30 kg",
+   "arm_m": 4.5,
+   "source": "TCDS F 56-10 équipement 08"
+  },
+  {
+   "name": "Réservoir de convoyage cabine 3 x 200 L (98 kg à vide)",
+   "arm_m": 4.5,
+   "source": "TCDS F 56-10 équipement 18"
+  },
+  {
+   "name": "Réservoir de convoyage cabine 200 L (21 kg à vide)",
+   "arm_m": 5.5,
+   "source": "TCDS F 56-10 équipement 19"
+  },
+  {
+   "name": "Paras au plancher / positions largage",
+   "arm_m": null,
+   "source": "Non publié ; à reconstruire à partir des rangées et de l'appendice W&B de l'avion"
+  }
+ ],
+ "seat_mass_kg": 4.5,
+ "fuel": {
+  "wing_tanks": {
+   "count": 2,
+   "capacity_each_usgal": 85,
+   "total_capacity_l": 655,
+   "usable_capacity_l": 644,
+   "usable_capacity_usgal": 170,
+   "usable_capacity_kg_placard": 520,
+   "arm_m": 3.79,
+   "source": "TCDS F 56-10 § 2.23 (bras, capacités) ; AFM 1820 p. 1-4 placard (644 L / 170 US gal / 520 kg / 1145 lb)"
+  },
+  "booster_pump_tank": {
+   "capacity_usgal": 3,
+   "arm_m": 5.82,
+   "source": "TCDS F 56-10 § 2.23"
+  },
+  "small_wing_tanks_option": {
+   "capacity_each_usgal": 63.5,
+   "usable_total_usgal": 128,
+   "arm_m": 3.79,
+   "source": "TCDS F 56-10 § 2.23"
+  },
+  "underwing_tanks_option": {
+   "capacity_l_variants": [
+    372,
+    477,
+    487
+   ],
+   "brochure_l": 487,
+   "brochure_kg": 390,
+   "arm_m": 3.42,
+   "installation_mass_kg": [
+    55,
+    60
+   ],
+   "source": "AFM 1820 p. 4-1 (suppl. 1826-1) ; brochure 2019 p. 18 ; TCDS équipement 20"
+  },
+  "density_kg_per_l": {
+   "placard_derived": 0.807,
+   "brochure_derived": 0.8,
+   "derived": true
+  },
+  "consumption_l_per_h_brochure": 148
+ },
+ "cabin": {
+  "volume_m3": ">3 (« over 3 m³ », fiche 2019 et brochure p. 22)",
+  "length_m": null,
+  "width_m": null,
+  "height_m": null,
+  "third_party_unverified_dimensions_m": {
+   "length": 2.29,
+   "width": 1.16,
+   "height": 1.28,
+   "source": "extrait de recherche (choosemyplane / tsunamiair), non vérifié"
+  },
+  "floor": "Rails de sièges en T (paires de rails), 9 points d'arrimage, trappe(s) de plancher, charge max 488 kg/m²",
+  "sliding_doors": {
+   "description": "Grande porte coulissante de chaque côté (gauche et droite)",
+   "width_m": null,
+   "height_m": null,
+   "position_arm_m": null,
+   "source": "fiche 2019, brochure p. 22 et 25 ; dimensions non trouvées"
+  },
+  "seat_stowage_door": {
+   "description": "Porte côté droit derrière la cabine (cadre 6) pour le rangement des 6 sièges",
+   "arm_m": 6.63
+  },
+  "seat_rows_arm_m": [
+   3.05,
+   3.85,
+   4.57,
+   5.28
+  ],
+  "max_seats": 11,
+  "normal_seats": 8,
+  "parachutists_ffp_dt33": {
+   "max_with_static_line_student": 9,
+   "max_on_floor_besides_instructor": 1,
+   "brochure_belts_for_skydivers": 9,
+   "brochure_text_parachutists": 10
+  }
+ },
+ "external_dimensions_m": {
+  "wing_span": 15.87,
+  "length": 10.9,
+  "height": 3.2,
+  "chord": 1.9,
+  "wing_area_m2": 30.15,
+  "main_gear_track": 3.0,
+  "horizontal_tail_span": 5.7,
+  "propeller_diameter": 2.67,
+  "wheelbase": null,
+  "wing_leading_edge_arm": 3.0,
+  "main_gear_arm": null,
+  "tail_wheel_arm": null,
+  "indicative_arms_from_tcds_equipment": {
+   "main_wheel_dirt_scrapers": 2.9,
+   "tail_wheel_debris_guard": 9.85,
+   "engine_air_intake_filter": 0.05,
+   "horizontal_stabilizer_nose": 9.3,
+   "vertical_fin_nose": 8.7
+  },
+  "source": "TCDS F 56-10 § 2.22 ; brochure 2019 p. 14 ; fiche 2019 trois-vues ; bras indicatifs : TCDS liste d'équipements p. 22 et 23"
+ },
+ "notes_file": "avions/pc6-b2h4/notes.md (notes communes B2-H4 / B2-H2, sources et pages)"
+}
