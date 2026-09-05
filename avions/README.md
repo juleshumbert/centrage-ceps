@@ -6,7 +6,7 @@ Un dossier par type. Chaque dossier contient :
 |---|---|
 | `envelope.json` | donnees lisibles par programme : datum, MAC, masses limites, enveloppe(s) de centrage en sommets `[masse, bras]`, stations et bras, carburant, dimensions cabine et portes, points ouverts ; `null` = non trouve, jamais une estimation silencieuse |
 | `notes.md` | chaque valeur avec son unite et sa source (URL, fichier, page), marquage officiel / tiers / deduit, incertitudes de lecture des figures |
-| `poh/` | manuels recuperes (POH, AFM, TCDS) au format PDF, verifies avec `pdfinfo` |
+| `poh/` | manuels recuperes (POH, AFM, TCDS) au format PDF, **en local seulement** (gitignore) : chaque `notes.md` donne l'URL et le nom de fichier pour les retelecharger |
 | `figures/` | pages rasterisees utiles (centrogramme, stations, trois vues) pour relire ou decalquer |
 | `planches_club.json` | (C208B, PC-6 B2-H4 seulement) valeurs effectivement utilisees par les planches du club, extraites des notebooks par `extract_planches_club.py` |
 

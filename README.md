@@ -33,7 +33,7 @@ avec les planches du club.
 
 | Dossier | Contenu |
 |---|---|
-| `avions/` | un dossier par type : `envelope.json` (enveloppe, stations, carburant, cabine), `notes.md` (valeurs sourcees), `poh/` (manuels PDF recuperes) |
+| `avions/` | un dossier par type : `envelope.json` (enveloppe, stations, carburant, cabine), `notes.md` (valeurs sourcees, URL de chaque manuel), `poh/` (manuels PDF, en local seulement, non versionnes) |
 | `heuristique_remplissage/` | etude Caravan : scripts Python, `enumeration/` (Rust), `placement_rs/` (Rust), `placement_cpp/` (C++ + HiGHS), `output/` (figures, fiches PDF, JSON), voir son README |
 | `reference/notebooks/` | snapshot des notebooks de planches de `centrage_c208`, lus par `caravan_model.py` (geometrie cabine, table carburant, enveloppe), ne pas editer ici |
 
