@@ -1,0 +1,115 @@
+name: Solveur C++
+
+# Compile le solveur `placement` (HiGHS embarque) et lance le test de fumee a chaque
+# modification ; sur un tag v*, construit les binaires Linux / macOS / Windows et publie
+# une release GitHub avec les binaires, les exemples et la modelisation.
+
+on:
+  push:
+    branches: [main]
+    paths: ['solveur/**', '.github/workflows/solveur.yml']
+    tags: ['v*']
+  pull_request:
+    paths: ['solveur/**', '.github/workflows/solveur.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  HIGHS_TAG: v1.9.0
+  JSON_VERSION: v3.11.3
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: linux-x86_64,   os: ubuntu-22.04,  bin: placement,     static: ON }
+          - { name: macos-arm64,    os: macos-14,      bin: placement,     static: OFF }
+          - { name: macos-x86_64,   os: macos-13,      bin: placement,     static: OFF }
+          - { name: windows-x86_64, os: windows-2022,  bin: placement.exe, static: OFF }
+    defaults:
+      run:
+        working-directory: solveur
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sources tierces (HiGHS, nlohmann/json)
+        shell: bash
+        run: |
+          git clone -q --depth 1 --branch "$HIGHS_TAG" https://github.com/ERGO-Code/HiGHS.git HiGHS
+          curl -sSL -o json.hpp "https://github.com/nlohmann/json/releases/download/$JSON_VERSION/json.hpp"
+
+      - name: Cache du build HiGHS
+        uses: actions/cache@v4
+        with:
+          path: solveur/build/HiGHS
+          key: highs-${{ matrix.name }}-${{ env.HIGHS_TAG }}-${{ hashFiles('solveur/CMakeLists.txt') }}
+
+      - name: Configurer
+        shell: bash
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DPLACEMENT_STATIC=${{ matrix.static }}
+
+      - name: Compiler
+        shell: bash
+        run: cmake --build build --target placement --config Release --parallel 4
+
+      - name: Binaire dans build/ (Windows range les cibles sous Release/)
+        if: runner.os == 'Windows'
+        shell: bash
+        run: cp build/Release/placement.exe build/placement.exe
+
+      - name: Test de fumee
+        shell: bash
+        run: ./tests/smoke.sh "./build/${{ matrix.bin }}"
+
+      - name: Renommer
+        shell: bash
+        run: |
+          mkdir -p dist
+          case "${{ matrix.bin }}" in
+            *.exe) cp "build/${{ matrix.bin }}" "dist/placement-${{ matrix.name }}.exe" ;;
+            *)     cp "build/${{ matrix.bin }}" "dist/placement-${{ matrix.name }}" ;;
+          esac
+          ls -la dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: placement-${{ matrix.name }}
+          path: solveur/dist/*
+          if-no-files-found: error
+
+  release:
+    name: Release GitHub
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Archive des exemples et de la modelisation
+        run: |
+          mkdir -p pack
+          cp -r solveur/exemples solveur/MODELE.md solveur/README.md pack/
+          (cd pack && zip -qr ../dist/placement-exemples-et-doc.zip .)
+          (cd dist && sha256sum * > SHA256SUMS.txt)
+          ls -la dist
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
+          body: |
+            Binaires du solveur `placement` (HiGHS embarque, aucune installation) pour Linux x86_64
+            (statique), macOS arm64 et x86_64, Windows x86_64, avec les exemples et `MODELE.md`.
+
+            ```bash
+            chmod +x placement-linux-x86_64
+            ./placement-linux-x86_64 exemples/exemple_stick.json --pdf planche.pdf
+            ```

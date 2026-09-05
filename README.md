@@ -33,22 +33,56 @@ avec les planches du club.
 
 | Dossier | Contenu |
 |---|---|
+| `solveur/` | le solveur C++ `placement` (HiGHS embarque) : `src/placement.cpp`, `CMakeLists.txt`, `build.sh`, `MODELE.md`, `exemples/`, `tests/smoke.sh`. Binaires publies en release GitHub a chaque tag `v*` |
+| `web/` | l'IHM (site statique Firebase Hosting `ceps09-centrage`) : choix de l'avion, stick, appel du solveur, plan cabine avec glisser-deposer, centrogramme. `js/avions.js` est genere par `web/tools/gen_avions.py` |
+| `functions/` | Cloud Function `placement` (codebase `centrage`, europe-west1) : `/api/placement` execute le binaire du solveur sur le stick JSON, apres verification du jeton Firebase et de l'appartenance au club |
 | `avions/` | un dossier par type : `envelope.json` (enveloppe, stations, carburant, cabine), `notes.md` (valeurs sourcees, URL de chaque manuel), `poh/` (manuels PDF, en local seulement, non versionnes) |
-| `heuristique_remplissage/` | etude Caravan : scripts Python, `enumeration/` (Rust), `placement_rs/` (Rust), `placement_cpp/` (C++ + HiGHS), `output/` (figures, fiches PDF, JSON), voir son README |
+| `heuristique_remplissage/` | etude Caravan : scripts Python, `enumeration/` (Rust), `placement_rs/` (Rust), `output/` (figures, fiches PDF, JSON), voir son README |
 | `reference/notebooks/` | snapshot des notebooks de planches de `centrage_c208`, lus par `caravan_model.py` (geometrie cabine, table carburant, enveloppe), ne pas editer ici |
+| `.github/workflows/` | `solveur.yml` (build + test sur 4 plateformes, release sur tag), `deploy.yml` (tests, build du binaire statique, deploiement Firebase sur push main) |
 
-## Demarrage rapide
+## IHM web et solveur
+
+```
+navigateur (web/)  --POST /api/placement (stick JSON)-->  Cloud Function (functions/)  --stdin-->  placement (solveur/, binaire statique)
+      ^                                                                                                      |
+      +---------------------------- resultat JSON : places, etapes, marges  <--------------------------------+
+```
+
+- L'IHM construit le stick au format du solveur (`solveur/README.md`), l'envoie, puis affiche
+  le placement sur le plan cabine. Deplacer un para (glisser-deposer, echange si la place est
+  occupee) recalcule masse, CG, marges et centrogramme **cote client**, avec les memes formules.
+  Un clic verrouille un para sur sa place : le solveur relance alors avec ces places imposees.
+- Avions proposes : C208B-A, C208B-B (C208B), PC6-A, PC6-B (PC-6 B2-H4), donnees des planches
+  du club ; PAC 750XL generique (POH, masse a vide a saisir). DHC-6 absent tant que les bras
+  des rangees ne sont pas trouves.
+- Acces reserve aux membres (portail `auth.js` partage avec les sites soeurs, projet Firebase
+  `paraclub-planning-f966c`). URL : https://ceps09-centrage.web.app
+
+### Developper en local
+
+```bash
+cd solveur && ./build.sh && ./tests/smoke.sh          # le binaire
+npm test --prefix web && npm test --prefix functions   # moteur client, garde-fous de la fonction
+python3 web/tools/gen_avions.py                        # apres modification de avions/*/planches_club.json
+mkdir -p functions/bin && cp solveur/build/placement functions/bin/   # binaire statique (PLACEMENT_STATIC=1) pour la fonction
+npx firebase-tools@15 deploy --only hosting:centrage,functions:centrage --project paraclub-planning-f966c
+```
+
+Le deploiement de production passe par `deploy.yml` (Workload Identity Federation, comme les
+apps soeurs) a chaque push sur `main`. Publier une release du solveur : `git tag v1.1.0 && git push --tags`.
+
+## Demarrage rapide (etude heuristique)
 
 ```bash
 cd heuristique_remplissage
 python3 caravan_model.py                                  # les 20 places et l'ordre par pivot
-python3 placement_milp.py manifestes/exemple_groupes.json # placement optimal d'un manifeste
+python3 placement_milp.py manifestes/exemple_groupes.json # placement optimal d'un manifeste (MILP Python)
 python3 verif_heuristique.py 235                          # heuristique a pivot contre l'oracle
 ```
 
 Dependances Python : `numpy`, `scipy` (>= 1.11 pour `milp`), `matplotlib`. Les binaires
-Rust et C++ se reconstruisent comme decrit dans `heuristique_remplissage/README.md` et
-`heuristique_remplissage/placement_cpp/README_livrable.md` ; ils ne sont pas versionnes.
+Rust se reconstruisent comme decrit dans `heuristique_remplissage/README.md`.
 
 ## Conventions
 

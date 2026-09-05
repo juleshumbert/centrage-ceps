@@ -1,0 +1,8 @@
+{
+  "name": "centrage-web",
+  "description": "IHM centrage.ceps09.com : choix de l'avion, stick, appel du solveur placement, deplacement des paras",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test test/" },
+  "engines": { "node": ">=20" }
+}

@@ -8,29 +8,34 @@ retient le plus réaliste : groupes compacts, premiers sortants près de la port
 passager tandem juste devant son porteur sur un bord. Le solveur (HiGHS,
 programmation linéaire en nombres entiers) est embarqué : aucune installation.
 
-## Contenu du livrable
+## Contenu
 
-| fichier | rôle |
+| chemin | rôle |
 |---|---|
-| `placement-linux-x86_64` | binaire Linux x86_64 (glibc 2.31 ou plus, bibliothèque C++ embarquée), testé |
-| `placement-macos-arm64`, `placement-macos-x86_64` | binaires macOS compilés en croisé, **non testés sur Mac** (voir « Construire ») |
-| `exemple_stick.json` | fichier d'entrée complet et commenté |
-| `exemple_stick_resultat.json`, `exemple_stick.pdf` | ce que produit `placement exemple_stick.json --sortie ... --pdf ...` |
-| `exemple_20_paras.json` | cabine pleine : 20 paras pour 20 places, à 54 lbs de la MTOW, `tolerance_marge` à 2 |
-| `exemple_20_paras_resultat.json`, `exemple_20_paras.pdf` | résultat et planche de cet exemple |
+| `src/placement.cpp` | le programme (C++17), HiGHS et nlohmann/json embarqués |
+| `CMakeLists.txt`, `build.sh`, `build_macos.sh` | construction (voir « Construire ») |
 | `MODELE.md` | la modélisation en programme linéaire |
-| `src/` | sources (`placement.cpp`, `CMakeLists.txt`, `build.sh`, `build_macos.sh`) |
+| `exemples/exemple_stick.json` | fichier d'entrée complet et commenté |
+| `exemples/exemple_stick_resultat.json`, `exemple_stick.pdf` | ce que produit `placement exemple_stick.json --sortie ... --pdf ...` |
+| `exemples/exemple_20_paras.json` | cabine pleine : 20 paras pour 20 places, à 54 lbs de la MTOW, `tolerance_marge` à 2 |
+| `exemples/exemple_groupes.json`, `exemple_tandems.json` | manifestes de l'étude (groupes, tandems) |
+| `tests/smoke.sh` | test de fumée : chaque exemple doit rendre `ok: true` |
+
+Les binaires (`placement-linux-x86_64`, `placement-macos-arm64`, `placement-macos-x86_64`,
+`placement-windows-x86_64.exe`) sont publiés dans les **releases GitHub** du dépôt, construits
+par le workflow `.github/workflows/solveur.yml` à chaque tag `v*`. Le même binaire Linux
+statique est embarqué dans la Cloud Function `functions/` qui sert l'IHM web.
 
 ## Utilisation
 
 ```bash
-./placement-linux-x86_64 --help
-./placement-linux-x86_64 exemple_stick.json --sortie resultat.json --pdf planche.pdf
-./placement-linux-x86_64 exemple_stick.json --rapide           # phase 2 par recuit seul, 1 à 2 s
-./placement-linux-x86_64 exemple_stick.json --temps 3          # solveur limité à 3 s par phase
-./placement-linux-x86_64 exemple_20_paras.json --pdf planche20.pdf  # cabine pleine, 20 paras
-./placement-linux-x86_64 exemple_stick.json --etapes toutes    # marge avant garantie après chaque sortie
-cat stick.json | ./placement-linux-x86_64 -                    # entrée standard, résultat JSON sur la sortie standard
+./build/placement --help
+./build/placement exemples/exemple_stick.json --sortie resultat.json --pdf planche.pdf
+./build/placement exemples/exemple_stick.json --rapide           # phase 2 par recuit seul, 1 à 2 s
+./build/placement exemples/exemple_stick.json --temps 3          # solveur limité à 3 s par phase
+./build/placement exemples/exemple_20_paras.json --pdf planche20.pdf  # cabine pleine, 20 paras
+./build/placement exemples/exemple_stick.json --etapes toutes    # marge avant garantie après chaque sortie
+cat stick.json | ./build/placement -                             # entrée standard, résultat JSON sur la sortie standard
 ```
 
 Code de retour 0 si un placement est rendu, 1 si aucun placement ne respecte les
@@ -169,12 +174,14 @@ tandems, ordre des groupes.
 Linux ou macOS avec un compilateur C++17, `cmake` et de préférence `ninja` :
 
 ```bash
-cd src && ./build.sh          # clone HiGHS v1.9.0 et nlohmann/json, compile ./build/placement
+./build.sh                    # clone HiGHS v1.9.0 et nlohmann/json, compile ./build/placement
+PLACEMENT_STATIC=1 ./build.sh # Linux : binaire entierement statique (releases, Cloud Functions)
+./tests/smoke.sh              # verifie les exemples
 ```
 
 Sur macOS : `brew install cmake ninja` puis `./build.sh` (compilation native,
 recommandée plutôt que les binaires croisés fournis). `build_macos.sh` produit
-les binaires macOS depuis Linux avec `zig cc`, sans Mac : ils sont fournis à
-titre d'essai et doivent être vérifiés avec `--help` puis sur l'exemple.
+les binaires macOS depuis Linux avec `zig cc`, sans Mac (les releases GitHub, elles,
+sont compilées nativement sur des runners macOS et Windows).
 
 Licences des composants embarqués : HiGHS (MIT), nlohmann/json (MIT).

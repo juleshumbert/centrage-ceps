@@ -130,7 +130,7 @@ avec le réalisme est réglé par la tolérance τ.
 
 N × |S| binaires (≤ 400), 2N contraintes de centrage, 4 |S| contraintes par membre de
 groupe, quelques égalités par tandem. Résolu par HiGHS (branch-and-cut) embarqué dans
-le binaire C++ `placement_cpp/placement`. Les phases prennent de quelques dixièmes de
+le binaire C++ `solveur/build/placement`. Les phases prennent de quelques dixièmes de
 seconde à quelques secondes ; au-delà d'une dizaine de paras sans groupes ordonnés ni
 tandems, la phase 2 peut atteindre la limite de temps avec une solution réalisable
 et un écart borné.

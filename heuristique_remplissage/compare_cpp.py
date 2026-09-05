@@ -1,4 +1,4 @@
-"""Valide le binaire C++ (placement_cpp/build/placement, HiGHS embarque) :
+"""Valide le binaire C++ (solveur/build/placement, HiGHS embarque) :
 - sur les manifestes d'exemple et des fiches de juillet ;
 - verification independante du placement rendu avec placement_milp.Placement.check
   (marges par etape), tandems (passager devant le porteur) et ordre des groupes ;
@@ -18,7 +18,7 @@ from export_json import export
 from placement_milp import Placement
 
 HERE = Path(__file__).resolve().parent
-BIN = HERE / 'placement_cpp' / 'build' / 'placement'
+BIN = HERE.parent / 'solveur' / 'build' / 'placement'
 
 
 def run_cpp(man, **options):

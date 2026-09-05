@@ -20,8 +20,8 @@ from placement_milp import Placement
 
 HERE = Path(__file__).resolve().parent
 RS = HERE / 'placement_rs' / 'placement'
-CPP = HERE / 'placement_cpp' / 'build' / 'placement'
-_cpp_src = (HERE / 'placement_cpp' / 'placement.cpp').read_text()
+CPP = HERE.parent / 'solveur' / 'build' / 'placement'
+_cpp_src = (HERE.parent / 'solveur' / 'src' / 'placement.cpp').read_text()
 CPP_HAS_ETAPES = any(k in _cpp_src for k in ('value("etapes"', 'o["etapes"]', 'opt(o, "etapes"', 'contains("etapes")'))
 
 

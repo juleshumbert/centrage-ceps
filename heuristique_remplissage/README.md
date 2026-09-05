@@ -467,9 +467,9 @@ paras et 3 groupes) ; 2 a 3 s au total contre 10 a 13 s. La preuve de la marge
 maximale aboutit pour 6 a 10 paras avec groupes ordonnes, pas au-dela (bornes
 trop laches), mais la valeur trouvee coincide avec celle du MILP.
 
-## Binaire C++ avec HiGHS embarque (`placement_cpp/`)
+## Binaire C++ avec HiGHS embarque (`../solveur/`, anciennement `../solveur/`)
 
-Modelisation complete dans `placement_cpp/MODELE.md`. Par rapport aux versions
+Modelisation complete dans `../solveur/MODELE.md`. Par rapport aux versions
 precedentes, l'objectif change : **marge arriere maximale au decollage**, sous
 **marge avant >= `marge_avant_min` a toutes les etapes du largage** (donc des la
 sortie du premier groupe), puis realisme a marge arriere >= max − `tolerance_marge`.
@@ -487,7 +487,7 @@ sortie du premier groupe), puis realisme a marge arriere >= max − `tolerance_m
   passes a CMake). Binaire strippe de 3,8 Mo, `build/placement`.
 
 ```bash
-placement_cpp/build/placement placement_cpp/exemple_groupes.json
+../solveur/build/placement ../solveur/exemples/exemple_groupes.json
 ```
 
 **Sortie** : `marge_arriere_max` (phase 1, prouvee si `phase1` vaut « optimum »),
@@ -527,7 +527,7 @@ phase 1 prend 7 a 10 s et, sur trois fiches sur six, aucun placement ne tient la
 marge avant de 0,5 in a toutes les etapes : le binaire le dit et rend la marge
 avant maximale possible (dichotomie limitee a 5 pas de 3 s).
 
-### Livrable (`placement_cpp/livrable/`)
+### Livrable (binaires publies en release GitHub, anciennement `../solveur/livrable/`)
 
 Binaire Linux statique `placement-linux-x86_64` avec `--help`, `--pdf`, `--etapes`
 (`premier_groupe` par defaut : marge avant garantie apres la sortie du premier
@@ -671,7 +671,7 @@ arriere (40,33 %MAC) et la MTOW, pas la limite avant.
 | `sticks.py` | fiches de stick PDF -> manifestes (masses tirees, groupes, ordre de sortie) -> placement en lot |
 | `placement_rs/main.rs`, `json.rs` | binaire autonome : JSON -> meilleur placement (recuit + recherche exacte), sans dependance |
 | `export_json.py`, `compare_rs.py`, `bench_rs_sticks.py` | export des manifestes vers le JSON des binaires, validation contre le MILP, chrono sur juillet |
-| `placement_cpp/MODELE.md`, `placement.cpp`, `CMakeLists.txt`, `build.sh` | binaire C++ avec HiGHS embarque : marge arriere max sous marge avant garantie pendant le largage |
+| `../solveur/MODELE.md`, `placement.cpp`, `CMakeLists.txt`, `build.sh` | binaire C++ avec HiGHS embarque : marge arriere max sous marge avant garantie pendant le largage |
 | `compare_cpp.py` | validation du binaire C++ (marges recalculees en Python, tandems, ordre) |
 | `bench_fenetres.py` | formulation « fenetres candidates » par groupe : borne LP et MILP 60 s contre la formulation boite |
 | `doc_placement_milp.html` | source du document de synthese (modele MILP + revue des accelerations), rendu en PDF par Chrome headless |

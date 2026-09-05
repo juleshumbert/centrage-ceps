@@ -16,7 +16,7 @@ from pathlib import Path
 from export_json import export
 
 HERE = Path(__file__).resolve().parent
-BIN = HERE / 'placement_cpp' / 'build' / 'placement'
+BIN = HERE.parent / 'solveur' / 'build' / 'placement'
 VARIANTS = {
     'A ancien (gap 1 %, sans recuit)': ['--gap', '0.01', '--recuit', '0', '--temps', '10'],
     'B defaut (recuit 1 s, gap 5 %)': ['--temps', '10'],
