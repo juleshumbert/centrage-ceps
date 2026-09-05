@@ -81,6 +81,7 @@ updating the commit hash in `reference/notebooks/README.md`.
 ## Running things
 
 ```bash
+python3 web/tools/devserver.py                                # local IHM + solver bridge on :8765
 cd solveur && ./build.sh && ./tests/smoke.sh                 # solver (clones HiGHS v1.9.0 + json.hpp)
 npm test --prefix web && npm test --prefix functions          # pure engine + function guards
 python3 web/tools/gen_avions.py                               # regenerate web/js/avions.js

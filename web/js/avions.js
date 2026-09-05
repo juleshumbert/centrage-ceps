@@ -571,6 +571,20 @@ export const AVIONS = [
      "cote": "gauche"
     }
    ],
+   "train": [
+    {
+     "nom": "train principal",
+     "x0": 200.0,
+     "x1": 228.0,
+     "y": 70.0
+    },
+    {
+     "nom": "roue avant",
+     "x0": 62.0,
+     "x1": 86.0,
+     "y": 0.0
+    }
+   ],
    "graduations": [
     150,
     175,
@@ -953,6 +967,20 @@ export const AVIONS = [
      "x0": 234.0,
      "x1": 284.0,
      "cote": "gauche"
+    }
+   ],
+   "train": [
+    {
+     "nom": "train principal",
+     "x0": 180.0,
+     "x1": 208.0,
+     "y": 70.0
+    },
+    {
+     "nom": "roue avant",
+     "x0": 62.0,
+     "x1": 86.0,
+     "y": 0.0
     }
    ],
    "graduations": [
@@ -1481,8 +1509,12 @@ export const AVIONS = [
   "dessin": {
    "fuselage": [
     [
+     -10.0,
+     14.0
+    ],
+    [
      30.0,
-     18.0
+     22.0
     ],
     [
      82.34,
@@ -1516,6 +1548,20 @@ export const AVIONS = [
      "x0": 187.0,
      "x1": 237.0,
      "cote": "gauche"
+    }
+   ],
+   "train": [
+    {
+     "nom": "train principal (STA 141.42)",
+     "x0": 128.0,
+     "x1": 155.0,
+     "y": 72.0
+    },
+    {
+     "nom": "roue avant (STA 16.4)",
+     "x0": 4.0,
+     "x1": 29.0,
+     "y": 0.0
     }
    ],
    "graduations": [
@@ -1871,6 +1917,20 @@ export const AVIONS = [
      "x0": 270.0,
      "x1": 326.0,
      "cote": "gauche"
+    }
+   ],
+   "train": [
+    {
+     "nom": "train principal (FS 232)",
+     "x0": 216,
+     "x1": 248,
+     "y": 73.0
+    },
+    {
+     "nom": "roue avant (FS 53)",
+     "x0": 41,
+     "x1": 65,
+     "y": 0.0
     }
    ],
    "graduations": [

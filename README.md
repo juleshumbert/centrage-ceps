@@ -75,18 +75,50 @@ navigateur (web/)  --POST /api/placement (stick JSON)-->  Cloud Function (functi
   exacte), verrou sur une place ou une position libre ; le solveur ne deplace que les paras non
   verrouilles.
 
-### Developper en local
+## Tout lancer
+
+Prerequis : Python 3 (avec `numpy`, `scipy`, `matplotlib` pour l'etude), Node 20 ou plus, un
+compilateur C++17, `cmake` et de preference `ninja` ; `git` pour recuperer HiGHS.
 
 ```bash
-cd solveur && ./build.sh && ./tests/smoke.sh          # le binaire
-npm test --prefix web && npm test --prefix functions   # moteur client, garde-fous de la fonction
-python3 web/tools/gen_avions.py                        # apres modification de avions/*/planches_club.json
-mkdir -p functions/bin && cp solveur/build/placement functions/bin/   # binaire statique (PLACEMENT_STATIC=1) pour la fonction
-npx firebase-tools@15 deploy --only hosting:centrage,functions:centrage --project paraclub-planning-f966c
+git clone https://github.com/juleshumbert/centrage-ceps.git && cd centrage-ceps
+
+# 1. le solveur (clone HiGHS v1.9.0 et nlohmann/json, compile solveur/build/placement, ~5 min)
+(cd solveur && ./build.sh && ./tests/smoke.sh)
+./solveur/build/placement solveur/exemples/exemple_stick.json --pdf /tmp/planche.pdf   # un stick, une planche PDF
+
+# 2. l'IHM en local (sert web/ et branche /api/placement sur le binaire ci-dessus)
+python3 web/tools/devserver.py            # puis http://127.0.0.1:8765/
+
+# 3. les tests
+npm test --prefix web                     # moteur de centrage cote client
+npm ci --prefix functions && npm test --prefix functions   # garde-fous de la fonction
+
+# 4. regenerer les donnees avions apres une modification dans avions/
+python3 avions/extract_planches_club.py   # pesees, places, tables carburant depuis les notebooks
+python3 web/tools/gen_avions.py           # -> web/js/avions.js
+
+# 5. l'etude heuristique (Caravan)
+(cd heuristique_remplissage && python3 placement_milp.py manifestes/exemple_groupes.json)
 ```
 
-Le deploiement de production passe par `deploy.yml` (Workload Identity Federation, comme les
-apps soeurs) a chaque push sur `main`. Publier une release du solveur : `git tag v1.1.0 && git push --tags`.
+Sans compiler : les binaires du solveur sont dans les releases GitHub (Linux statique, macOS,
+Windows) ; `placement --help` decrit les options et `solveur/README.md` le format JSON.
+
+### Deployer (Firebase, projet partage du club)
+
+Le deploiement de production est fait par `.github/workflows/deploy.yml` a chaque push sur
+`main` : compilation du binaire statique, tests, `firebase deploy --only hosting:centrage,functions:centrage`
+par Workload Identity Federation (variables de depot `GCP_WIF_PROVIDER`, `GCP_SERVICE_ACCOUNT`,
+`FIREBASE_PROJECT_ID`, environnement `production`). Pour deployer sur un autre projet Firebase :
+creer un site Hosting, adapter `.firebaserc`, puis
+
+```bash
+mkdir -p functions/bin && cp solveur/build/placement functions/bin/   # binaire Linux x86_64 STATIQUE (PLACEMENT_STATIC=1 ./build.sh)
+npx firebase-tools@15 deploy --only hosting:centrage,functions:centrage --project <projet>
+```
+
+Publier une release du solveur : `git tag v1.1.0 && git push --tags` (workflow `solveur.yml`).
 
 ## Demarrage rapide (etude heuristique)
 

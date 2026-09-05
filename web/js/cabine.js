@@ -27,7 +27,8 @@ function pitchMin(places) {
 }
 
 /**
- * Dessine la maquette : fuselage complet (schema `avion.dessin`, nez a gauche, cote droit en bas),
+ * Dessine la maquette : fuselage complet (schema `avion.dessin`, nez a gauche, vue de dessus :
+ * cote droit en haut, cote gauche en bas, comme l'ancien outil centrage CEPS),
  * aile, empennage, porte, rangees (dont la rangee exterieure cote porte), places, paras, fleche du CG
  * et limites de centrage a la masse courante.
  *  paras : [{nom, masseKg, groupe, sortie, place, pos:{x,y}, verrou}]
@@ -47,7 +48,7 @@ export function dessinerCabine(svg, avion, paras, opts = {}) {
   const echY = Math.min(ech * 2.4, 300 / demiTotal);   // etirement lateral admis : c'est un schema
   const hCab = 2 * demiTotal * echY;
   const yMil = 34 + hCab / 2;
-  const px = (x) => margeG + (x - x0) * ech, py = (y) => yMil + y * echY;
+  const px = (x) => margeG + (x - x0) * ech, py = (y) => yMil - y * echY;   // y > 0 (droite) vers le haut
   const ax = (X) => x0 + (X - margeG) / ech;
   const estPlace = (p) => places.some((s) => s.id === p.place) || (p.pos && Number.isFinite(p.pos.x));
   const nonPlaces = paras.filter((p) => !estPlace(p));
@@ -75,7 +76,7 @@ export function dessinerCabine(svg, avion, paras, opts = {}) {
   for (const z of cab.zones) {
     if (cab.zones.length > 1) {
       svg.appendChild(el('line', { x1: px(z.x0), x2: px(z.x0), y1: py(-demiA(z.x0)), y2: py(demiA(z.x0)), stroke: 'var(--line-2)', 'stroke-width': 1 }));
-      svg.appendChild(el('text', { x: (px(z.x0) + px(z.x1)) / 2, y: py(-demiA((z.x0 + z.x1) / 2)) + 10, class: 'cab-zone', 'text-anchor': 'middle' }, z.nom));
+      svg.appendChild(el('text', { x: (px(z.x0) + px(z.x1)) / 2, y: py(demiA((z.x0 + z.x1) / 2)) + 10, class: 'cab-zone', 'text-anchor': 'middle' }, z.nom));
     }
   }
   svg.appendChild(el('line', { x1: px(cab.x1), x2: px(cab.x1), y1: py(-demiA(cab.x1)), y2: py(demiA(cab.x1)), stroke: 'var(--line-2)', 'stroke-width': 1 }));
@@ -91,7 +92,12 @@ export function dessinerCabine(svg, avion, paras, opts = {}) {
     const cote = cab.porte.cote === 'droite' ? 1 : -1;
     const yP = (x) => py(cote * (demiA(x) + 1.5 * (demiLarg / 30)));
     svg.appendChild(el('line', { x1: px(cab.porte.x0), x2: px(cab.porte.x1), y1: yP(cab.porte.x0), y2: yP(cab.porte.x1), stroke: 'var(--amber)', 'stroke-width': 5, 'stroke-linecap': 'round' }));
-    svg.appendChild(el('text', { x: (px(cab.porte.x0) + px(cab.porte.x1)) / 2, y: yP((cab.porte.x0 + cab.porte.x1) / 2) + (cote > 0 ? 15 : -8), class: 'cab-porte', 'text-anchor': 'middle' }, 'porte'));
+    svg.appendChild(el('text', { x: (px(cab.porte.x0) + px(cab.porte.x1)) / 2, y: yP((cab.porte.x0 + cab.porte.x1) / 2) + (cote > 0 ? -8 : 15), class: 'cab-porte', 'text-anchor': 'middle' }, 'porte'));
+  }
+  // train d'atterrissage (roues), si le schema le donne
+  for (const t of dess.train || []) {
+    const yT = Math.min(Math.abs(t.y || 0), demiTotal * 0.9);   // voie ramenee dans le cadre (schema)
+    for (const sg of (t.y ? [-1, 1] : [0])) svg.appendChild(el('rect', { x: px(t.x0), y: py(sg * yT) - Math.max(3, demiLarg * 0.09 * echY), width: (t.x1 - t.x0) * ech, height: Math.max(6, demiLarg * 0.18 * echY), rx: 2, fill: '#5c6f82', stroke: 'var(--ink-2)' }));
   }
   // graduations des bras
   const grads = dess.graduations && dess.graduations.length ? dess.graduations : (() => { const st = pasGraduation(x1 - x0), out = []; for (let x = Math.ceil(x0 / st) * st; x <= x1 + 1e-9; x += st) out.push(x); return out; })();

@@ -268,7 +268,18 @@ function brancher() {
   $('#btnAjouter').addEventListener('click', () => { const n = state.paras.length + 1; state.paras.push({ ...genererParas(1, Number($('#genKg').value) || 90)[0], nom: `P${n}` }); render(); });
   $('#btnGenerer').addEventListener('click', () => { state.paras = genererParas(Number($('#genN').value) || 10, Number($('#genKg').value) || 90); state.resultat = null; state.placementSolveur = null; state.modifie = false; render(); });
   $('#btnVider').addEventListener('click', () => { for (const p of state.paras) { p.place = null; p.pos = null; p.verrou = null; } state.modifie = !!state.placementSolveur; render(); });
-  $('#btnExemple').addEventListener('click', () => { state = { ...defaut(), enveloppes: state.enveloppes, avionId: EXEMPLE.avionId, varianteId: EXEMPLE.varianteId, peseeId: 'A', piloteKg: EXEMPLE.piloteKg, carburant: EXEMPLE.carburant, paras: EXEMPLE.paras.map((p) => ({ groupe: '', sortie: '', tandem: '', role: '', interdit: [], verrou: null, place: null, pos: null, ...p })) }; render(); });
+  $('#btnExemple').addEventListener('click', () => {
+    // exemple sur l'avion courant, avec le nombre de paras demande (les 15 du stick de demonstration,
+    // tronques ou completes par des paras a la masse forfaitaire, rang de sortie a la suite)
+    const a = avion(); const n = Math.max(1, Math.min(Number($('#genN').value) || 15, a.places.length));
+    const kg = Number($('#genKg').value) || 90;
+    const paras = EXEMPLE.paras.slice(0, n).map((p) => ({ groupe: '', sortie: '', tandem: '', role: '', interdit: [], verrou: null, place: null, pos: null, ...p }));
+    if (a.id !== EXEMPLE.avionId) for (const p of paras) p.interdit = [];
+    let rang = Math.max(0, ...paras.map((p) => Number(p.sortie) || 0)) + 1;
+    for (let i = paras.length; i < n; i++) paras.push({ nom: `P${i + 1}`, masseKg: kg, groupe: '', sortie: rang + Math.floor((i - paras.length) / 4), tandem: '', role: '', interdit: [], verrou: null, place: null, pos: null });
+    state = { ...state, piloteKg: EXEMPLE.piloteKg, carburant: a.id === EXEMPLE.avionId ? EXEMPLE.carburant : state.carburant, paras, resultat: null, placementSolveur: null, modifie: false };
+    render();
+  });
   $('#btnCalculer').addEventListener('click', calculer);
   $('#btnRevenir').addEventListener('click', revenirSolveur);
   $('#btnJson').addEventListener('click', telecharger);
