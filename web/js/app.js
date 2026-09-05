@@ -122,7 +122,7 @@ function renderResultats(a) {
   else inf.innerHTML = `<span class="pill ok">solveur</span> marge arriere max ${fmtMarge(r.marge_arriere_max, u)} ${u} (phase 1 ${esc(r.phase1 || '')}, phase 2 ${esc(r.phase2 || '')}), realisme ${Number(r.cout_realisme).toFixed(1)}, ${Number(r.temps_s).toFixed(1)} s de calcul` + (r.temps_serveur_ms ? ` (${(r.temps_serveur_ms / 1000).toFixed(1)} s serveur)` : '') + (r.premier_groupe ? ` · premier groupe : ${esc(r.premier_groupe.join(', '))}` : '');
   $('#btnRevenir').disabled = !state.placementSolveur || !state.modifie;
   // dessins
-  dessinerCabine($('#svgCabine'), a, ps, { onDeplacer: deplacer, onClic: basculerVerrou });
+  dessinerCabine($('#svgCabine'), a, ps, { onDeplacer: deplacer, onClic: basculerVerrou, onSurvol: (txt) => { $('#cabInfo').textContent = txt || ''; } });
   const base = C.etat(a, [{ masse: C.masseNative(a, params().piloteKg), bras: a.pilote.bras }, { masse: C.carburantMasse(a, state.carburant), bras: C.carburantBras(a, C.carburantMasse(a, state.carburant)) }]);
   const pts = [...etapes.map((e, i) => ({ label: i === 0 ? 'decollage' : e.rang === Infinity ? 'fin' : `sortie ${e.rang}`, masse: e.masse, cg: e.cg, statut: e.statut })), { label: 'sans paras', masse: base.masse, cg: base.cg, statut: base.statut }];
   dessinerCentrogramme($('#svgCentro'), a, nbPlaces ? pts : [pts[pts.length - 1]]);

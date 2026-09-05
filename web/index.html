@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="./theme.css">
 <style>
-  .layout { display: grid; grid-template-columns: minmax(360px, 460px) minmax(0, 1fr); gap: var(--sp-4, 16px); align-items: start; }
+  .layout { display: grid; grid-template-columns: minmax(380px, 600px) minmax(0, 1fr); gap: var(--sp-4, 16px); align-items: start; }
   @media (max-width: 1100px) { .layout { grid-template-columns: 1fr; } }
   .col { display: flex; flex-direction: column; gap: var(--sp-4, 16px); min-width: 0; }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; }
@@ -19,6 +19,7 @@
   @media (max-width: 640px) { .grid4 { grid-template-columns: 1fr 1fr; } }
   label.f { display: flex; flex-direction: column; gap: 4px; font-family: var(--font-cond); text-transform: uppercase; letter-spacing: .06em; font-size: .7rem; color: var(--muted); font-weight: 600; }
   label.f input, label.f select { font-family: var(--font-mono); font-size: .92rem; }
+  label.f .cap { display: block; }
   label.f .hint { font-family: var(--font-sans); text-transform: none; letter-spacing: 0; font-weight: 400; font-size: .74rem; color: var(--muted); }
   .inline { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: .84rem; }
   .muted { color: var(--muted); }
@@ -27,8 +28,9 @@
   #tblParas { width: 100%; border-collapse: collapse; font-size: .82rem; }
   #tblParas th { font-family: var(--font-cond); text-transform: uppercase; letter-spacing: .05em; font-size: .66rem; color: var(--muted); font-weight: 600; padding: 4px 4px; border-bottom: 1px solid var(--line-2); text-align: left; white-space: nowrap; }
   #tblParas td { padding: 2px 3px; border-bottom: 1px solid var(--line); vertical-align: middle; }
-  #tblParas input[type=text], #tblParas input[type=number], #tblParas select { padding: 3px 5px; font-size: .82rem; width: 100%; min-width: 3.2em; }
-  #tblParas input[type=text] { min-width: 4.5em; }
+  #tblParas input[type=text], #tblParas input[type=number], #tblParas select { padding: 3px 4px; font-size: .8rem; width: 100%; min-width: 0; box-sizing: border-box; }
+  #tblParas td:nth-child(1) { width: 6em; } #tblParas td:nth-child(2) { width: 4.4em; } #tblParas td:nth-child(3), #tblParas td:nth-child(5) { width: 3.8em; }
+  #tblParas td:nth-child(4) { width: 3.6em; } #tblParas td:nth-child(6) { width: 6.2em; } #tblParas td:nth-child(8) { width: 4.8em; } #tblParas td:nth-child(9) { width: 3em; }
   .tbl-wrap { overflow-x: auto; max-height: 52vh; overflow-y: auto; }
   svg#svgCabine { width: 100%; height: auto; display: block; touch-action: none; user-select: none; }
   svg#svgCentro { width: 100%; max-width: 620px; height: auto; display: block; margin: 0 auto; }
@@ -42,7 +44,7 @@
   .para-num { font-family: var(--font-mono); font-size: 12px; font-weight: 700; fill: #fff; pointer-events: none; }
   .para-nom { font-family: var(--font-cond); font-size: 10px; fill: var(--ink-2); pointer-events: none; }
   .para-lock { font-size: 11px; pointer-events: none; }
-  g.para:hover circle { filter: brightness(1.08); }
+  g.para:hover circle { stroke: var(--cyan); }
   .readouts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
   @media (max-width: 760px) { .readouts { grid-template-columns: 1fr 1fr; } }
   .legende { font-size: .78rem; color: var(--muted); margin-top: 6px; }
@@ -69,14 +71,14 @@
       <section class="card">
         <h2>Avion</h2>
         <div class="stack">
-          <label class="f">Immatriculation
+          <label class="f"><span class="cap">Immatriculation</span>
             <select id="selAvion"></select>
           </label>
           <details>
             <summary>Masse a vide et bras a vide (pesee)</summary>
             <div class="grid2" style="margin-top:8px">
-              <label class="f">Masse a vide (<span id="uniteMasse"></span>)<input type="number" id="inMasseVide" step="0.1"></label>
-              <label class="f">Bras a vide (<span id="uniteBras"></span>)<input type="number" id="inBrasVide" step="0.001"></label>
+              <label class="f"><span class="cap">Masse a vide (<span id="uniteMasse"></span>)</span><input type="number" id="inMasseVide" step="0.1"></label>
+              <label class="f"><span class="cap">Bras a vide (<span id="uniteBras"></span>)</span><input type="number" id="inBrasVide" step="0.001"></label>
             </div>
             <div class="btn-row" style="margin-top:6px"><button class="btn ghost mini" id="btnPesee">Revenir aux valeurs des planches</button></div>
           </details>
@@ -87,8 +89,8 @@
       <section class="card">
         <h2>Largage</h2>
         <div class="grid2">
-          <label class="f">Pilote (kg)<input type="number" id="inPilote" min="40" max="150" step="1"></label>
-          <label class="f">Carburant au decollage (<span id="uniteCarb"></span>)<input type="number" id="inCarb" min="0" step="10"><span class="hint"><span id="carbInfo"></span> <span id="carbCap"></span></span></label>
+          <label class="f"><span class="cap">Pilote (kg)</span><input type="number" id="inPilote" min="40" max="150" step="1"></label>
+          <label class="f"><span class="cap">Carburant au decollage (<span id="uniteCarb"></span>)</span><input type="number" id="inCarb" min="0" step="10"><span class="hint"><span id="carbInfo"></span> <span id="carbCap"></span></span></label>
         </div>
         <div class="inline" style="margin-top:10px">
           <span>Paras : <b id="nbParas">0</b> (<span id="totalParas">0 kg</span>)</span>
@@ -110,12 +112,12 @@
         <details style="margin-top:10px">
           <summary>Options du solveur</summary>
           <div class="grid2" style="margin-top:8px">
-            <label class="f">Marge avant minimale (<span id="optMargeUnit"></span>)<input type="number" id="optMarge" step="0.05" min="0"></label>
-            <label class="f">Tolerance de marge (<span id="optTolUnit"></span>)<input type="number" id="optTol" step="0.05" min="0"><span class="hint">0.25 : centrage d'abord ; 2 a 4 : plus de realisme</span></label>
-            <label class="f">Marge avant garantie
+            <label class="f"><span class="cap">Marge avant minimale (<span id="optMargeUnit"></span>)</span><input type="number" id="optMarge" step="0.05" min="0"></label>
+            <label class="f"><span class="cap">Tolerance de marge (<span id="optTolUnit"></span>)</span><input type="number" id="optTol" step="0.05" min="0"><span class="hint">0.25 : centrage d'abord ; 2 a 4 : plus de realisme</span></label>
+            <label class="f"><span class="cap">Marge avant garantie</span>
               <select id="optEtapes"><option value="premier_groupe">au decollage et apres le 1er groupe</option><option value="toutes">apres chaque sortie</option><option value="decollage">au decollage seulement</option></select>
             </label>
-            <label class="f">Temps max par phase (s)<input type="number" id="optTemps" min="0.5" max="20" step="0.5"></label>
+            <label class="f"><span class="cap">Temps max par phase (s)</span><input type="number" id="optTemps" min="0.5" max="20" step="0.5"></label>
           </div>
           <div class="inline" style="margin-top:8px">
             <label class="inline"><input type="checkbox" id="optGroupes"> groupes ordonnes (un groupe qui sort avant est entierement en arriere)</label>
@@ -136,6 +138,7 @@
       <section class="card">
         <h2>Plan cabine <span class="sub">glisser un para sur une place pour le deplacer (echange si occupee), cliquer pour le verrouiller</span></h2>
         <svg id="svgCabine" role="img" aria-label="plan de la cabine"></svg>
+        <div class="status mono" id="cabInfo" style="min-height:1.2em"></div>
         <div class="legende">Nez a gauche, cote droit en bas. Numero = rang de sortie, couleur = groupe, contour noir = verrouille. Le centrage se recalcule a chaque deplacement ; relance le solveur pour reoptimiser avec les paras verrouilles.</div>
       </section>
 

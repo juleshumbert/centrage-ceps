@@ -30,12 +30,12 @@ export function dessinerCabine(svg, avion, paras, opts = {}) {
   const x0 = cab.x0, x1 = cab.x1;
   const demiLarg = Math.max(...cab.zones.map((z) => z.largeur)) / 2;
   const ech = (W - margeG - margeD) / (x1 - x0);                // px par unite de bras
-  const echY = Math.min(ech, 150 / demiLarg);                    // la cabine ne depasse pas 300 px de haut
+  const echY = Math.min(ech, 175 / demiLarg);                    // la cabine ne depasse pas 350 px de haut
   const hCab = 2 * demiLarg * echY;
   const yMil = 30 + hCab / 2;
   const nonPlaces = paras.filter((p) => !p.place || !places.some((s) => s.id === p.place));
-  const hBanc = nonPlaces.length ? 96 : 0;
-  const H = 30 + hCab + 40 + hBanc;
+  const hBanc = nonPlaces.length ? 112 : 0;
+  const H = 30 + hCab + 48 + hBanc;
   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
   const px = (x) => margeG + (x - x0) * ech;
   const py = (y) => yMil + y * echY;                             // y > 0 (droite) vers le bas
@@ -76,8 +76,8 @@ export function dessinerCabine(svg, avion, paras, opts = {}) {
   svg.appendChild(gPlaces);
   // Banc des paras non places
   if (nonPlaces.length) {
-    const yB = 30 + hCab + 40 + 30;
-    svg.appendChild(el('text', { x: margeG, y: yB - 30, class: 'cab-side' }, 'paras sans place (a glisser sur une place)'));
+    const yB = 30 + hCab + 48 + 56;
+    svg.appendChild(el('text', { x: margeG, y: yB - 40, class: 'cab-side' }, 'paras sans place (a glisser sur une place)'));
     nonPlaces.forEach((p, i) => { p._cx = margeG + r + i * (2 * r + 10); p._cy = yB; });
   }
   // Paras
@@ -91,7 +91,8 @@ export function dessinerCabine(svg, avion, paras, opts = {}) {
     g.appendChild(el('text', { x: cx, y: cy + 4.5, class: 'para-num', 'text-anchor': 'middle' }, p.sortie != null && p.sortie !== '' ? String(p.sortie) : '·'));
     g.appendChild(el('text', { x: cx, y: cy - r - 4, class: 'para-nom', 'text-anchor': 'middle' }, `${p.nom} ${Math.round(p.masseKg)}`));
     if (p.verrou) g.appendChild(el('text', { x: cx + r - 4, y: cy - r + 8, class: 'para-lock' }, '🔒'));
-    g.appendChild(el('title', {}, `${p.nom}, ${p.masseKg} kg${p.groupe ? ', groupe ' + p.groupe : ''}${p.sortie != null && p.sortie !== '' ? ', sortie ' + p.sortie : ''}${s ? ', place ' + s.id + ' (' + fmt(s.x, avion) + ')' : ''}${p.verrou ? ', verrouille' : ''}. Glisser pour deplacer, cliquer pour (de)verrouiller.`));
+    // Pas de <title> SVG : l'info-bulle native gele le rendu de certains Chrome ; le survol passe par opts.onSurvol.
+    g.dataset.info = `${p.nom}, ${p.masseKg} kg${p.groupe ? ', groupe ' + p.groupe : ''}${p.sortie != null && p.sortie !== '' ? ', sortie ' + p.sortie : ''}${s ? ', place ' + s.id + ' (bras ' + fmt(s.x, avion) + ' ' + avion.unites.bras + ')' : ', sans place'}${p.verrou ? ', verrouille' : ''}. Glisser pour deplacer, cliquer pour (de)verrouiller.`;
     gParas.appendChild(g);
   }
   svg.appendChild(gParas);
@@ -149,6 +150,8 @@ function brancherDrag(svg, avion, paras, ctx) {
     else svg.querySelectorAll('g.place circle').forEach((c) => c.setAttribute('stroke', 'var(--line-2)'));
   };
   svg.onpointerup = fin; svg.onpointercancel = fin;
+  svg.onpointerover = (ev) => { const g = ev.target.closest && ev.target.closest('g.para'); if (g && opts.onSurvol) opts.onSurvol(g.dataset.info); };
+  svg.onpointerout = (ev) => { const g = ev.target.closest && ev.target.closest('g.para'); if (g && opts.onSurvol) opts.onSurvol(null); };
   function placeSous(o) {
     let best = null, bd = Infinity;
     for (const s of places) { const d = Math.hypot(px(s.x) - o.x, py(s.y) - o.y); if (d < bd) { bd = d; best = s; } }
@@ -198,7 +201,8 @@ export function dessinerCentrogramme(svg, avion, points) {
   points.forEach((p, i) => {
     const col = p.statut === 'ok' ? 'var(--ok)' : 'var(--danger)';
     svg.appendChild(el('circle', { cx: X(p.cg), cy: Y(p.masse), r: i === 0 ? 6 : 4.5, fill: col, stroke: '#fff', 'stroke-width': 1.5 }));
-    svg.appendChild(el('text', { x: X(p.cg) + 8, y: Y(p.masse) + (i % 2 ? 12 : -6), class: 'pt-lbl' }, p.label));
+    const aDroite = X(p.cg) > W - mR - 80;
+    svg.appendChild(el('text', { x: X(p.cg) + (aDroite ? -8 : 8), y: Y(p.masse) + (i % 2 ? 12 : -6), class: 'pt-lbl', 'text-anchor': aDroite ? 'end' : 'start' }, p.label));
   });
 }
 function fmtCg(c, avion) { return avion.unites.bras === 'm' ? c.toFixed(2) : c.toFixed(0); }
