@@ -1,0 +1,140 @@
+{
+ "aircraft": "Pilatus PC-6/B2-H4 Turbo Porter",
+ "source": "reference/notebooks/planche_pc6_A.ipynb et _yry.ipynb (planches club CEPS Ariege)",
+ "units": {
+  "weight": "kg",
+  "arm": "m",
+  "moment": "kg.m"
+ },
+ "datum": "datum AFM Pilatus (a confirmer dans avions/pc6-b2h4/notes.md)",
+ "mac": {
+  "lemac_m": 3.0,
+  "length_m": 1.9,
+  "formula": "%MAC = (CG_m - lemac_m) / length_m * 100"
+ },
+ "limits": {
+  "mtow_kg": 2800,
+  "target_cg_m": 3.66
+ },
+ "registrations": {
+  "PC6-A": {
+   "ew_kg": 1365,
+   "ew_moment_kgm": 4635.12,
+   "ew_cg_m": 3.396
+  },
+  "PC6-B": {
+   "ew_kg": 1355.5,
+   "ew_moment_kgm": 4641.232,
+   "ew_cg_m": 3.424
+  }
+ },
+ "envelopes": [
+  {
+   "name": "planches club",
+   "vertices": [
+    [
+     0.0,
+     3.209
+    ],
+    [
+     1450.0,
+     3.209
+    ],
+    [
+     2800.0,
+     3.608
+    ],
+    [
+     2800.0,
+     3.722
+    ],
+    [
+     0.0,
+     3.722
+    ]
+   ],
+   "note": "le sommet a masse 0 vaut EW_KG dans le notebook (bord bas du trace)",
+   "forward_limit": {
+    "weight_kg": [
+     1450,
+     2800
+    ],
+    "arm_m": [
+     3.209,
+     3.608
+    ]
+   },
+   "aft_limit_m": 3.722
+  }
+ ],
+ "stations": [
+  {
+   "name": "pilote",
+   "arm_m": 3.05
+  }
+ ],
+ "fixed_seats": {
+  "rangee_haute_m": [
+   2.9,
+   3.4,
+   3.9,
+   4.4,
+   5.2
+  ],
+  "rangee_basse_m": [
+   3.4,
+   3.875,
+   4.35,
+   4.825,
+   5.3
+  ]
+ },
+ "fuel": {
+  "capacity_l": 640,
+  "per_rotation_l": 50,
+  "reserve_l": 70,
+  "table": [
+   {
+    "gal": 0.0,
+    "l": 0.0,
+    "kg": 0.0,
+    "moment_kgm": 0.0,
+    "arm_m": null
+   },
+   {
+    "gal": 42.5,
+    "l": 160.9,
+    "kg": 129.6,
+    "moment_kgm": 522.3,
+    "arm_m": 4.03
+   },
+   {
+    "gal": 85.0,
+    "l": 321.8,
+    "kg": 259.2,
+    "moment_kgm": 1018.7,
+    "arm_m": 3.93
+   },
+   {
+    "gal": 127.5,
+    "l": 482.6,
+    "kg": 388.9,
+    "moment_kgm": 1523.3,
+    "arm_m": 3.917
+   },
+   {
+    "gal": 170.0,
+    "l": 643.5,
+    "kg": 518.5,
+    "moment_kgm": 2037.7,
+    "arm_m": 3.93
+   }
+  ]
+ },
+ "forfaits_kg": {
+  "para_militaire": 90,
+  "para_civil": 80,
+  "pilote_militaire": 80,
+  "pilote_civil": 86
+ }
+}

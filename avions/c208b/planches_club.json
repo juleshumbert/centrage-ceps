@@ -1,0 +1,665 @@
+{
+ "aircraft": "Cessna 208B Grand Caravan",
+ "source": "reference/notebooks/planche_c208b_A.ipynb et _LA.ipynb (planches club CEPS Ariege)",
+ "units": {
+  "weight": "lb",
+  "arm": "in",
+  "moment": "lb.in/1000"
+ },
+ "datum": "datum POH Cessna 208B (100 in en avant de la face avant de la cloison pare-feu, a confirmer dans avions/c208b/notes.md)",
+ "mac": {
+  "lemac_in": 177.57,
+  "length_in": 66.4,
+  "formula": "%MAC = (CG_in - lemac_in) / length_in * 100"
+ },
+ "limits": {
+  "mtow_lb": 9062,
+  "target_cg_in": 200.5
+ },
+ "registrations": {
+  "C208B-A": {
+   "ew_lb": 4890,
+   "ew_moment_1000": 924.161,
+   "ew_cg_in": 188.99
+  },
+  "C208B-B": {
+   "ew_lb": 4986,
+   "ew_moment_1000": 930.11184,
+   "ew_cg_in": 186.54
+  }
+ },
+ "envelopes": [
+  {
+   "name": "planches club (limite avant lineaire par morceaux, limite arriere constante)",
+   "vertices": [
+    [
+     0.0,
+     179.6
+    ],
+    [
+     5500.0,
+     179.6
+    ],
+    [
+     8000.0,
+     193.37
+    ],
+    [
+     9062.0,
+     199.15
+    ],
+    [
+     9062.0,
+     204.35
+    ],
+    [
+     0.0,
+     204.35
+    ]
+   ],
+   "note": "le sommet a masse 0 vaut EW_LBS dans le notebook (bord bas du trace), la limite ne depend pas de la masse sous 5500 lb",
+   "forward_limit": {
+    "weight_lb": [
+     5500,
+     8000,
+     9062
+    ],
+    "arm_in": [
+     179.6,
+     193.37,
+     199.15
+    ]
+   },
+   "aft_limit_in": 204.35
+  }
+ ],
+ "stations": [
+  {
+   "name": "pilote",
+   "arm_in": 135.5
+  },
+  {
+   "name": "ZONE 0",
+   "x0_in": 118.0,
+   "x1_in": 155.4,
+   "arm_in": 135.5,
+   "width_in": 53.0
+  },
+  {
+   "name": "ZONE 1",
+   "x0_in": 155.4,
+   "x1_in": 188.7,
+   "arm_in": 172.1,
+   "width_in": 62.0
+  },
+  {
+   "name": "ZONE 2",
+   "x0_in": 188.7,
+   "x1_in": 246.8,
+   "arm_in": 217.8,
+   "width_in": 62.0
+  },
+  {
+   "name": "ZONE 3",
+   "x0_in": 246.8,
+   "x1_in": 282.0,
+   "arm_in": 264.4,
+   "width_in": 64.0
+  },
+  {
+   "name": "ZONE 4",
+   "x0_in": 282.0,
+   "x1_in": 307.0,
+   "arm_in": 294.5,
+   "width_in": 57.0
+  },
+  {
+   "name": "ZONE 5",
+   "x0_in": 307.0,
+   "x1_in": 332.0,
+   "arm_in": 319.5,
+   "width_in": 53.0
+  },
+  {
+   "name": "ZONE 6",
+   "x0_in": 332.0,
+   "x1_in": 356.0,
+   "arm_in": 344,
+   "width_in": 46.0
+  },
+  {
+   "name": "ZONE -1",
+   "x0_in": 100.0,
+   "x1_in": 118.0,
+   "arm_in": 109,
+   "width_in": 53.0
+  }
+ ],
+ "fixed_seats_n20": [
+  {
+   "idx": 0,
+   "arm_in": 135.5,
+   "lateral_in": 16.0,
+   "row": "copilote"
+  },
+  {
+   "idx": 1,
+   "arm_in": 155.4,
+   "lateral_in": 16.0,
+   "row": "droite"
+  },
+  {
+   "idx": 2,
+   "arm_in": 180.66666666666669,
+   "lateral_in": 16.0,
+   "row": "droite"
+  },
+  {
+   "idx": 3,
+   "arm_in": 205.93333333333334,
+   "lateral_in": 16.0,
+   "row": "droite"
+  },
+  {
+   "idx": 4,
+   "arm_in": 231.2,
+   "lateral_in": 16.0,
+   "row": "droite"
+  },
+  {
+   "idx": 5,
+   "arm_in": 256.4666666666667,
+   "lateral_in": 16.0,
+   "row": "droite"
+  },
+  {
+   "idx": 6,
+   "arm_in": 281.73333333333335,
+   "lateral_in": 16.0,
+   "row": "droite"
+  },
+  {
+   "idx": 7,
+   "arm_in": 307.0,
+   "lateral_in": 16.0,
+   "row": "droite"
+  },
+  {
+   "idx": 8,
+   "arm_in": 168.03333333333333,
+   "lateral_in": 0.0,
+   "row": "centre"
+  },
+  {
+   "idx": 9,
+   "arm_in": 199.61666666666667,
+   "lateral_in": 0.0,
+   "row": "centre"
+  },
+  {
+   "idx": 10,
+   "arm_in": 231.2,
+   "lateral_in": 0.0,
+   "row": "centre"
+  },
+  {
+   "idx": 11,
+   "arm_in": 262.7833333333333,
+   "lateral_in": 0.0,
+   "row": "centre"
+  },
+  {
+   "idx": 12,
+   "arm_in": 294.3666666666667,
+   "lateral_in": 0.0,
+   "row": "centre"
+  },
+  {
+   "idx": 13,
+   "arm_in": 155.4,
+   "lateral_in": -16.0,
+   "row": "gauche"
+  },
+  {
+   "idx": 14,
+   "arm_in": 180.66666666666669,
+   "lateral_in": -16.0,
+   "row": "gauche"
+  },
+  {
+   "idx": 15,
+   "arm_in": 205.93333333333334,
+   "lateral_in": -16.0,
+   "row": "gauche"
+  },
+  {
+   "idx": 16,
+   "arm_in": 231.2,
+   "lateral_in": -16.0,
+   "row": "gauche"
+  },
+  {
+   "idx": 17,
+   "arm_in": 256.4666666666667,
+   "lateral_in": -16.0,
+   "row": "gauche"
+  },
+  {
+   "idx": 18,
+   "arm_in": 281.73333333333335,
+   "lateral_in": -16.0,
+   "row": "gauche"
+  },
+  {
+   "idx": 19,
+   "arm_in": 307.0,
+   "lateral_in": -16.0,
+   "row": "gauche"
+  }
+ ],
+ "fuel": {
+  "capacity_usable_gal": 332,
+  "capacity_usable_lb": 2224,
+  "density_lb_per_gal": 6.7,
+  "per_rotation_lb": 120,
+  "reserve_lb": 200,
+  "table": [
+   {
+    "gal": 5.0,
+    "lb": 34.0,
+    "moment_1000": 6.8,
+    "arm_in": 200.0
+   },
+   {
+    "gal": 10.0,
+    "lb": 67.0,
+    "moment_1000": 13.6,
+    "arm_in": 202.99
+   },
+   {
+    "gal": 15.0,
+    "lb": 101.0,
+    "moment_1000": 20.4,
+    "arm_in": 201.98
+   },
+   {
+    "gal": 20.0,
+    "lb": 134.0,
+    "moment_1000": 27.2,
+    "arm_in": 202.99
+   },
+   {
+    "gal": 25.0,
+    "lb": 168.0,
+    "moment_1000": 34.0,
+    "arm_in": 202.38
+   },
+   {
+    "gal": 30.0,
+    "lb": 201.0,
+    "moment_1000": 40.8,
+    "arm_in": 202.99
+   },
+   {
+    "gal": 35.0,
+    "lb": 235.0,
+    "moment_1000": 47.6,
+    "arm_in": 202.55
+   },
+   {
+    "gal": 40.0,
+    "lb": 268.0,
+    "moment_1000": 54.4,
+    "arm_in": 202.99
+   },
+   {
+    "gal": 45.0,
+    "lb": 302.0,
+    "moment_1000": 61.2,
+    "arm_in": 202.65
+   },
+   {
+    "gal": 50.0,
+    "lb": 335.0,
+    "moment_1000": 68.0,
+    "arm_in": 202.99
+   },
+   {
+    "gal": 55.0,
+    "lb": 369.0,
+    "moment_1000": 74.8,
+    "arm_in": 202.71
+   },
+   {
+    "gal": 60.0,
+    "lb": 402.0,
+    "moment_1000": 81.6,
+    "arm_in": 202.99
+   },
+   {
+    "gal": 65.0,
+    "lb": 436.0,
+    "moment_1000": 88.4,
+    "arm_in": 202.75
+   },
+   {
+    "gal": 70.0,
+    "lb": 469.0,
+    "moment_1000": 95.2,
+    "arm_in": 202.99
+   },
+   {
+    "gal": 75.0,
+    "lb": 503.0,
+    "moment_1000": 102.0,
+    "arm_in": 202.78
+   },
+   {
+    "gal": 80.0,
+    "lb": 536.0,
+    "moment_1000": 108.8,
+    "arm_in": 202.99
+   },
+   {
+    "gal": 85.0,
+    "lb": 570.0,
+    "moment_1000": 115.7,
+    "arm_in": 202.98
+   },
+   {
+    "gal": 90.0,
+    "lb": 603.0,
+    "moment_1000": 122.5,
+    "arm_in": 203.15
+   },
+   {
+    "gal": 95.0,
+    "lb": 637.0,
+    "moment_1000": 129.3,
+    "arm_in": 202.98
+   },
+   {
+    "gal": 100.0,
+    "lb": 670.0,
+    "moment_1000": 136.1,
+    "arm_in": 203.13
+   },
+   {
+    "gal": 105.0,
+    "lb": 704.0,
+    "moment_1000": 142.9,
+    "arm_in": 202.98
+   },
+   {
+    "gal": 110.0,
+    "lb": 737.0,
+    "moment_1000": 149.7,
+    "arm_in": 203.12
+   },
+   {
+    "gal": 115.0,
+    "lb": 771.0,
+    "moment_1000": 156.6,
+    "arm_in": 203.11
+   },
+   {
+    "gal": 120.0,
+    "lb": 804.0,
+    "moment_1000": 163.4,
+    "arm_in": 203.23
+   },
+   {
+    "gal": 125.0,
+    "lb": 838.0,
+    "moment_1000": 170.2,
+    "arm_in": 203.1
+   },
+   {
+    "gal": 130.0,
+    "lb": 871.0,
+    "moment_1000": 177.0,
+    "arm_in": 203.21
+   },
+   {
+    "gal": 135.0,
+    "lb": 905.0,
+    "moment_1000": 183.8,
+    "arm_in": 203.09
+   },
+   {
+    "gal": 140.0,
+    "lb": 938.0,
+    "moment_1000": 190.6,
+    "arm_in": 203.2
+   },
+   {
+    "gal": 145.0,
+    "lb": 972.0,
+    "moment_1000": 197.5,
+    "arm_in": 203.19
+   },
+   {
+    "gal": 155.0,
+    "lb": 1039.0,
+    "moment_1000": 211.1,
+    "arm_in": 203.18
+   },
+   {
+    "gal": 160.0,
+    "lb": 1072.0,
+    "moment_1000": 217.9,
+    "arm_in": 203.26
+   },
+   {
+    "gal": 170.0,
+    "lb": 1139.0,
+    "moment_1000": 231.5,
+    "arm_in": 203.25
+   },
+   {
+    "gal": 175.0,
+    "lb": 1173.0,
+    "moment_1000": 238.4,
+    "arm_in": 203.24
+   },
+   {
+    "gal": 180.0,
+    "lb": 1206.0,
+    "moment_1000": 245.2,
+    "arm_in": 203.32
+   },
+   {
+    "gal": 185.0,
+    "lb": 1240.0,
+    "moment_1000": 252.0,
+    "arm_in": 203.23
+   },
+   {
+    "gal": 190.0,
+    "lb": 1273.0,
+    "moment_1000": 258.8,
+    "arm_in": 203.3
+   },
+   {
+    "gal": 195.0,
+    "lb": 1307.0,
+    "moment_1000": 265.7,
+    "arm_in": 203.29
+   },
+   {
+    "gal": 200.0,
+    "lb": 1340.0,
+    "moment_1000": 272.5,
+    "arm_in": 203.36
+   },
+   {
+    "gal": 205.0,
+    "lb": 1374.0,
+    "moment_1000": 279.3,
+    "arm_in": 203.28
+   },
+   {
+    "gal": 210.0,
+    "lb": 1407.0,
+    "moment_1000": 286.1,
+    "arm_in": 203.34
+   },
+   {
+    "gal": 215.0,
+    "lb": 1441.0,
+    "moment_1000": 292.9,
+    "arm_in": 203.26
+   },
+   {
+    "gal": 220.0,
+    "lb": 1474.0,
+    "moment_1000": 299.7,
+    "arm_in": 203.32
+   },
+   {
+    "gal": 225.0,
+    "lb": 1508.0,
+    "moment_1000": 306.5,
+    "arm_in": 203.25
+   },
+   {
+    "gal": 230.0,
+    "lb": 1541.0,
+    "moment_1000": 313.3,
+    "arm_in": 203.31
+   },
+   {
+    "gal": 235.0,
+    "lb": 1575.0,
+    "moment_1000": 320.1,
+    "arm_in": 203.24
+   },
+   {
+    "gal": 240.0,
+    "lb": 1608.0,
+    "moment_1000": 326.9,
+    "arm_in": 203.3
+   },
+   {
+    "gal": 245.0,
+    "lb": 1642.0,
+    "moment_1000": 333.7,
+    "arm_in": 203.23
+   },
+   {
+    "gal": 250.0,
+    "lb": 1675.0,
+    "moment_1000": 340.5,
+    "arm_in": 203.28
+   },
+   {
+    "gal": 255.0,
+    "lb": 1709.0,
+    "moment_1000": 347.3,
+    "arm_in": 203.22
+   },
+   {
+    "gal": 260.0,
+    "lb": 1742.0,
+    "moment_1000": 354.1,
+    "arm_in": 203.27
+   },
+   {
+    "gal": 265.0,
+    "lb": 1776.0,
+    "moment_1000": 360.9,
+    "arm_in": 203.21
+   },
+   {
+    "gal": 270.0,
+    "lb": 1809.0,
+    "moment_1000": 367.7,
+    "arm_in": 203.26
+   },
+   {
+    "gal": 275.0,
+    "lb": 1843.0,
+    "moment_1000": 374.5,
+    "arm_in": 203.2
+   },
+   {
+    "gal": 280.0,
+    "lb": 1876.0,
+    "moment_1000": 381.2,
+    "arm_in": 203.2
+   },
+   {
+    "gal": 285.0,
+    "lb": 1910.0,
+    "moment_1000": 388.0,
+    "arm_in": 203.14
+   },
+   {
+    "gal": 290.0,
+    "lb": 1943.0,
+    "moment_1000": 394.8,
+    "arm_in": 203.19
+   },
+   {
+    "gal": 295.0,
+    "lb": 1977.0,
+    "moment_1000": 401.6,
+    "arm_in": 203.14
+   },
+   {
+    "gal": 300.0,
+    "lb": 2010.0,
+    "moment_1000": 408.4,
+    "arm_in": 203.18
+   },
+   {
+    "gal": 305.0,
+    "lb": 2044.0,
+    "moment_1000": 415.2,
+    "arm_in": 203.13
+   },
+   {
+    "gal": 310.0,
+    "lb": 2077.0,
+    "moment_1000": 422.0,
+    "arm_in": 203.18
+   },
+   {
+    "gal": 320.0,
+    "lb": 2144.0,
+    "moment_1000": 435.6,
+    "arm_in": 203.17
+   },
+   {
+    "gal": 325.0,
+    "lb": 2178.0,
+    "moment_1000": 442.4,
+    "arm_in": 203.12
+   },
+   {
+    "gal": 327.0,
+    "lb": 2189.0,
+    "moment_1000": 444.7,
+    "arm_in": 203.15
+   },
+   {
+    "gal": 330.0,
+    "lb": 2211.0,
+    "moment_1000": 449.1,
+    "arm_in": 203.12
+   },
+   {
+    "gal": 332.0,
+    "lb": 2224.0,
+    "moment_1000": 451.7,
+    "arm_in": 203.1
+   }
+  ]
+ },
+ "forfaits_kg": {
+  "para_militaire": 90,
+  "para_civil": 80,
+  "pilote_militaire": 80,
+  "pilote_civil": 86
+ }
+}
