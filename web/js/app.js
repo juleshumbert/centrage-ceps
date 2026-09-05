@@ -4,15 +4,15 @@ import { EXEMPLE } from './exemple.js';
 import * as C from './centrage.js';
 import { dessinerCabine, dessinerCentrogramme, fmt } from './cabine.js';
 
-const KEY = 'centrage-ceps:v2';
+const KEY = 'centrage-ceps:v3';
 const $ = (s) => document.querySelector(s);
 
 // ---------------------------------------------------------------- etat
 function defaut() {
   const a = AVIONS[0];
   return {
-    avionId: a.id, varianteId: a.variante_defaut, nomLocal: '', masseVide: null, brasVide: null,
-    piloteKg: a.pilote.masse_kg_defaut, carburant: a.carburant.defaut,
+    avionId: a.id, varianteId: a.variante_defaut, peseeId: (a.pesees && a.pesees[0] ? a.pesees[0].id : null), nomLocal: '', masseVide: null, brasVide: null,
+    piloteKg: a.pilote.masse_kg_defaut, carburant: a.carburant.defaut, porteOuverte: false,
     paras: genererParas(10, 90),
     options: { marge_avant_min: 0.5, tolerance_marge: 0.25, etapes: 'premier_groupe', temps_max_s: 8, groupes_ordonnes: false, rapide: false },
     enveloppes: {},            // cle avionId:varianteId -> {mtow, enveloppe} modifies dans l'application
@@ -33,10 +33,10 @@ const base = () => AVIONS.find((a) => a.id === state.avionId) || AVIONS[0];
 const cleEnv = () => `${state.avionId}:${state.varianteId}`;
 function avion() {
   const b = base();
-  const a = C.appliquerVariante(b, state.varianteId, state.enveloppes[cleEnv()]);
-  return { ...a, masse_vide: state.masseVide ?? b.masse_vide, bras_vide: state.brasVide ?? b.bras_vide };
+  const a = C.appliquerVariante(b, state.varianteId, state.enveloppes[cleEnv()], state.peseeId);
+  return { ...a, masse_vide: state.masseVide ?? a.masse_vide, bras_vide: state.brasVide ?? a.bras_vide };
 }
-const params = () => ({ piloteKg: Number(state.piloteKg) || 0, carburant: Number(state.carburant) || 0 });
+const params = () => ({ piloteKg: Number(state.piloteKg) || 0, carburant: Number(state.carburant) || 0, porteOuverte: !!state.porteOuverte });
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmtMarge = (v, u) => (Number.isFinite(v) ? (v >= 0 ? '+' : '') + (u === 'm' ? v.toFixed(3) : v.toFixed(2)) : '-');
 
@@ -46,6 +46,10 @@ function render() {
   $('#selAvion').value = a.id;
   const sel = $('#selVariante'); sel.innerHTML = (b.variantes || []).map((v) => `<option value="${esc(v.id)}">${esc(v.libelle)}</option>`).join(''); sel.value = state.varianteId;
   $('#varianteSource').textContent = a.variante ? a.variante.source || '' : '';
+  const selP = $('#selPesee'); selP.innerHTML = (b.pesees || []).map((q) => `<option value="${esc(q.id)}">${esc(q.libelle)} : ${q.masse_vide} ${a.unites.masse} a ${q.bras_vide} ${a.unites.bras}</option>`).join(''); selP.value = state.peseeId || '';
+  $('#peseeSource').textContent = a.pesee ? a.pesee.source || '' : '';
+  $('#porteBloc').hidden = !(a.porte && a.porte.moment_ouverture);
+  if (a.porte && a.porte.moment_ouverture) { $('#inPorte').checked = !!state.porteOuverte; $('#porteLibelle').textContent = a.porte.moment_ouverture.libelle; }
   $('#inNomLocal').value = state.nomLocal || '';
   $('#avionType').textContent = (state.nomLocal ? state.nomLocal + ' · ' : '') + a.libelle;
   $('#uniteMasse').textContent = a.unites.masse; $('#uniteBras').textContent = a.unites.bras; $('#uniteCarb').textContent = a.unites.carburant;
@@ -129,7 +133,8 @@ function renderResultats(a) {
   else if (!r.ok) inf.innerHTML = `<span class="pill danger">aucun placement valide</span> ${esc(r.message || '')}` + (r.marge_avant_max_possible != null ? ` (marge avant max possible ${fmtMarge(r.marge_avant_max_possible, u)} ${u})` : '') + (r.placement_au_mieux ? ' · le meilleur compromis a ete applique sur le plan.' : '');
   else inf.innerHTML = `<span class="pill ok">solveur</span> marge arriere max ${fmtMarge(r.marge_arriere_max, u)} ${u} (phase 1 ${esc(r.phase1 || '')}, phase 2 ${esc(r.phase2 || '')}), realisme ${Number(r.cout_realisme).toFixed(1)}, ${Number(r.temps_s).toFixed(1)} s de calcul` + (r.temps_serveur_ms ? ` (${(r.temps_serveur_ms / 1000).toFixed(1)} s serveur)` : '') + (r.premier_groupe ? ` · premier groupe : ${esc(r.premier_groupe.join(', '))}` : '');
   $('#btnRevenir').disabled = !state.placementSolveur || !state.modifie;
-  dessinerCabine($('#svgCabine'), a, ps, { onDeplacer: deplacer, onClic: basculerVerrou, onSurvol: (txt) => { $('#cabInfo').textContent = txt || ''; } });
+  dessinerCabine($('#svgCabine'), a, ps, { onDeplacer: deplacer, onClic: basculerVerrou, onSurvol: (txt) => { $('#cabInfo').textContent = txt || ''; },
+    cg: nbPlaces ? { cg: dec.cg, avant: dec.avant, arriere: dec.arriere, statut: b.statut } : null });
   const fuelM = C.carburantMasse(a, state.carburant);
   const vide = C.etat(a, [{ masse: C.masseNative(a, params().piloteKg), bras: a.pilote.bras }, { masse: fuelM, bras: C.carburantBras(a, fuelM) }]);
   const pts = [...etapes.map((e, i) => ({ label: i === 0 ? 'decollage' : e.rang === Infinity ? 'fin' : `sortie ${e.rang}`, masse: e.masse, cg: e.cg, statut: e.statut })), { label: 'sans paras', masse: vide.masse, cg: vide.cg, statut: vide.statut }];
@@ -211,7 +216,7 @@ function revenirSolveur() {
 
 function telecharger() {
   const a = avion();
-  const data = { avion: a.id, variante: state.varianteId, nom_local: state.nomLocal || null, parametres: params(), paras: state.paras, options: state.options,
+  const data = { avion: a.id, variante: state.varianteId, pesee: state.peseeId, masse_vide: a.masse_vide, bras_vide: a.bras_vide, nom_local: state.nomLocal || null, parametres: params(), paras: state.paras, options: state.options,
     enveloppe_utilisee: { mtow: a.mtow, ...a.enveloppe, modifiee: !!state.enveloppes[cleEnv()] },
     entree_solveur: state.derniereEntree || C.stickPourSolveur(a, params(), state.paras, state.options), resultat_solveur: state.resultat,
     placement_actuel: state.paras.map((p) => ({ nom: p.nom, place: p.place, pos: p.pos })),
@@ -222,7 +227,7 @@ function telecharger() {
 
 function changerAvion(id) {
   const a = AVIONS.find((x) => x.id === id); if (!a) return;
-  state.avionId = id; state.varianteId = a.variante_defaut; state.masseVide = null; state.brasVide = null; state.carburant = a.carburant.defaut; state.piloteKg = a.pilote.masse_kg_defaut;
+  state.avionId = id; state.varianteId = a.variante_defaut; state.peseeId = a.pesees && a.pesees[0] ? a.pesees[0].id : null; state.masseVide = null; state.brasVide = null; state.carburant = a.carburant.defaut; state.piloteKg = a.pilote.masse_kg_defaut; state.porteOuverte = false;
   for (const p of state.paras) { p.place = null; p.pos = null; p.verrou = null; }
   state.resultat = null; state.placementSolveur = null; state.modifie = false; render();
 }
@@ -232,6 +237,9 @@ function brancher() {
   $('#selAvion').innerHTML = AVIONS.map((a) => `<option value="${esc(a.id)}">${esc(a.libelle)}</option>`).join('');
   $('#selAvion').addEventListener('change', (e) => changerAvion(e.target.value));
   $('#selVariante').addEventListener('change', (e) => { state.varianteId = e.target.value; state.resultat = null; render(); });
+  $('#selPesee').addEventListener('change', (e) => { state.peseeId = e.target.value; state.masseVide = null; state.brasVide = null; state.resultat = null; render(); });
+  $('#inPorte').addEventListener('change', (e) => { state.porteOuverte = e.target.checked; render(); });
+  $('#btnMiseEnPlace').addEventListener('click', () => { state.paras = C.miseEnPlace(avion(), state.paras, 2); state.modifie = true; render(); });
   $('#inNomLocal').addEventListener('change', (e) => { state.nomLocal = e.target.value.trim().slice(0, 40); render(); });
   $('#inMasseVide').addEventListener('change', (e) => { state.masseVide = Number(e.target.value) || null; state.resultat = null; render(); });
   $('#inBrasVide').addEventListener('change', (e) => { state.brasVide = Number(e.target.value) || null; state.resultat = null; render(); });
@@ -260,7 +268,7 @@ function brancher() {
   $('#btnAjouter').addEventListener('click', () => { const n = state.paras.length + 1; state.paras.push({ ...genererParas(1, Number($('#genKg').value) || 90)[0], nom: `P${n}` }); render(); });
   $('#btnGenerer').addEventListener('click', () => { state.paras = genererParas(Number($('#genN').value) || 10, Number($('#genKg').value) || 90); state.resultat = null; state.placementSolveur = null; state.modifie = false; render(); });
   $('#btnVider').addEventListener('click', () => { for (const p of state.paras) { p.place = null; p.pos = null; p.verrou = null; } state.modifie = !!state.placementSolveur; render(); });
-  $('#btnExemple').addEventListener('click', () => { state = { ...defaut(), enveloppes: state.enveloppes, avionId: EXEMPLE.avionId, varianteId: EXEMPLE.varianteId, piloteKg: EXEMPLE.piloteKg, carburant: EXEMPLE.carburant, paras: EXEMPLE.paras.map((p) => ({ groupe: '', sortie: '', tandem: '', role: '', interdit: [], verrou: null, place: null, pos: null, ...p })) }; render(); });
+  $('#btnExemple').addEventListener('click', () => { state = { ...defaut(), enveloppes: state.enveloppes, avionId: EXEMPLE.avionId, varianteId: EXEMPLE.varianteId, peseeId: 'A', piloteKg: EXEMPLE.piloteKg, carburant: EXEMPLE.carburant, paras: EXEMPLE.paras.map((p) => ({ groupe: '', sortie: '', tandem: '', role: '', interdit: [], verrou: null, place: null, pos: null, ...p })) }; render(); });
   $('#btnCalculer').addEventListener('click', calculer);
   $('#btnRevenir').addEventListener('click', revenirSolveur);
   $('#btnJson').addEventListener('click', telecharger);

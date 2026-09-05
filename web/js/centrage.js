@@ -45,7 +45,10 @@ export function cgVersMac(avion, cg) {
  */
 export function etat(avion, charges) {
   let masse = avion.masse_vide, moment = avion.masse_vide * avion.bras_vide;
-  for (const c of charges) { masse += c.masse; moment += c.masse * c.bras; }
+  for (const c of charges) {
+    if (Number.isFinite(c.moment)) { moment += c.moment; continue; }   // moment pur (porte qui recule)
+    masse += c.masse; moment += c.masse * c.bras;
+  }
   const cg = moment / masse;
   const avant = interp(avion.enveloppe.avant, masse);
   const arriere = interp(avion.enveloppe.arriere, masse);
@@ -78,12 +81,15 @@ export function etapes(avion, params, paras, places, mode = 'premier_groupe') {
   const rangs = [...new Set(places_.map((p) => (p.sortie == null || p.sortie === '' ? Infinity : Number(p.sortie))))].sort((a, b) => a - b);
   const out = [{ etape: 'decollage', restants: places_.length, ...etat(avion, [...fixes, ...charge(places_)]) }];
   if (places_.length === 0) return { etapes: out, nonPlaces };
+  // porte ouverte pour le largage : moment ajoute (ex. PC-6, la porte coulissante recule), masse inchangee
+  const porte = params.porteOuverte && avion.porte && avion.porte.moment_ouverture ? [{ moment: avion.porte.moment_ouverture.kgm }] : [];
+  if (porte.length) out.push({ etape: 'porte ouverte, avant la premiere sortie', restants: places_.length, ...etat(avion, [...fixes, ...porte, ...charge(places_)]) });
   const seuils = mode === 'toutes' ? rangs : rangs.slice(0, 1);
   for (const r of seuils) {
     const restants = places_.filter((p) => (p.sortie == null || p.sortie === '' ? Infinity : Number(p.sortie)) > r);
     const sortis = places_.length - restants.length;
     out.push({ etape: `apres la sortie du rang ${r === Infinity ? 'final' : r} (${sortis} sorti(s))`, rang: r, restants: restants.length,
-      ...etat(avion, [...fixes, ...charge(restants)]) });
+      ...etat(avion, [...fixes, ...porte, ...charge(restants)]) });
   }
   return { etapes: out, nonPlaces };
 }
@@ -141,14 +147,42 @@ export function stickPourSolveur(avion, params, paras, options = {}) {
  * Avion effectif : variante choisie (MTOW et enveloppe) puis surcharge eventuelle
  * {mtow, enveloppe} editee dans l'application. Ne modifie pas l'objet d'origine.
  */
-export function appliquerVariante(avion, varianteId, surcharge) {
+export function appliquerVariante(avion, varianteId, surcharge, peseeId) {
   const v = (avion.variantes || []).find((x) => x.id === varianteId) || (avion.variantes || [])[0];
   const out = { ...avion };
+  const pe = (avion.pesees || []).find((x) => x.id === peseeId) || (avion.pesees || [])[0];
+  if (pe) { out.masse_vide = pe.masse_vide; out.bras_vide = pe.bras_vide; out.pesee = pe; }
   if (v) { out.mtow = v.mtow; out.enveloppe = JSON.parse(JSON.stringify(v.enveloppe)); out.variante = v; }
   if (surcharge) {
     if (Number.isFinite(surcharge.mtow)) out.mtow = surcharge.mtow;
     if (surcharge.enveloppe) out.enveloppe = JSON.parse(JSON.stringify(surcharge.enveloppe));
   }
+  return out;
+}
+
+/**
+ * Mise en place du premier groupe (plus petit rang de sortie) : les paras vont a la porte.
+ * Les `nbExterieur` premiers (les plus legers en dernier) passent sur la rangee exterieure, les
+ * autres se rangent a l'interieur le long de la rangee cote porte, au droit de la porte, du fond
+ * vers l'avant. Retourne une copie des paras avec `pos` mis a jour (place = null).
+ */
+export function miseEnPlace(avion, paras, nbExterieur = 2) {
+  const rangs = paras.map((p) => (p.sortie == null || p.sortie === '' ? Infinity : Number(p.sortie)));
+  const r0 = Math.min(...rangs);
+  if (!Number.isFinite(r0)) return paras.map((p) => ({ ...p }));
+  const ext = (avion.rangees || []).find((r) => r.exterieur);
+  const cote = avion.porte && avion.porte.cote === 'droite' ? 1 : -1;
+  const interne = (avion.rangees || []).filter((r) => !r.exterieur && Math.sign(r.y) === cote).sort((a, b) => Math.abs(b.y) - Math.abs(a.y))[0]
+    || (avion.rangees || []).find((r) => !r.exterieur);
+  const porte = avion.cabine.porte;
+  const pas = (porte.x1 - porte.x0) / 3;
+  const groupe = paras.map((p, i) => ({ p, i })).filter(({ i }) => rangs[i] === r0).sort((a, b) => b.p.masseKg - a.p.masseKg);
+  const out = paras.map((p) => ({ ...p }));
+  groupe.forEach(({ i }, k) => {
+    const q = out[i]; q.place = null; q.verrou = null;
+    if (ext && k < nbExterieur) q.pos = { x: Math.min(ext.xmax, Math.max(ext.xmin, porte.x1 - k * pas)), y: ext.y };
+    else { const j = k - (ext ? nbExterieur : 0); q.pos = { x: Math.min(interne.xmax, Math.max(interne.xmin, porte.x1 - pas / 2 - j * pas)), y: interne.y }; }
+  });
   return out;
 }
 

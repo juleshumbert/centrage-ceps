@@ -55,10 +55,15 @@ reference/notebooks/          snapshot of centrage_c208 notebooks, executed cell
   lives in `functions/protection.js` (origin check, per-IP limiter, per-instance semaphore, result
   cache) plus `maxInstances`, `concurrency` and the solver time cap in `sanitize.js`. Keep it.
 - NO AIRCRAFT REGISTRATION anywhere in the repo, not even in commit messages (history was rewritten
-  on 2026-09-05 to remove them). Aircraft are `c208b-A`, `c208b-B`, `pc6-A`, `pc6-B`, `pac750xl`,
-  `dhc6-300`. Real manifests (people's names) stay out of git (`output/sticks/*.json|png` ignored).
-- Aircraft variants (MTOW + envelope) are in `web/js/avions.js` (generated): Caravan `poh`, `ape2`
-  (STC APE II = 9062 lb, planches club), `ape3` (placeholder copy of ape2 until the STC data is found).
+  on 2026-09-05 to remove them). One model per type: `c208b`, `c208a`, `pc6`, `pac750xl`, `dhc6`,
+  each with `pesees` (A, B or an estimate). Real manifests (people's names) stay out of git.
+- Variants (MTOW + envelope) in `web/js/avions.js` (generated): Caravan `poh`, `ape2` (STC SA00392SE,
+  fwd limit 200.23 in at 9062 lb), `ape3` (STC SA01213SE, same envelope, MLW 9000); PC-6 `b2h4`, `b2h2`.
+  The club's planches envelope (less restrictive) was deliberately dropped.
+- Every aircraft has an `EXT` row outside the fuselage on the door side (paras at the door) and a
+  `dessin` schema (fuselage profile to the tail, wing, empennage, blocs). `miseEnPlace()` moves the
+  first exit group to the door (2 outside, others inside at the door). PC-6 `porte.moment_ouverture`
+  (+21 kg.m, AFM supplement 1824) applies to post-takeoff stages when the door switch is on.
 - A para is either on a seat (`place`) or at a free position (`pos:{x,y}` along a row); a lock is
   the seat id or `'libre'` (virtual place `L-<nom>` sent to the solver).
 

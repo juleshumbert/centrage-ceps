@@ -15,19 +15,24 @@ Il rassemble :
 
 ## Avions
 
-| Dossier | Type | Documents obtenus | Enveloppe | Stations | Cabine |
-|---|---|---|---|---|---|
-| `avions/c208b` | Cessna 208B Grand Caravan (C208B-A, C208B-B) | POH 208B G1000 complet (536 p.), TCDS FAA A37CE et EASA IM.A.226 | oui, 208B / 208B EX, decollage et atterrissage | oui (sieges, 6 zones cargo, pod) | oui (stations FS, largeurs, hauteurs, portes, rails) |
-| `avions/c208` | Cessna 208 Caravan (675 SHP) | TCDS, extrait POH sections 1 a 4, Spec & Description | oui (TCDS) | partiel (section 6 non trouvee) | stations et porte cargo |
-| `avions/pc6-b2h4` | Pilatus PC-6/B2-H4 (PC6-A, PC6-B) | AFM 1820 rev. 8 (PIM, 80 p.), TCDS OFAC F 56-10, brochures, DT FFP 33 | oui (identique aux planches club) | rangees de sieges, carburant, options | volume seulement, porte non cotee (valeurs tierces non verifiees) |
-| `avions/pc6-b2h2` | Pilatus PC-6/B2-H2 | mêmes sources (aucun AFM B2-H2 public) | oui (TCDS) | idem B2-H4 | idem B2-H4 |
-| `avions/pac750xl` | Pacific Aerospace 750XL | POH complet (278 p.), TCDS EASA IM.A.081 | oui, deux variantes de reservoirs | oui, 12 positions paras (fig. 6-10) | oui (158 x 54 x 56 in, porte a rouleau, trains) |
-| `avions/dhc6` | de Havilland DHC-6-300 Twin Otter | TCDS FAA A9EA, manuel FlightSafety (local seulement, 213 Mo), brochures Viking | oui (decollage, atterrissage, flotteurs) | pilotes, soutes, carburant ; rangees de sieges non trouvees | oui (221 x 69 x 59 in, portes) |
-| `avions/dhc6/dhc5` | DHC-5 Buffalo (demande initiale « DHC5 ») | brochure constructeur seulement | non (aucun manuel de vol public) | non | dimensions generales |
+Un modele par type, sans immatriculation ; les pesees connues sont listees par lettre et se
+corrigent dans l'application.
+
+| Dossier | Type | Documents obtenus | Enveloppe(s) dans l'IHM | Places |
+|---|---|---|---|---|
+| `avions/c208b` | Cessna 208B Grand Caravan | POH 208B G1000 complet, TCDS FAA et EASA, STC APE (rapports TSB) | POH 8750 lb ; STC APE II 9062 lb ; STC APE III (MLW 9000) | 20 (planches club) |
+| `avions/c208b` (section 208) | Cessna 208A Caravan (fuselage court) | TCDS, extrait POH sections 1 a 4, Spec & Description | POH / TCDS 8000 lb | 15 (par analogie, a verifier) |
+| `avions/pc6-b2h4`, `avions/pc6-b2h2` | Pilatus PC-6 Turbo Porter | AFM 1820 rev. 8, TCDS OFAC F 56-10, brochures, DT FFP 33 | B2-H4 2800 kg ; B2-H2 2200 kg | 10 (planches club) ; porte coulissante ouverte +21 kg.m |
+| `avions/pac750xl` | Pacific Aerospace 750XL | POH complet (278 p.), TCDS EASA IM.A.081 | POH, deux variantes de reservoirs | 17 : 10 cote copilote, 7 derriere le pilote (configuration club) |
+| `avions/dhc6` | de Havilland DHC-6-300 Twin Otter | TCDS FAA A9EA, manuel FlightSafety (local), brochures Viking, rapports NTSB / TSB | TCDS decollage et atterrissage | 22 (hypothese : deux files, pas 20 in) |
+
+Chaque maquette comporte une **ligne exterieure cote porte** (paras a la porte, sur la marche ou
+le montant) et le dessin complet du fuselage jusqu'a la queue ; le bouton « Mise en place du 1er
+groupe » envoie les premiers sortants a la porte pour verifier le centrage a cet instant. Les
+schemas du Caravan et du Pilatus reprennent ceux des anciennes IHM (centrage_c208, etude Cahors).
 
 Le detail des valeurs, des sources (URL, fichier, page) et des points ouverts est dans le
-`notes.md` de chaque avion ; `avions/README.md` decrit le format et les ecarts constates
-avec les planches du club.
+`notes.md` de chaque avion ; `avions/README.md` decrit le format et les ecarts constates.
 
 ## Arborescence
 
@@ -60,12 +65,12 @@ navigateur (web/)  --POST /api/placement (stick JSON)-->  Cloud Function (functi
   site, limiteur par adresse IP (par minute et par jour), au plus deux calculs simultanes par
   instance et trois instances, cache des demandes identiques, temps de solveur plafonne
   (`functions/protection.js`). URL : https://ceps09-centrage.web.app
-- **Aucune immatriculation dans le depot** (ni dans l'historique) : les avions sont designes par
-  type et lettre (Caravan 208B avion A / B, PC-6 avion A / B). L'IHM permet un nom local, qui
-  reste dans le navigateur. Les manifestes reels (noms des paras) sont eux aussi hors depot.
-- Variantes par avion (masse max et enveloppe) : Caravan POH 8750 lb, STC APE II 9062 lb
-  (planches club), STC APE III (a renseigner) ; l'enveloppe et la MTOW se modifient dans
-  l'application (tableau ou sommets deplacables), memorisees dans le navigateur.
+- **Aucune immatriculation dans le depot** (ni dans l'historique) : un modele par type, pesees
+  par lettre. L'IHM permet un nom local, qui reste dans le navigateur. Les manifestes reels (noms
+  des paras) sont eux aussi hors depot.
+- Variantes par avion (masse max et enveloppe) : Caravan POH 8750 lb, STC APE II 9062 lb, STC
+  APE III ; PC-6 B2-H4 / B2-H2 ; l'enveloppe et la MTOW se modifient dans l'application (tableau
+  ou sommets deplacables), memorisees dans le navigateur.
 - Placement : sur une place fixe ou en **position libre** le long d'une rangee (bras = position
   exacte), verrou sur une place ou une position libre ; le solveur ne deplace que les paras non
   verrouilles.

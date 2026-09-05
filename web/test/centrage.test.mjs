@@ -2,10 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { AVIONS } from '../js/avions.js';
-import { interp, etat, etapes, bilan, stickPourSolveur, carburantBras, carburantMasse, appliquerVariante, normaliserEnveloppe } from '../js/centrage.js';
+import { interp, etat, etapes, bilan, stickPourSolveur, carburantBras, carburantMasse, appliquerVariante, normaliserEnveloppe, miseEnPlace } from '../js/centrage.js';
 
-const BK = appliquerVariante(AVIONS.find((a) => a.id === 'c208b-A'), 'ape2');
-const EU = appliquerVariante(AVIONS.find((a) => a.id === 'pc6-A'), 'afm');
+const BK = appliquerVariante(AVIONS.find((a) => a.id === 'c208b'), 'ape2', null, 'A');
+const EU = appliquerVariante(AVIONS.find((a) => a.id === 'pc6'), 'b2h4', null, 'A');
 
 test('interp : bornes et interieur', () => {
   const pts = [[5500, 179.6], [8000, 193.37], [9062, 199.15]];
@@ -61,12 +61,12 @@ test('stickPourSolveur : verrou = toutes les autres places interdites', () => {
 });
 
 test('variantes : POH 8750 lb contre STC APE II 9062 lb', () => {
-  const base = AVIONS.find((a) => a.id === 'c208b-A');
+  const base = AVIONS.find((a) => a.id === 'c208b');
   const poh = appliquerVariante(base, 'poh'), ape2 = appliquerVariante(base, 'ape2');
   assert.equal(poh.mtow, 8750); assert.equal(ape2.mtow, 9062);
   assert.equal(interp(poh.enveloppe.avant, 8750), 199.15);
   assert.equal(interp(ape2.enveloppe.avant, 9062), 200.23);   // STC APE II (TSB A14W0181)
-  assert.equal(interp(appliquerVariante(base, 'planches').enveloppe.avant, 9062), 199.15);   // planches club, moins restrictives
+  assert.equal(appliquerVariante(base, 'ape2', null, 'B').masse_vide, base.pesees[1].masse_vide);   // pesee B
   const modif = appliquerVariante(base, 'ape2', { mtow: 9000, enveloppe: { avant: [[5500, 180], [9000, 200]], arriere: [[0, 205], [9000, 205]] } });
   assert.equal(modif.mtow, 9000); assert.equal(interp(modif.enveloppe.arriere, 7000), 205);
   assert.equal(base.mtow, undefined, 'la base n est pas modifiee');
@@ -89,4 +89,23 @@ test('normaliserEnveloppe trie et filtre', () => {
   const e = normaliserEnveloppe({ avant: [['9000', '199'], [5500, 179.6], ['x', 1]], arriere: [[0, 204.35]] });
   assert.deepEqual(e.avant, [[5500, 179.6], [9000, 199]]);
   assert.equal(normaliserEnveloppe({ avant: [], arriere: [] }), null);
+});
+
+test('porte ouverte (PC-6) : moment ajoute apres le decollage seulement', () => {
+  const paras = [{ nom: 'A', masseKg: 90, place: 'D1', sortie: 1 }, { nom: 'B', masseKg: 90, place: 'G1', sortie: 2 }];
+  const sans = etapes(EU, { piloteKg: 80, carburant: 200 }, paras, EU.places).etapes;
+  const avec = etapes(EU, { piloteKg: 80, carburant: 200, porteOuverte: true }, paras, EU.places).etapes;
+  assert.equal(avec.length, sans.length + 1);
+  assert.ok(Math.abs(avec[0].cg - sans[0].cg) < 1e-12, 'decollage inchange');
+  assert.ok(Math.abs((avec[1].cg - sans[0].cg) * sans[0].masse - 21) < 1e-6, 'porte ouverte : +21 kg.m');
+});
+
+test('mise en place du 1er groupe : dehors et au droit de la porte', () => {
+  const paras = [{ nom: 'A', masseKg: 95, place: 'D1', sortie: 1 }, { nom: 'B', masseKg: 80, place: 'D2', sortie: 1 }, { nom: 'C', masseKg: 90, place: 'D3', sortie: 1 }, { nom: 'D', masseKg: 90, place: 'G1', sortie: 2 }];
+  const out = miseEnPlace(BK, paras, 2);
+  const ext = BK.rangees.find((r) => r.exterieur);
+  assert.equal(out[0].pos.y, ext.y); assert.equal(out[2].pos.y, ext.y);      // les deux plus lourds dehors
+  assert.equal(out[1].pos.y, -16);                                            // le troisieme cote porte, dedans
+  assert.equal(out[3].place, 'G1');                                           // rang 2 inchange
+  assert.ok(out[0].pos.x <= ext.xmax && out[0].pos.x >= ext.xmin);
 });

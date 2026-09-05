@@ -39,6 +39,7 @@
   .para-num { font-family: var(--font-mono); font-size: 12px; font-weight: 700; fill: #fff; pointer-events: none; }
   .para-nom { font-family: var(--font-cond); font-size: 10px; fill: var(--ink-2); pointer-events: none; }
   .para-lock { font-size: 11px; pointer-events: none; }
+  .cg-lbl { font-family: var(--font-mono); font-size: 10px; font-weight: 700; fill: #fff; }
   g.para:hover circle { stroke: var(--cyan); }
   .readouts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
   @media (max-width: 760px) { .readouts { grid-template-columns: 1fr 1fr; } }
@@ -72,13 +73,14 @@
             <label class="f"><span class="cap">Nom local (optionnel, reste dans ce navigateur)</span><input type="text" id="inNomLocal" maxlength="40" placeholder="ex. avion bleu"></label>
           </div>
           <label class="f"><span class="cap">Variante (masse max, enveloppe)</span><select id="selVariante"></select><span class="hint" id="varianteSource"></span></label>
+          <label class="f"><span class="cap">Pesee</span><select id="selPesee"></select><span class="hint" id="peseeSource"></span></label>
           <details>
-            <summary>Masse a vide et bras a vide (pesee)</summary>
+            <summary>Corriger la masse a vide et le bras a vide</summary>
             <div class="grid2" style="margin-top:8px">
               <label class="f"><span class="cap">Masse a vide (<span id="uniteMasse"></span>)</span><input type="number" id="inMasseVide" step="0.1"></label>
               <label class="f"><span class="cap">Bras a vide (<span id="uniteBras"></span>)</span><input type="number" id="inBrasVide" step="0.001"></label>
             </div>
-            <div class="btn-row" style="margin-top:6px"><button class="btn ghost mini" id="btnPesee">Revenir aux valeurs de reference</button></div>
+            <div class="btn-row" style="margin-top:6px"><button class="btn ghost mini" id="btnPesee">Revenir a la pesee choisie</button></div>
           </details>
           <div id="avionNotes" hidden></div>
         </div>
@@ -89,6 +91,9 @@
         <div class="grid2">
           <label class="f"><span class="cap">Pilote (kg)</span><input type="number" id="inPilote" min="40" max="150" step="1"></label>
           <label class="f"><span class="cap">Carburant au decollage (<span id="uniteCarb"></span>)</span><input type="number" id="inCarb" min="0" step="10"><span class="hint"><span id="carbInfo"></span> <span id="carbCap"></span></span></label>
+        </div>
+        <div class="inline" id="porteBloc" style="margin-top:8px" hidden>
+          <label class="inline"><input type="checkbox" id="inPorte"> <span id="porteLibelle">porte ouverte</span> <span class="muted">(appliquee aux etapes apres le decollage)</span></label>
         </div>
         <div class="inline" style="margin-top:10px">
           <span>Paras : <b id="nbParas">0</b> (<span id="totalParas">0 kg</span>)</span>
@@ -125,6 +130,7 @@
         <div class="btn-row" style="margin-top:12px">
           <button class="btn accent" id="btnCalculer">Calculer le placement</button>
           <button class="btn ghost" id="btnRevenir" disabled title="remet chaque para a la place calculee par le solveur">Revenir au solveur</button>
+          <button class="btn ghost" id="btnMiseEnPlace" title="le premier groupe (plus petit rang de sortie) va a la porte : deux dehors sur la ligne exterieure, les autres au droit de la porte">Mise en place du 1er groupe</button>
           <button class="btn ghost" id="btnVider" title="retire tous les paras des places">Vider les places</button>
           <span class="status" id="calcStatut"></span>
         </div>
@@ -134,10 +140,10 @@
     <!-- ------------------------------------------------ plan, centrogramme, resultats -->
     <div class="col">
       <section class="card">
-        <h2>Plan cabine <span class="sub">glisser un para sur une place (echange si occupee) ou n'importe ou le long d'une rangee ; cliquer pour le verrouiller</span></h2>
+        <h2>Maquette <span class="sub">glisser un para sur une place (echange si occupee), le long d'une rangee ou sur la ligne exterieure cote porte ; cliquer pour le verrouiller</span></h2>
         <svg id="svgCabine" role="img" aria-label="plan de la cabine"></svg>
         <div class="status mono" id="cabInfo" style="min-height:1.2em"></div>
-        <div class="legende">Nez a gauche, cote droit en bas. Numero = rang de sortie, couleur = groupe, contour noir = verrouille, contour pointille = position libre (bras = position exacte). Le centrage se recalcule a chaque deplacement ; relance le solveur pour reoptimiser les paras non verrouilles.</div>
+        <div class="legende">Nez a gauche, cote droit en bas. Numero = rang de sortie, couleur = groupe, contour noir = verrouille, contour pointille = position libre (bras = position exacte). La ligne orange hors fuselage est la ligne exterieure cote porte (paras a la porte, sur la marche ou le montant). La fleche orange est le CG au decollage, les traits rouges les limites a cette masse. Le centrage se recalcule a chaque deplacement ; relance le solveur pour reoptimiser les paras non verrouilles.</div>
       </section>
 
       <section class="card">
