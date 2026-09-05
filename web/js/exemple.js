@@ -1,6 +1,7 @@
 // Genere depuis solveur/exemples/exemple_stick.json (masses converties en kg).
 export const EXEMPLE = {
- "avionId": "C208B-A",
+ "avionId": "c208b-A",
+ "varianteId": "ape2",
  "piloteKg": 80,
  "carburant": 900.0,
  "paras": [

@@ -56,8 +56,19 @@ navigateur (web/)  --POST /api/placement (stick JSON)-->  Cloud Function (functi
 - Avions proposes : C208B-A, C208B-B (C208B), PC6-A, PC6-B (PC-6 B2-H4), donnees des planches
   du club ; PAC 750XL generique (POH, masse a vide a saisir). DHC-6 absent tant que les bras
   des rangees ne sont pas trouves.
-- Acces reserve aux membres (portail `auth.js` partage avec les sites soeurs, projet Firebase
-  `paraclub-planning-f966c`). URL : https://ceps09-centrage.web.app
+- Acces public, sans authentification. La fonction est protegee contre l'abus : origine du
+  site, limiteur par adresse IP (par minute et par jour), au plus deux calculs simultanes par
+  instance et trois instances, cache des demandes identiques, temps de solveur plafonne
+  (`functions/protection.js`). URL : https://ceps09-centrage.web.app
+- **Aucune immatriculation dans le depot** (ni dans l'historique) : les avions sont designes par
+  type et lettre (Caravan 208B avion A / B, PC-6 avion A / B). L'IHM permet un nom local, qui
+  reste dans le navigateur. Les manifestes reels (noms des paras) sont eux aussi hors depot.
+- Variantes par avion (masse max et enveloppe) : Caravan POH 8750 lb, STC APE II 9062 lb
+  (planches club), STC APE III (a renseigner) ; l'enveloppe et la MTOW se modifient dans
+  l'application (tableau ou sommets deplacables), memorisees dans le navigateur.
+- Placement : sur une place fixe ou en **position libre** le long d'une rangee (bras = position
+  exacte), verrou sur une place ou une position libre ; le solveur ne deplace que les paras non
+  verrouilles.
 
 ### Developper en local
 

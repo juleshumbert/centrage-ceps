@@ -71,9 +71,10 @@ export function etapes(avion, params, paras, places, mode = 'premier_groupe') {
     { masse: masseNative(avion, params.piloteKg), bras: avion.pilote.bras },
     { masse: fuelMasse, bras: carburantBras(avion, fuelMasse) },
   ];
-  const places_ = paras.filter((p) => brasPlace.has(p.place));
+  const brasDe = (p) => (p.pos && Number.isFinite(p.pos.x) ? p.pos.x : brasPlace.get(p.place));
+  const places_ = paras.filter((p) => Number.isFinite(brasDe(p)));
   const nonPlaces = paras.length - places_.length;
-  const charge = (liste) => liste.map((p) => ({ masse: masseNative(avion, p.masseKg), bras: brasPlace.get(p.place) }));
+  const charge = (liste) => liste.map((p) => ({ masse: masseNative(avion, p.masseKg), bras: brasDe(p) }));
   const rangs = [...new Set(places_.map((p) => (p.sortie == null || p.sortie === '' ? Infinity : Number(p.sortie))))].sort((a, b) => a - b);
   const out = [{ etape: 'decollage', restants: places_.length, ...etat(avion, [...fixes, ...charge(places_)]) }];
   if (places_.length === 0) return { etapes: out, nonPlaces };
@@ -105,7 +106,13 @@ export function bilan(etapesListe) {
  */
 export function stickPourSolveur(avion, params, paras, options = {}) {
   const fuelMasse = carburantMasse(avion, params.carburant);
-  const ids = avion.places.map((p) => p.id);
+  const places = avion.places.map((p) => ({ ...p }));
+  for (const p of paras) {   // para verrouille sur une position libre : place virtuelle a ses coordonnees
+    if (p.verrou === 'libre' && p.pos && Number.isFinite(p.pos.x)) {
+      places.push({ id: `L-${p.nom}`, x: Math.round(p.pos.x * 1000) / 1000, y: Math.round((p.pos.y || 0) * 1000) / 1000, libre: true });
+    }
+  }
+  const ids = places.map((p) => p.id);
   return {
     unites: { masse: avion.unites.masse, bras: avion.unites.bras },
     avion: { immat: avion.immat, masse_vide: avion.masse_vide, bras_vide: avion.bras_vide },
@@ -113,7 +120,7 @@ export function stickPourSolveur(avion, params, paras, options = {}) {
     carburant: { masse: fuelMasse, bras: carburantBras(avion, fuelMasse) },
     pilote: { masse: masseNative(avion, params.piloteKg), bras: avion.pilote.bras },
     porte: { x: avion.porte.x, y: avion.porte.y },
-    places: avion.places.map((p) => ({ ...p })),
+    places,
     paras: paras.map((p) => {
       const q = { nom: p.nom, masse: Math.round(masseNative(avion, p.masseKg) * 1000) / 1000 };
       if (p.groupe) q.groupe = p.groupe;
@@ -121,10 +128,34 @@ export function stickPourSolveur(avion, params, paras, options = {}) {
       if (p.tandem) { q.tandem = p.tandem; q.role = p.role || 'porteur'; }
       if (p.devant_de) q.devant_de = p.devant_de;
       const interdit = [...(p.interdit || [])];
-      if (p.verrou && ids.includes(p.verrou)) interdit.push(...ids.filter((id) => id !== p.verrou));
+      const cible = p.verrou === 'libre' ? `L-${p.nom}` : p.verrou;
+      if (cible && ids.includes(cible)) interdit.push(...ids.filter((id) => id !== cible));
       if (interdit.length) q.interdit = [...new Set(interdit)];
       return q;
     }),
     options: { etapes: 'premier_groupe', marge_avant_min: 0.5, tolerance_marge: 0.25, groupes_ordonnes: false, temps_max_s: 10, ...options },
   };
+}
+
+/**
+ * Avion effectif : variante choisie (MTOW et enveloppe) puis surcharge eventuelle
+ * {mtow, enveloppe} editee dans l'application. Ne modifie pas l'objet d'origine.
+ */
+export function appliquerVariante(avion, varianteId, surcharge) {
+  const v = (avion.variantes || []).find((x) => x.id === varianteId) || (avion.variantes || [])[0];
+  const out = { ...avion };
+  if (v) { out.mtow = v.mtow; out.enveloppe = JSON.parse(JSON.stringify(v.enveloppe)); out.variante = v; }
+  if (surcharge) {
+    if (Number.isFinite(surcharge.mtow)) out.mtow = surcharge.mtow;
+    if (surcharge.enveloppe) out.enveloppe = JSON.parse(JSON.stringify(surcharge.enveloppe));
+  }
+  return out;
+}
+
+/** Nettoie une enveloppe editee : nombres, tri par masse, au moins deux points par limite. */
+export function normaliserEnveloppe(env) {
+  const clean = (pts) => (pts || []).map((p) => [Number(p[0]), Number(p[1])]).filter((p) => Number.isFinite(p[0]) && Number.isFinite(p[1])).sort((a, b) => a[0] - b[0]);
+  const avant = clean(env.avant), arriere = clean(env.arriere);
+  if (avant.length < 1 || arriere.length < 1) return null;
+  return { avant, arriere };
 }

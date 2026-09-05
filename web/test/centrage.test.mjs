@@ -2,10 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { AVIONS } from '../js/avions.js';
-import { interp, etat, etapes, bilan, stickPourSolveur, carburantBras, carburantMasse } from '../js/centrage.js';
+import { interp, etat, etapes, bilan, stickPourSolveur, carburantBras, carburantMasse, appliquerVariante, normaliserEnveloppe } from '../js/centrage.js';
 
-const BK = AVIONS.find((a) => a.id === 'C208B-A');
-const EU = AVIONS.find((a) => a.id === 'PC6-A');
+const BK = appliquerVariante(AVIONS.find((a) => a.id === 'c208b-A'), 'ape2');
+const EU = appliquerVariante(AVIONS.find((a) => a.id === 'pc6-A'), 'afm');
 
 test('interp : bornes et interieur', () => {
   const pts = [[5500, 179.6], [8000, 193.37], [9062, 199.15]];
@@ -58,4 +58,34 @@ test('stickPourSolveur : verrou = toutes les autres places interdites', () => {
   assert.equal(s.paras[1].groupe, 'VR');
   assert.ok(Math.abs(s.paras[0].masse - 90 * 2.20462) < 1e-3);
   assert.equal(s.options.temps_max_s, 10);
+});
+
+test('variantes : POH 8750 lb contre STC APE II 9062 lb', () => {
+  const base = AVIONS.find((a) => a.id === 'c208b-A');
+  const poh = appliquerVariante(base, 'poh'), ape2 = appliquerVariante(base, 'ape2');
+  assert.equal(poh.mtow, 8750); assert.equal(ape2.mtow, 9062);
+  assert.equal(interp(poh.enveloppe.avant, 8750), 199.15);
+  assert.equal(interp(ape2.enveloppe.avant, 9062), 199.15);
+  const modif = appliquerVariante(base, 'ape2', { mtow: 9000, enveloppe: { avant: [[5500, 180], [9000, 200]], arriere: [[0, 205], [9000, 205]] } });
+  assert.equal(modif.mtow, 9000); assert.equal(interp(modif.enveloppe.arriere, 7000), 205);
+  assert.equal(base.mtow, undefined, 'la base n est pas modifiee');
+});
+
+test('position libre : bras = x de la position, para libre verrouille = place virtuelle', () => {
+  const paras = [{ nom: 'A', masseKg: 90, pos: { x: 250, y: 16 } }, { nom: 'B', masseKg: 90, place: 'D3' }];
+  const { etapes: et, nonPlaces } = etapes(BK, { piloteKg: 80, carburant: 900 }, paras, BK.places);
+  assert.equal(nonPlaces, 0);
+  const attendu = etat(BK, [{ masse: 80 * 2.20462, bras: 135.5 }, { masse: 900, bras: carburantBras(BK, 900) }, { masse: 90 * 2.20462, bras: 250 }, { masse: 90 * 2.20462, bras: 205.9 }]);
+  assert.ok(Math.abs(et[0].cg - attendu.cg) < 1e-9);
+  const s = stickPourSolveur(BK, { piloteKg: 80, carburant: 900 }, [{ nom: 'A', masseKg: 90, pos: { x: 250, y: 16 }, verrou: 'libre' }, { nom: 'B', masseKg: 90, pos: { x: 220, y: 0 } }]);
+  assert.ok(s.places.some((p) => p.id === 'L-A' && p.x === 250));
+  assert.ok(!s.places.some((p) => p.id === 'L-B'), 'para libre non verrouille : pas de place virtuelle');
+  assert.equal(s.paras[0].interdit.length, s.places.length - 1);
+  assert.equal(s.paras[1].interdit, undefined);
+});
+
+test('normaliserEnveloppe trie et filtre', () => {
+  const e = normaliserEnveloppe({ avant: [['9000', '199'], [5500, 179.6], ['x', 1]], arriere: [[0, 204.35]] });
+  assert.deepEqual(e.avant, [[5500, 179.6], [9000, 199]]);
+  assert.equal(normaliserEnveloppe({ avant: [], arriere: [] }), null);
 });

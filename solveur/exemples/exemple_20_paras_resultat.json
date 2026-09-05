@@ -30,7 +30,7 @@
  "masse_decollage": 9007.8,
  "objectif": "marge arriere maximale au decollage sous marge avant garantie",
  "ok": true,
- "pdf": "exemple_20_paras.pdf",
+ "pdf": "exemples/exemple_20_paras.pdf",
  "phase1": "optimum",
  "phase2": "temps limite",
  "placement": [
@@ -181,8 +181,8 @@
   "Chloe",
   "David"
  ],
- "temps_phase1_s": 0.02450666,
- "temps_phase2_s": 10.006880636,
- "temps_recuit_s": 1.00021153,
- "temps_s": 11.043064685
+ "temps_phase1_s": 0.024275449,
+ "temps_phase2_s": 10.016898485,
+ "temps_recuit_s": 1.000165463,
+ "temps_s": 11.050371734
 }

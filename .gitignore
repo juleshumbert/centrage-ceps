@@ -22,3 +22,7 @@ firebase-debug.log
 # (URL de chaque document dans avions/<type>/notes.md)
 avions/*/poh/
 avions/dhc6/dhc5/
+
+# manifestes reels du club (noms, masses) : en local seulement, jamais dans le depot
+heuristique_remplissage/output/sticks/*.json
+heuristique_remplissage/output/sticks/*.png

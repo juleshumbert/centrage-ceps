@@ -1,9 +1,9 @@
-// Genere par web/tools/gen_avions.py depuis avions/*/planches_club.json et avions/pac750xl/envelope.json.
-// Ne pas editer a la main : corriger la source puis relancer le script.
+// Genere par web/tools/gen_avions.py depuis avions/*/planches_club.json et avions/*/envelope.json.
+// Ne pas editer a la main : corriger la source puis relancer le script. Aucune immatriculation ici.
 export const AVIONS = [
  {
-  "id": "C208B-A",
-  "immat": "C208B-A",
+  "id": "c208b-A",
+  "libelle": "Caravan 208B · avion A",
   "type": "Cessna 208B Grand Caravan",
   "famille": "c208b",
   "unites": {
@@ -14,33 +14,6 @@ export const AVIONS = [
   "kg_par_unite_masse": 0.45359290943563974,
   "masse_vide": 4890,
   "bras_vide": 188.99,
-  "mtow": 9062,
-  "enveloppe": {
-   "avant": [
-    [
-     5500,
-     179.6
-    ],
-    [
-     8000,
-     193.37
-    ],
-    [
-     9062,
-     199.15
-    ]
-   ],
-   "arriere": [
-    [
-     0,
-     204.35
-    ],
-    [
-     9062,
-     204.35
-    ]
-   ]
-  },
   "mac": {
    "lemac": 177.57,
    "longueur": 66.4
@@ -430,6 +403,29 @@ export const AVIONS = [
     "y": -16.0
    }
   ],
+  "rangees": [
+   {
+    "id": "D",
+    "libelle": "droite",
+    "y": 16.0,
+    "xmin": 128.0,
+    "xmax": 352.0
+   },
+   {
+    "id": "C",
+    "libelle": "centre",
+    "y": 0.0,
+    "xmin": 140.0,
+    "xmax": 352.0
+   },
+   {
+    "id": "G",
+    "libelle": "gauche",
+    "y": -16.0,
+    "xmin": 154.0,
+    "xmax": 352.0
+   }
+  ],
   "cabine": {
    "x0": 100.0,
    "x1": 356.0,
@@ -489,11 +485,111 @@ export const AVIONS = [
     "cote": "gauche"
    }
   },
+  "variantes": [
+   {
+    "id": "poh",
+    "libelle": "POH, MTOW 8750 lb",
+    "mtow": 8750,
+    "enveloppe": {
+     "avant": [
+      [
+       5500.0,
+       179.6
+      ],
+      [
+       8000.0,
+       193.37
+      ],
+      [
+       8750.0,
+       199.15
+      ]
+     ],
+     "arriere": [
+      [
+       0.0,
+       204.35
+      ],
+      [
+       8750.0,
+       204.35
+      ]
+     ]
+    },
+    "source": "POH 208BPHBUS-00 p.2-13 (PDF p.53) text and Fig. 6-17 (PDF p.381); FAA TCDS A37CE Rev22 p.5"
+   },
+   {
+    "id": "ape2",
+    "libelle": "STC APE II, MTOW 9062 lb (planches club)",
+    "mtow": 9062,
+    "enveloppe": {
+     "avant": [
+      [
+       5500,
+       179.6
+      ],
+      [
+       8000,
+       193.37
+      ],
+      [
+       9062,
+       199.15
+      ]
+     ],
+     "arriere": [
+      [
+       0,
+       204.35
+      ],
+      [
+       9062,
+       204.35
+      ]
+     ]
+    },
+    "source": "planches club (avions/c208b/planches_club.json) ; STC APE II = MTOW 9062 lb"
+   },
+   {
+    "id": "ape3",
+    "libelle": "STC APE III (a renseigner : copie de APE II en attendant)",
+    "mtow": 9062,
+    "enveloppe": {
+     "avant": [
+      [
+       5500,
+       179.6
+      ],
+      [
+       8000,
+       193.37
+      ],
+      [
+       9062,
+       199.15
+      ]
+     ],
+     "arriere": [
+      [
+       0,
+       204.35
+      ],
+      [
+       9062,
+       204.35
+      ]
+     ]
+    },
+    "source": "valeurs du STC APE III non trouvees : enveloppe a modifier dans l application",
+    "a_verifier": true
+   }
+  ],
+  "variante_defaut": "ape2",
   "source": "avions/c208b/planches_club.json (planches club) ; porte cargo FS 282 a 332 (POH 208B)"
  },
  {
-  "id": "C208B-B",
-  "immat": "C208B-B",
+  "id": "c208b-B",
+  "libelle": "Caravan 208B · avion B",
   "type": "Cessna 208B Grand Caravan",
   "famille": "c208b",
   "unites": {
@@ -504,33 +600,6 @@ export const AVIONS = [
   "kg_par_unite_masse": 0.45359290943563974,
   "masse_vide": 4986,
   "bras_vide": 186.54,
-  "mtow": 9062,
-  "enveloppe": {
-   "avant": [
-    [
-     5500,
-     179.6
-    ],
-    [
-     8000,
-     193.37
-    ],
-    [
-     9062,
-     199.15
-    ]
-   ],
-   "arriere": [
-    [
-     0,
-     204.35
-    ],
-    [
-     9062,
-     204.35
-    ]
-   ]
-  },
   "mac": {
    "lemac": 177.57,
    "longueur": 66.4
@@ -920,6 +989,29 @@ export const AVIONS = [
     "y": -16.0
    }
   ],
+  "rangees": [
+   {
+    "id": "D",
+    "libelle": "droite",
+    "y": 16.0,
+    "xmin": 128.0,
+    "xmax": 352.0
+   },
+   {
+    "id": "C",
+    "libelle": "centre",
+    "y": 0.0,
+    "xmin": 140.0,
+    "xmax": 352.0
+   },
+   {
+    "id": "G",
+    "libelle": "gauche",
+    "y": -16.0,
+    "xmin": 154.0,
+    "xmax": 352.0
+   }
+  ],
   "cabine": {
    "x0": 100.0,
    "x1": 356.0,
@@ -979,11 +1071,111 @@ export const AVIONS = [
     "cote": "gauche"
    }
   },
+  "variantes": [
+   {
+    "id": "poh",
+    "libelle": "POH, MTOW 8750 lb",
+    "mtow": 8750,
+    "enveloppe": {
+     "avant": [
+      [
+       5500.0,
+       179.6
+      ],
+      [
+       8000.0,
+       193.37
+      ],
+      [
+       8750.0,
+       199.15
+      ]
+     ],
+     "arriere": [
+      [
+       0.0,
+       204.35
+      ],
+      [
+       8750.0,
+       204.35
+      ]
+     ]
+    },
+    "source": "POH 208BPHBUS-00 p.2-13 (PDF p.53) text and Fig. 6-17 (PDF p.381); FAA TCDS A37CE Rev22 p.5"
+   },
+   {
+    "id": "ape2",
+    "libelle": "STC APE II, MTOW 9062 lb (planches club)",
+    "mtow": 9062,
+    "enveloppe": {
+     "avant": [
+      [
+       5500,
+       179.6
+      ],
+      [
+       8000,
+       193.37
+      ],
+      [
+       9062,
+       199.15
+      ]
+     ],
+     "arriere": [
+      [
+       0,
+       204.35
+      ],
+      [
+       9062,
+       204.35
+      ]
+     ]
+    },
+    "source": "planches club (avions/c208b/planches_club.json) ; STC APE II = MTOW 9062 lb"
+   },
+   {
+    "id": "ape3",
+    "libelle": "STC APE III (a renseigner : copie de APE II en attendant)",
+    "mtow": 9062,
+    "enveloppe": {
+     "avant": [
+      [
+       5500,
+       179.6
+      ],
+      [
+       8000,
+       193.37
+      ],
+      [
+       9062,
+       199.15
+      ]
+     ],
+     "arriere": [
+      [
+       0,
+       204.35
+      ],
+      [
+       9062,
+       204.35
+      ]
+     ]
+    },
+    "source": "valeurs du STC APE III non trouvees : enveloppe a modifier dans l application",
+    "a_verifier": true
+   }
+  ],
+  "variante_defaut": "ape2",
   "source": "avions/c208b/planches_club.json (planches club) ; porte cargo FS 282 a 332 (POH 208B)"
  },
  {
-  "id": "PC6-A",
-  "immat": "PC6-A",
+  "id": "pc6-A",
+  "libelle": "Pilatus PC-6 B2-H4 · avion A",
   "type": "Pilatus PC-6/B2-H4",
   "famille": "pc6",
   "unites": {
@@ -994,29 +1186,6 @@ export const AVIONS = [
   "kg_par_unite_masse": 1.0,
   "masse_vide": 1365,
   "bras_vide": 3.396,
-  "mtow": 2800,
-  "enveloppe": {
-   "avant": [
-    [
-     1450,
-     3.209
-    ],
-    [
-     2800,
-     3.608
-    ]
-   ],
-   "arriere": [
-    [
-     0,
-     3.722
-    ],
-    [
-     2800,
-     3.722
-    ]
-   ]
-  },
   "mac": {
    "lemac": 3.0,
    "longueur": 1.9
@@ -1107,6 +1276,22 @@ export const AVIONS = [
     "y": -0.45
    }
   ],
+  "rangees": [
+   {
+    "id": "D",
+    "libelle": "droite",
+    "y": 0.45,
+    "xmin": 2.6,
+    "xmax": 5.65
+   },
+   {
+    "id": "G",
+    "libelle": "gauche",
+    "y": -0.45,
+    "xmin": 3.3,
+    "xmax": 5.65
+   }
+  ],
   "cabine": {
    "x0": 2.5,
    "x1": 5.7,
@@ -1124,11 +1309,42 @@ export const AVIONS = [
     "cote": "droite"
    }
   },
+  "variantes": [
+   {
+    "id": "afm",
+    "libelle": "AFM B2-H4, MTOW 2800 kg",
+    "mtow": 2800,
+    "enveloppe": {
+     "avant": [
+      [
+       1450,
+       3.209
+      ],
+      [
+       2800,
+       3.608
+      ]
+     ],
+     "arriere": [
+      [
+       0,
+       3.722
+      ],
+      [
+       2800,
+       3.722
+      ]
+     ]
+    },
+    "source": "planches club, identique au TCDS OFAC F 56-10"
+   }
+  ],
+  "variante_defaut": "afm",
   "source": "avions/pc6-b2h4/planches_club.json (planches club) ; cabine et porte : ordre de grandeur, voir avions/pc6-b2h4/notes.md"
  },
  {
-  "id": "PC6-B",
-  "immat": "PC6-B",
+  "id": "pc6-B",
+  "libelle": "Pilatus PC-6 B2-H4 · avion B",
   "type": "Pilatus PC-6/B2-H4",
   "famille": "pc6",
   "unites": {
@@ -1139,29 +1355,6 @@ export const AVIONS = [
   "kg_par_unite_masse": 1.0,
   "masse_vide": 1355.5,
   "bras_vide": 3.424,
-  "mtow": 2800,
-  "enveloppe": {
-   "avant": [
-    [
-     1450,
-     3.209
-    ],
-    [
-     2800,
-     3.608
-    ]
-   ],
-   "arriere": [
-    [
-     0,
-     3.722
-    ],
-    [
-     2800,
-     3.722
-    ]
-   ]
-  },
   "mac": {
    "lemac": 3.0,
    "longueur": 1.9
@@ -1252,6 +1445,22 @@ export const AVIONS = [
     "y": -0.45
    }
   ],
+  "rangees": [
+   {
+    "id": "D",
+    "libelle": "droite",
+    "y": 0.45,
+    "xmin": 2.6,
+    "xmax": 5.65
+   },
+   {
+    "id": "G",
+    "libelle": "gauche",
+    "y": -0.45,
+    "xmin": 3.3,
+    "xmax": 5.65
+   }
+  ],
   "cabine": {
    "x0": 2.5,
    "x1": 5.7,
@@ -1269,11 +1478,42 @@ export const AVIONS = [
     "cote": "droite"
    }
   },
+  "variantes": [
+   {
+    "id": "afm",
+    "libelle": "AFM B2-H4, MTOW 2800 kg",
+    "mtow": 2800,
+    "enveloppe": {
+     "avant": [
+      [
+       1450,
+       3.209
+      ],
+      [
+       2800,
+       3.608
+      ]
+     ],
+     "arriere": [
+      [
+       0,
+       3.722
+      ],
+      [
+       2800,
+       3.722
+      ]
+     ]
+    },
+    "source": "planches club, identique au TCDS OFAC F 56-10"
+   }
+  ],
+  "variante_defaut": "afm",
   "source": "avions/pc6-b2h4/planches_club.json (planches club) ; cabine et porte : ordre de grandeur, voir avions/pc6-b2h4/notes.md"
  },
  {
-  "id": "PAC750XL",
-  "immat": "PAC 750XL (generique)",
+  "id": "pac750xl",
+  "libelle": "PAC 750XL (generique)",
   "type": "Pacific Aerospace 750XL",
   "famille": "pac750xl",
   "unites": {
@@ -1284,33 +1524,6 @@ export const AVIONS = [
   "kg_par_unite_masse": 0.45359290943563974,
   "masse_vide": 3300,
   "bras_vide": 110.58,
-  "mtow": 7500,
-  "enveloppe": {
-   "avant": [
-    [
-     4209,
-     100.46
-    ],
-    [
-     5639,
-     103.18
-    ],
-    [
-     7500,
-     111.55
-    ]
-   ],
-   "arriere": [
-    [
-     0,
-     125.6
-    ],
-    [
-     7500,
-     125.6
-    ]
-   ]
-  },
   "mac": {
    "lemac": 100.21,
    "longueur": 85.584
@@ -1402,6 +1615,29 @@ export const AVIONS = [
     "y": 0.0
    }
   ],
+  "rangees": [
+   {
+    "id": "D",
+    "libelle": "droite",
+    "y": 18.0,
+    "xmin": 85.0,
+    "xmax": 238.0
+   },
+   {
+    "id": "C",
+    "libelle": "centre",
+    "y": 0.0,
+    "xmin": 85.0,
+    "xmax": 238.0
+   },
+   {
+    "id": "G",
+    "libelle": "gauche",
+    "y": -18.0,
+    "xmin": 85.0,
+    "xmax": 238.0
+   }
+  ],
   "cabine": {
    "x0": 82.34,
    "x1": 240.08,
@@ -1419,11 +1655,382 @@ export const AVIONS = [
     "cote": "gauche"
    }
   },
+  "variantes": [
+   {
+    "id": "std",
+    "libelle": "POH, all configurations, standard tanks (S/N 101 to 185 except 177), MTOW 7500 lb",
+    "mtow": 7500,
+    "enveloppe": {
+     "avant": [
+      [
+       4209.0,
+       100.46
+      ],
+      [
+       5639.0,
+       103.18
+      ],
+      [
+       7500.0,
+       111.55
+      ]
+     ],
+     "arriere": [
+      [
+       0.0,
+       125.6
+      ],
+      [
+       7500.0,
+       125.6
+      ]
+     ]
+    },
+    "source": "POH p.42 (POH 2-8, Figure 2-8) and p.157 (POH 6-7); EASA TCDS EASA.IM.A.081 Issue 6 A.III.14.1"
+   },
+   {
+    "id": "gros_reservoirs",
+    "libelle": "POH, enlarged fuel tanks (mod PAC/XL/0448, S/N 177 and 186 onwards), MTOW 7500 lb",
+    "mtow": 7500,
+    "enveloppe": {
+     "avant": [
+      [
+       4209.0,
+       102.18
+      ],
+      [
+       5639.0,
+       104.9
+      ],
+      [
+       7500.0,
+       113.27
+      ]
+     ],
+     "arriere": [
+      [
+       0.0,
+       124.6
+      ],
+      [
+       7500.0,
+       124.6
+      ]
+     ]
+    },
+    "source": "EASA TCDS EASA.IM.A.081 Issue 6 A.III.14.2, file EASA_TCDS_IM_A_081.pdf"
+   }
+  ],
+  "variante_defaut": "std",
   "a_verifier": [
    "masse a vide 3300 lb et bras 110.58 in : ordre de grandeur (tiers / exemple POH), saisir la pesee reelle",
    "bras carburant : reservoir avant 110.21 in, arriere 139.15 in ; sequence de remplissage non connue",
    "positions paras 1 a 12 sur l axe (figure 6-10 du POH), pas de position laterale publiee"
   ],
   "source": "avions/pac750xl/envelope.json (POH PAC 750XL, TCDS EASA)"
+ },
+ {
+  "id": "dhc6-300",
+  "libelle": "DHC-6 Twin Otter 300 (generique)",
+  "type": "de Havilland DHC-6-300 Twin Otter",
+  "famille": "dhc6",
+  "unites": {
+   "masse": "lb",
+   "bras": "in",
+   "carburant": "lb"
+  },
+  "kg_par_unite_masse": 0.45359290943563974,
+  "masse_vide": 7400,
+  "bras_vide": 200.0,
+  "mac": {
+   "lemac": 188.24,
+   "longueur": 78.0
+  },
+  "pilote": {
+   "bras": 95.0,
+   "masse_kg_defaut": 80,
+   "nombre": 2
+  },
+  "carburant": {
+   "capacite": 2532,
+   "par_rotation": null,
+   "reserve": null,
+   "defaut": 1200,
+   "table": [
+    [
+     0,
+     162.5
+    ],
+    [
+     1213,
+     162.5
+    ],
+    [
+     2533,
+     202.89
+    ]
+   ]
+  },
+  "porte": {
+   "x": 300.0,
+   "y": -40.0,
+   "cote": "gauche"
+  },
+  "places": [
+   {
+    "id": "D1",
+    "x": 123.3,
+    "y": 22.0
+   },
+   {
+    "id": "D2",
+    "x": 145.3,
+    "y": 22.0
+   },
+   {
+    "id": "D3",
+    "x": 167.3,
+    "y": 22.0
+   },
+   {
+    "id": "D4",
+    "x": 189.3,
+    "y": 22.0
+   },
+   {
+    "id": "D5",
+    "x": 211.3,
+    "y": 22.0
+   },
+   {
+    "id": "D6",
+    "x": 233.3,
+    "y": 22.0
+   },
+   {
+    "id": "D7",
+    "x": 255.3,
+    "y": 22.0
+   },
+   {
+    "id": "D8",
+    "x": 277.3,
+    "y": 22.0
+   },
+   {
+    "id": "D9",
+    "x": 299.3,
+    "y": 22.0
+   },
+   {
+    "id": "D10",
+    "x": 321.3,
+    "y": 22.0
+   },
+   {
+    "id": "G1",
+    "x": 123.3,
+    "y": -22.0
+   },
+   {
+    "id": "G2",
+    "x": 145.3,
+    "y": -22.0
+   },
+   {
+    "id": "G3",
+    "x": 167.3,
+    "y": -22.0
+   },
+   {
+    "id": "G4",
+    "x": 189.3,
+    "y": -22.0
+   },
+   {
+    "id": "G5",
+    "x": 211.3,
+    "y": -22.0
+   },
+   {
+    "id": "G6",
+    "x": 233.3,
+    "y": -22.0
+   },
+   {
+    "id": "G7",
+    "x": 255.3,
+    "y": -22.0
+   },
+   {
+    "id": "G8",
+    "x": 277.3,
+    "y": -22.0
+   },
+   {
+    "id": "G9",
+    "x": 299.3,
+    "y": -22.0
+   },
+   {
+    "id": "G10",
+    "x": 321.3,
+    "y": -22.0
+   },
+   {
+    "id": "C1",
+    "x": 156.3,
+    "y": 0.0
+   },
+   {
+    "id": "C2",
+    "x": 178.3,
+    "y": 0.0
+   },
+   {
+    "id": "C3",
+    "x": 200.3,
+    "y": 0.0
+   },
+   {
+    "id": "C4",
+    "x": 222.3,
+    "y": 0.0
+   },
+   {
+    "id": "C5",
+    "x": 244.3,
+    "y": 0.0
+   },
+   {
+    "id": "C6",
+    "x": 266.3,
+    "y": 0.0
+   },
+   {
+    "id": "C7",
+    "x": 288.3,
+    "y": 0.0
+   },
+   {
+    "id": "C8",
+    "x": 310.3,
+    "y": 0.0
+   }
+  ],
+  "rangees": [
+   {
+    "id": "D",
+    "libelle": "droite",
+    "y": 22.0,
+    "xmin": 115.32,
+    "xmax": 326.0
+   },
+   {
+    "id": "C",
+    "libelle": "centre",
+    "y": 0.0,
+    "xmin": 115.32,
+    "xmax": 326.0
+   },
+   {
+    "id": "G",
+    "libelle": "gauche",
+    "y": -22.0,
+    "xmin": 115.32,
+    "xmax": 326.0
+   }
+  ],
+  "cabine": {
+   "x0": 109.32,
+   "x1": 332.0,
+   "zones": [
+    {
+     "nom": "cabine",
+     "x0": 109.32,
+     "x1": 332.0,
+     "largeur": 69
+    }
+   ],
+   "porte": {
+    "x0": 275.0,
+    "x1": 325.0,
+    "cote": "gauche"
+   }
+  },
+  "variantes": [
+   {
+    "id": "decollage",
+    "libelle": "TCDS A9EA, take-off, max 12500 lb",
+    "mtow": 12500,
+    "enveloppe": {
+     "avant": [
+      [
+       9000.0,
+       203.84
+      ],
+      [
+       11600.0,
+       203.84
+      ],
+      [
+       12500.0,
+       207.74
+      ]
+     ],
+     "arriere": [
+      [
+       0.0,
+       216.32
+      ],
+      [
+       12500.0,
+       216.32
+      ]
+     ]
+    },
+    "source": "FAA TCDS A9EA Rev 15 p. 12, figure 'C.G. range (Landing gear fixed)', values printed on the figure (file FAA_TCDS_A9EA_paraclete_1.pdf, raster tcds_p12-12.png); identical figure redrawn to 6000 lb in MSFS2024 AOM p. 44 (third party)"
+   },
+   {
+    "id": "atterrissage",
+    "libelle": "TCDS A9EA, landing, max 12300 lb",
+    "mtow": 12300,
+    "enveloppe": {
+     "avant": [
+      [
+       9000.0,
+       203.84
+      ],
+      [
+       11000.0,
+       203.84
+      ],
+      [
+       12300.0,
+       207.74
+      ]
+     ],
+     "arriere": [
+      [
+       0.0,
+       216.32
+      ],
+      [
+       12300.0,
+       216.32
+      ]
+     ]
+    },
+    "source": "FAA TCDS A9EA Rev 15 p. 12"
+   }
+  ],
+  "variante_defaut": "decollage",
+  "a_verifier": [
+   "masse a vide 7400 lb et bras 200 in : ordre de grandeur, saisir la pesee reelle",
+   "positions des paras au sol : pas regulier construit sur la longueur de cabine (FS 109 a 332), pas de manuel de masse et centrage trouve",
+   "ordre de remplissage des reservoirs (avant puis arriere) suppose pour le bras carburant",
+   "position de la porte gauche (FS 275 a 325) estimee : arriere du bord de fuite"
+  ],
+  "source": "avions/dhc6/envelope.json (TCDS FAA A9EA, Viking)"
  }
 ];

@@ -9,7 +9,7 @@ const LIMITS = Object.freeze({
   maxPlaces: 40,
   maxBodyBytes: 256 * 1024,
   tempsMin: 0.5,
-  tempsMax: 20,      // par phase ; la fonction a 120 s de timeout
+  tempsMax: 10,      // par phase ; la fonction a 60 s de timeout
   recuitMax: 5,
 });
 
