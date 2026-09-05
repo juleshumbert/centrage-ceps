@@ -14,3 +14,6 @@ heuristique_remplissage/placement_cpp/HiGHS/
 heuristique_remplissage/placement_cpp/build/
 heuristique_remplissage/placement_cpp/json.hpp
 heuristique_remplissage/placement_cpp/build-macos-*/
+
+# au-dela de la limite GitHub (100 Mo) : garde en local seulement
+avions/dhc6/poh/FlightSafety_DHC6_PTM_full.pdf

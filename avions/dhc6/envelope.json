@@ -1,0 +1,137 @@
+{
+  "aircraft": "DHC-6-300",
+  "generated": "2026-09-05",
+  "units": {"weight": "lb", "arm": "in"},
+  "datum": "Station 0 is 109.32 in forward of a jig point marked by a plate on the bulkhead between the flight compartment and the cabin (FAA TCDS A9EA Rev 15, p. 18). Maintenance manual wording (third-party excerpt): Station 0 is 60.00 in forward of the flight compartment front bulkhead.",
+  "mac": {
+    "length_in": 78.0,
+    "lemac_in": 188.24,
+    "temac_in": 266.24,
+    "percent_mac_formula": "pct = (arm - 188.24) / 78 * 100",
+    "source": "FAA TCDS A9EA Rev 15 p. 18 (FAA_TCDS_A9EA_paraclete_1.pdf); temac derived"
+  },
+  "weights": {
+    "mtow_landplane": 12500,
+    "mtow_floatplane": 12500,
+    "mtow_skiplane": 12500,
+    "mlw_landplane": 12300,
+    "mlw_wheel_ski": 12300,
+    "mlw_floatplane": 12500,
+    "mzfw": null,
+    "empty_weight_typical_series300": null,
+    "empty_weight_equipped_series400": 7445,
+    "unusable_fuel_usgal_in_empty_weight": 3.5,
+    "oil_lb_in_empty_weight": 54,
+    "oil_arm_in": 177.0,
+    "max_seats": 22,
+    "source": "FAA TCDS A9EA p. 12 and p. 20; Series 400 empty weight from Viking Twin Otter Series 400 Technical Specifications 2018 p. 1"
+  },
+  "envelopes": [
+    {
+      "name": "Series 300 landplane and wheel-skiplane, take-off",
+      "category": "normal",
+      "vertices": [[9000, 203.84], [11600, 203.84], [12500, 207.74], [12500, 216.32], [9000, 216.32]],
+      "vertices_pct_mac": [[9000, 20], [11600, 20], [12500, 25], [12500, 36], [9000, 36]],
+      "lower_bound_note": "9000 lb is the bottom of the TCDS chart frame, not a declared limit; the TCDS text gives the aft limit as 36 % MAC at all weights and the forward limit as 20 % MAC below 11600 lb. Extend both vertical segments downward for lighter weights.",
+      "source": "FAA TCDS A9EA Rev 15 p. 12, figure 'C.G. range (Landing gear fixed)', values printed on the figure (file FAA_TCDS_A9EA_paraclete_1.pdf, raster tcds_p12-12.png); identical figure redrawn to 6000 lb in MSFS2024 AOM p. 44 (third party)"
+    },
+    {
+      "name": "Series 300 landplane and wheel-skiplane, landing",
+      "category": "normal",
+      "vertices": [[9000, 203.84], [11000, 203.84], [12300, 207.74], [12300, 216.32], [9000, 216.32]],
+      "vertices_pct_mac": [[9000, 20], [11000, 20], [12300, 25], [12300, 36], [9000, 36]],
+      "lower_bound_note": "same remark as take-off envelope",
+      "source": "FAA TCDS A9EA Rev 15 p. 12"
+    },
+    {
+      "name": "Series 300 floatplane (CAP 12000A/B), all phases",
+      "category": "normal",
+      "vertices": [[null, 207.74], [12500, 207.74], [12500, 213.20], [null, 213.20]],
+      "vertices_pct_mac": [[null, 25], [12500, 25], [12500, 32], [null, 32]],
+      "lower_bound_note": "forward 25 % MAC and aft 32 % MAC at all weights up to 12500 lb; no lower weight bound stated",
+      "source": "FAA TCDS A9EA Rev 15 p. 12 (text)"
+    },
+    {
+      "name": "Series 300 parachuting configuration (air operable door, AFM Supplement 23)",
+      "category": "parachuting",
+      "vertices": null,
+      "vertices_pct_mac": null,
+      "lower_bound_note": "No specific envelope or 'aft CG with cargo door removed' restriction found in the documents obtained. FlightSafety PTM p. 45 refers to AFM Supplement 23 for the air operable (bi-fold) parachute door. MSFS2024 AOM p. 44 (third party) lists: door closed for take-off, landing and single-engine; 140 KIAS max door open; drops at flaps 20 deg and 70 KIAS; occupancy limited to crew and parachutists.",
+      "source": "FlightSafety_DHC6_PTM_full.pdf p. 45; MSFS2024_DHC6_AOM.pdf p. 44 (third party)"
+    }
+  ],
+  "stations": [
+    {"name": "Flight compartment front bulkhead / start of semi-monocoque", "arm": 60.0, "max_weight": null, "source": "FlightSafety PTM p. 30; maintenance manual excerpt (third party)"},
+    {"name": "Forward baggage, short nose", "arm": 41.0, "max_weight": 200, "source": "FAA TCDS A9EA p. 12"},
+    {"name": "Forward baggage, long nose (Mod 6/1077)", "arm": 25.0, "max_weight": 300, "source": "FAA TCDS A9EA p. 12"},
+    {"name": "Pilot seats (2)", "arm": 95.0, "max_weight": null, "source": "FAA TCDS A9EA p. 12"},
+    {"name": "Flight compartment / cabin bulkhead (jig point)", "arm": 109.32, "max_weight": null, "source": "derived from datum definition, FAA TCDS A9EA p. 18"},
+    {"name": "Forward fuel tank group", "arm": 162.5, "max_weight": null, "source": "FAA TCDS A9EA p. 13"},
+    {"name": "Oil (both engines)", "arm": 177.0, "max_weight": 54, "source": "FAA TCDS A9EA p. 13 and p. 20"},
+    {"name": "Wing leading edge / LEMAC (constant chord wing)", "arm": 188.24, "max_weight": null, "source": "FAA TCDS A9EA p. 18"},
+    {"name": "Load sheet index reference arm", "arm": 210.0, "max_weight": null, "source": "FlightSafety Client Guide p. 2-2: INDEX = 10 + W * (arm - 210) / 10000"},
+    {"name": "Rear fuel tank group", "arm": 240.0, "max_weight": null, "source": "FAA TCDS A9EA p. 13"},
+    {"name": "Wing trailing edge (derived)", "arm": 266.24, "max_weight": null, "source": "derived: LEMAC + 78"},
+    {"name": "Passenger seat rows 1 to 7", "arm": null, "max_weight": null, "source": "NOT FOUND: arms are in the Weight and Balance Handbook PSM 1-63-8 (not available online)"},
+    {"name": "Rear cabin door / cabin rear bulkhead", "arm": 332.0, "max_weight": null, "source": "Viking Special Missions Parachute sheet (Series 400): 'Rear Cabin Door at STN 332'"},
+    {"name": "Rear baggage compartment", "arm": 354.0, "max_weight": 500, "source": "FAA TCDS A9EA p. 12"},
+    {"name": "Rear extension shelf", "arm": 391.0, "max_weight": 150, "source": "FAA TCDS A9EA p. 12 (rear + extension not to exceed 500 lb)"}
+  ],
+  "fuel": {
+    "forward_tank": {"arm": 162.5, "usable_usgal": 181, "usable_impgal": 151},
+    "rear_tank": {"arm": 240.0, "usable_usgal": 197, "usable_impgal": 164},
+    "total_usable_usgal": 378,
+    "total_usable_impgal": 315,
+    "unusable_usgal": 3.5,
+    "density_lb_per_usgal": null,
+    "density_note": "no density given in the documents obtained; usual Jet A-1 planning value 6.7 lb/USG is an assumption, not a source value",
+    "loading_table": null,
+    "series400_capacity_usgal": 374.5,
+    "series400_long_range_option_usgal": 89,
+    "source": "FAA TCDS A9EA p. 13 and p. 20; Viking Series 400 Technical Specifications p. 1"
+  },
+  "cabin": {
+    "length_in": 221,
+    "length_note": "18 ft 5 in (5.61 m)",
+    "height_in": 59,
+    "width_max_in": 69,
+    "width_floor_in": null,
+    "usable_volume_cuft": 384,
+    "floor_below_waterline_zero_in": 15,
+    "front_bulkhead_station_in": 109.32,
+    "rear_bulkhead_station_in": 332.0,
+    "front_bulkhead_note": "derived from datum definition (jig point on cockpit/cabin bulkhead); 332 - 109.32 = 222.7 in, consistent with the 221 in cabin length",
+    "doors": {
+      "left_double_door_airstair_plus_cargo": {"width_in": 50, "height_in": 56, "station_in": null, "note": "combined opening 50 x 56 in (1.27 x 1.42 m); aft half is the dual cargo door, forward half the detachable airstair door; located just aft of the wing trailing edge on the left side; exact FS not found"},
+      "right_cabin_door": {"width_in": 30, "height_in": 45.5, "station_in": null},
+      "parachute_roll_up_or_bifold_door": {"width_in": null, "height_in": null, "station_in": null, "note": "replaces both left cabin doors (same frame); air operable roll-up (plastic on rails) or inward-opening bi-fold; dimensions not found in an official source; AFM Supplement 23"},
+      "rear_cabin_door_to_rear_baggage": {"station_in": 332.0}
+    },
+    "seating_commuter": "19/20 seats: 7 rows, 6 double seats left plus 1 single aft, 5 single seats right plus up to 3 optional seats forward of the rear baggage compartment (FlightSafety PTM Fig. 1-10, p. 37)",
+    "source": "Viking Series 400 Technical Specifications 2018 p. 1 and Brochure p. 3 (cabin and doors); FAA TCDS A9EA p. 18 (floor waterline); Viking Parachute sheet (STN 332); FlightSafety PTM p. 37 and p. 40"
+  },
+  "exterior": {
+    "wing_span_in": 780,
+    "overall_length_in": 621,
+    "overall_height_in": 234,
+    "wheelbase_in": 178.5,
+    "track_in": 146,
+    "horizontal_tail_span_in": 248,
+    "propeller_diameter_in": 102,
+    "propeller_ground_clearance_in": 60,
+    "propeller_fuselage_clearance_in": 25.6,
+    "main_gear_station_in": null,
+    "nose_gear_station_in": null,
+    "source": "FlightSafety PTM Fig. 1-38 p. 53 (approximate per figure note); Viking Series 400 Technical Specifications p. 1"
+  },
+  "open_points": [
+    "seat row arms (PSM 1-63-8 not found online)",
+    "AFM Supplement 23 (air operable door) limitations not obtained",
+    "MZFW not published in TCDS",
+    "Series 300 basic empty weight: use the aircraft weighing report",
+    "fuel density used by AFM tables not read",
+    "FS of main and nose gear not found",
+    "exact FS of left door edges and roll-up door dimensions not found",
+    "Transport Canada TCDS A-82 PDF not found (FAA A9EA used instead)"
+  ]
+}

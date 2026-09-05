@@ -1,0 +1,187 @@
+{
+  "aircraft": "C208B",
+  "variants_covered": ["C208B (PT6A-114A 675 SHP, POH 208BPHBUS)", "C208B EX (S/N 208B2197, 208B5000 and on, TCDS only)", "C208 (675 SHP, TCDS + POH excerpt, no section 6)"],
+  "units": {"weight": "lb", "arm": "in", "moment": "in-lb/1000", "volume": "ft3"},
+  "datum": "Vertical plane 100 in forward of the front face of the firewall (firewall = FS 100.0). TCDS wording: 100 in forward of center of nose gear jack point. Same for 208 and 208B.",
+  "mac": {
+    "C208B": {"lemac_in": 177.57, "length_in": 66.40, "source": "POH 208BPHBUS p.2-13 (PDF p.53)"},
+    "C208": {"lemac_in": 157.57, "length_in": 66.40, "source": "POH 208 (675 SHP) sect.2 excerpt (OCR, C208_675_POH_excerpt_wsimg.pdf); consistent with TCDS %MAC values"},
+    "formula": "pct_mac = (arm - lemac_in) / length_in * 100"
+  },
+  "weights": {
+    "C208B": {"max_ramp": 8785, "max_takeoff": 8750, "max_landing": 8500, "max_zero_fuel": null, "max_cabin_cargo_behind_barrier": 3400, "sample_basic_empty_weight": 5005, "sample_basic_empty_arm": 185.69, "source": "POH 208BPHBUS 2-12, 6-11, 6-12, 6-49; TCDS A37CE Rev22"},
+    "C208B_EX": {"max_ramp": 8842, "max_takeoff": 8807, "max_landing": 8500, "max_ramp_tks": 8785, "max_takeoff_tks": 8750, "max_zero_fuel": null, "source": "TCDS A37CE Rev22 sect.III; EASA IM.A.226 Issue 15 sect.2.2"},
+    "C208": {"max_ramp": 8035, "max_takeoff": 8000, "max_landing": 7800, "max_zero_fuel": null, "max_cabin_cargo_behind_barrier": 2900, "standard_empty_weight_estimate": 4230, "source": "TCDS A37CE Rev22 sect.I; Cessna Spec & Description 2016 §1.3; POH 208 excerpt placards"},
+    "C208_amphibian": {"max_ramp": 7635, "max_takeoff": 7600, "max_landing": 7300, "source": "TCDS A37CE Rev22"},
+    "third_party": {"C208B_skydiving_empty_weight_example": 4570, "source": "caravanpilots.blogspot.com 2014 (not official)"}
+  },
+  "envelopes": [
+    {
+      "name": "C208B normal category, takeoff and flight, with or without cargo pod",
+      "aircraft": "C208B",
+      "note": "Forward limit vertical at 179.60 below 5500 lb; chart lower bound 4000 lb (no minimum weight published). Aft limit 204.35 at all weights. Straight lines between vertices. Shaded aft warning band 38.33 to 40.33 %MAC (203.02 to 204.35 in).",
+      "vertices": [[4000, 179.60], [5500, 179.60], [8000, 193.37], [8750, 199.15], [8750, 204.35], [4000, 204.35]],
+      "vertices_pct_mac": [[4000, 3.06], [5500, 3.06], [8000, 23.80], [8750, 32.50], [8750, 40.33], [4000, 40.33]],
+      "source": "POH 208BPHBUS-00 p.2-13 (PDF p.53) text and Fig. 6-17 (PDF p.381); FAA TCDS A37CE Rev22 p.5"
+    },
+    {
+      "name": "C208B normal category, landing",
+      "aircraft": "C208B",
+      "note": "Same forward line cut at max landing weight 8500 lb (197.22 lies on the 8000-8750 line).",
+      "vertices": [[4000, 179.60], [5500, 179.60], [8000, 193.37], [8500, 197.22], [8500, 204.35], [4000, 204.35]],
+      "vertices_pct_mac": [[4000, 3.06], [5500, 3.06], [8000, 23.80], [8500, 29.60], [8500, 40.33], [4000, 40.33]],
+      "source": "FAA TCDS A37CE Rev22 p.5; POH Fig. 6-17 (solid line)"
+    },
+    {
+      "name": "C208B legacy per EASA TCDS Issue 15 (2025), takeoff and flight (discrepancy with POH 2008 and FAA Rev22)",
+      "aircraft": "C208B",
+      "note": "EASA gives forward limit 185.00 at 6500 lb instead of 179.60 at 5500 lb. Landing: 185.00 at 5500 lb. To be checked against the actual aircraft POH revision.",
+      "vertices": [[4000, 185.00], [6500, 185.00], [8000, 193.37], [8750, 199.15], [8750, 204.35], [4000, 204.35]],
+      "vertices_pct_mac": null,
+      "source": "EASA TCDS IM.A.226 Issue 15 sect.2.1 item 13"
+    },
+    {
+      "name": "C208B EX (S/N 208B2197, 208B5000 and on), takeoff and flight, with or without cargo pod",
+      "aircraft": "C208B_EX",
+      "note": "%MAC computed assuming same MAC as 208B (not verified in an EX POH).",
+      "vertices": [[4000, 185.00], [6500, 185.00], [8000, 193.37], [8807, 199.15], [8807, 204.35], [4000, 204.35]],
+      "vertices_pct_mac": [[4000, 11.19], [6500, 11.19], [8000, 23.80], [8807, 32.50], [8807, 40.33], [4000, 40.33]],
+      "source": "FAA TCDS A37CE Rev22 sect.III p.7; EASA IM.A.226 Issue 15 sect.2.2"
+    },
+    {
+      "name": "C208B EX with TKS fairing, takeoff and flight",
+      "aircraft": "C208B_EX",
+      "vertices": [[4000, 185.00], [5500, 185.00], [8000, 193.37], [8750, 199.15], [8750, 204.35], [4000, 204.35]],
+      "vertices_pct_mac": null,
+      "source": "FAA TCDS A37CE Rev22 sect.III p.8"
+    },
+    {
+      "name": "C208B EX landing (both configurations)",
+      "aircraft": "C208B_EX",
+      "vertices": [[4000, 185.00], [5500, 185.00], [8000, 193.37], [8500, 197.22], [8500, 204.35], [4000, 204.35]],
+      "vertices_pct_mac": null,
+      "source": "FAA TCDS A37CE Rev22 sect.III"
+    },
+    {
+      "name": "C208 (675 SHP) landplane normal category, takeoff and flight",
+      "aircraft": "C208",
+      "note": "Forward limit vertical at 162.41 below 4200 lb; no minimum weight published (4000 used as chart bound by analogy). Aft 184.35 at all weights.",
+      "vertices": [[4000, 162.41], [4200, 162.41], [8000, 174.06], [8000, 184.35], [4000, 184.35]],
+      "vertices_pct_mac": [[4000, 7.29], [4200, 7.29], [8000, 24.83], [8000, 40.33], [4000, 40.33]],
+      "source": "FAA TCDS A37CE Rev22 sect.I p.3; EASA IM.A.226 Issue 15 sect.1; POH 208 (675 SHP) sect.2 excerpt"
+    },
+    {
+      "name": "C208 (675 SHP) landplane, landing",
+      "aircraft": "C208",
+      "vertices": [[4000, 162.41], [4200, 162.41], [7800, 173.44], [7800, 184.35], [4000, 184.35]],
+      "vertices_pct_mac": [[4000, 7.29], [4200, 7.29], [7800, 23.90], [7800, 40.33], [4000, 40.33]],
+      "source": "FAA TCDS A37CE Rev22 sect.I p.3"
+    },
+    {
+      "name": "C208 amphibian (Wipline 8000), takeoff and flight",
+      "aircraft": "C208",
+      "vertices": [[5200, 165.47], [7600, 172.83], [7600, 182.68], [5200, 182.68]],
+      "vertices_pct_mac": null,
+      "source": "FAA TCDS A37CE Rev22 sect.I"
+    },
+    {
+      "name": "restricted / cargo category",
+      "aircraft": "C208B",
+      "vertices": null,
+      "note": "No separate envelope published: Cargo and Passenger versions share the normal category envelope (POH 208BPHBUS, TCDS).",
+      "source": null
+    },
+    {
+      "name": "MTOW 9062 lb STC / winglets",
+      "aircraft": "C208B",
+      "vertices": null,
+      "note": "Not found in this search.",
+      "source": null
+    }
+  ],
+  "stations": [
+    {"name": "Firewall front face", "aircraft": "both", "arm_in": 100.0, "source": "POH 208BPHBUS 6-18"},
+    {"name": "Pilot seat 1 (average occupant, seat pin FS 145.0)", "aircraft": "C208B", "arm_in": 135.5, "range_in": [133.5, 146.5], "source": "POH Fig. 6-11, Fig. 6-15 sh.1; TCDS"},
+    {"name": "Front passenger seat 2", "aircraft": "C208B", "arm_in": 135.5, "range_in": [133.5, 146.5], "source": "POH Fig. 6-11"},
+    {"name": "Pilot / front passenger", "aircraft": "C208", "arm_in": null, "range_in": [133.5, 146.5], "source": "TCDS A37CE sect.I (No. of Seats)"},
+    {"name": "Commuter row 1 (seats 3-4 in 10-place; bench 3-4-5 in 11-place)", "aircraft": "C208B", "arm_in": 173.9, "seat_rail_plunger_fs": 163.5, "source": "POH Fig. 6-11 sh.3, Fig. 6-15 sh.2-3"},
+    {"name": "Commuter row 2 (seats 5-6; bench 6-7-8)", "aircraft": "C208B", "arm_in": 209.9, "seat_rail_plunger_fs": 199.5, "source": "idem"},
+    {"name": "Commuter row 3 (seats 7-8; bench 9-10-11)", "aircraft": "C208B", "arm_in": 245.9, "seat_rail_plunger_fs": 235.5, "source": "idem"},
+    {"name": "Commuter row 4 (seats 9-10, 10-place only)", "aircraft": "C208B", "arm_in": 281.9, "seat_rail_plunger_fs": 271.5, "source": "idem"},
+    {"name": "Cabin cargo zone 1", "aircraft": "C208B", "arm_in": 172.1, "fs_from": 155.4, "fs_to": 188.7, "volume_ft3": 52.9, "max_lb_secured": 1780, "max_lb_unsecured_partitions": 415, "source": "POH 6-22, Fig. 6-11"},
+    {"name": "Cabin cargo zone 2", "aircraft": "C208B", "arm_in": 217.8, "fs_from": 188.7, "fs_to": 246.8, "volume_ft3": 109.0, "max_lb_secured": 3100, "max_lb_unsecured_partitions": 860, "source": "idem"},
+    {"name": "Cabin cargo zone 3", "aircraft": "C208B", "arm_in": 264.4, "fs_from": 246.8, "fs_to": 282.0, "volume_ft3": 63.0, "max_lb_secured": 1900, "max_lb_unsecured_partitions": 495, "source": "idem"},
+    {"name": "Cabin cargo zone 4", "aircraft": "C208B", "arm_in": 294.5, "fs_from": 282.0, "fs_to": 307.0, "volume_ft3": 43.5, "max_lb_secured": 1380, "max_lb_unsecured_partitions": 340, "source": "idem"},
+    {"name": "Cabin cargo zone 5", "aircraft": "C208B", "arm_in": 319.5, "fs_from": 307.0, "fs_to": 332.0, "volume_ft3": 40.1, "max_lb_secured": 1270, "max_lb_unsecured_partitions": 315, "source": "idem"},
+    {"name": "Cabin cargo zone 6 (raised floor, 5 in above main floor)", "aircraft": "C208B", "arm_in": 344.0, "fs_from": 332.0, "fs_to": 356.0, "volume_ft3": 31.5, "max_lb_secured": 320, "max_lb_unsecured_partitions": 245, "source": "idem"},
+    {"name": "Cargo pod zone A", "aircraft": "C208B", "arm_in": 132.4, "fs_from": 100.00, "fs_to": 154.75, "volume_ft3": 23.4, "max_lb": 230, "source": "POH 6-22, Fig. 6-12, Fig. 6-16"},
+    {"name": "Cargo pod zone B", "aircraft": "C208B", "arm_in": 182.1, "fs_from": 154.75, "fs_to": 209.35, "volume_ft3": 31.5, "max_lb": 310, "source": "idem"},
+    {"name": "Cargo pod zone C", "aircraft": "C208B", "arm_in": 233.4, "fs_from": 209.35, "fs_to": 257.35, "volume_ft3": 27.8, "max_lb": 270, "source": "idem"},
+    {"name": "Cargo pod zone D", "aircraft": "C208B", "arm_in": 287.6, "fs_from": 257.35, "fs_to": 332.00, "volume_ft3": 28.8, "max_lb": 280, "pod_total_max_lb": 1090, "pod_total_ft3": 111.5, "source": "idem"},
+    {"name": "Cargo barrier (bottom on seat rails / top at cabin structure)", "aircraft": "C208B", "arm_in": 153.0, "top_fs": 166.0, "source": "POH 6-19"},
+    {"name": "Forward face of raised aft floor", "aircraft": "C208B", "arm_in": 332.0, "source": "POH 6-10"},
+    {"name": "Aft cabin wall", "aircraft": "C208B", "arm_in": 356.0, "source": "POH Fig. 6-4"},
+    {"name": "Engine oil (full, 29 lb)", "aircraft": "both", "arm_in": 69.2, "source": "TCDS Note 1"},
+    {"name": "Unusable fuel 24.1 lb", "aircraft": "C208B", "arm_in": 206.4, "source": "TCDS Note 1 (S/N 208B0090 and on)"},
+    {"name": "Unusable fuel 24.1 lb", "aircraft": "C208", "arm_in": 186.4, "source": "TCDS Note 1 (S/N 20800131 and on)"},
+    {"name": "Cargo zones 1 to 6 (208, placard max loads 1410/1430/1410/1380/1270/320 lb)", "aircraft": "C208", "arm_in": null, "fs_from": null, "fs_to": null, "source": "POH 208 excerpt placards; zone FS boundaries and arms not found"}
+  ],
+  "fuel": {
+    "C208B": {
+      "capacity_total_gal": 335,
+      "capacity_usable_gal": 332,
+      "usable_lb_jet_a_6_7": 2224,
+      "tcds_tank_arm_in": 203.8,
+      "taxi_allowance_lb": 35,
+      "taxi_allowance_arm_in": 200.0,
+      "arm_table_note": "arm = moment*1000/weight computed from POH Fig. 6-15 sheet 4 (Jet A, 6.7 lb/gal, 60 F); precision about 0.1 in above 100 gal, up to 0.5 in below",
+      "arm_table": [[5, 200.0], [10, 203.0], [25, 202.4], [50, 203.0], [75, 202.8], [100, 203.1], [125, 203.1], [150, 203.3], [175, 203.2], [200, 203.4], [225, 203.2], [250, 203.3], [275, 203.2], [300, 203.2], [325, 203.1], [332, 203.1]],
+      "moment_table_gal_lb_moment1000": [[5, 34, 6.8], [10, 67, 13.6], [15, 101, 20.4], [20, 134, 27.2], [25, 168, 34.0], [30, 201, 40.8], [35, 235, 47.6], [40, 268, 54.4], [45, 302, 61.2], [50, 335, 68.0], [55, 369, 74.8], [60, 402, 81.6], [65, 436, 88.4], [70, 469, 95.2], [75, 503, 102.0], [80, 536, 108.8], [85, 570, 115.7], [90, 603, 122.5], [95, 637, 129.3], [100, 670, 136.1], [105, 704, 142.9], [110, 737, 149.7], [115, 771, 156.6], [120, 804, 163.4], [125, 838, 170.2], [130, 871, 177.0], [135, 905, 183.8], [140, 938, 190.6], [145, 972, 197.5], [150, 1005, 204.3], [155, 1039, 211.1], [160, 1072, 217.9], [165, 1106, 224.7], [170, 1139, 231.5], [175, 1173, 238.4], [180, 1206, 245.2], [185, 1240, 252.0], [190, 1273, 258.8], [195, 1307, 265.7], [200, 1340, 272.5], [205, 1374, 279.3], [210, 1407, 286.1], [215, 1441, 292.9], [220, 1474, 299.7], [225, 1508, 306.5], [230, 1541, 313.3], [235, 1575, 320.1], [240, 1608, 326.9], [245, 1642, 333.7], [250, 1675, 340.5], [255, 1709, 347.3], [260, 1742, 354.1], [265, 1776, 360.9], [270, 1809, 367.7], [275, 1843, 374.5], [280, 1876, 381.2], [285, 1910, 388.0], [290, 1943, 394.8], [295, 1977, 401.6], [300, 2010, 408.4], [305, 2044, 415.2], [310, 2077, 422.0], [315, 2111, 428.8], [320, 2144, 435.6], [325, 2178, 442.4], [327, 2189, 446.4], [330, 2211, 449.1], [332, 2224, 451.7]],
+      "source": "POH 208BPHBUS Fig. 6-15 sheet 4 (PDF p.375, image fig/montage_373_375.png); Fig. 6-16 (taxi fuel); TCDS A37CE (tank arm)"
+    },
+    "C208B_EX": {"capacity_total_gal": 339.1, "capacity_usable_gal": 335.3, "tcds_tank_arm_in": 203.8, "arm_table": null, "source": "TCDS A37CE Rev22 sect.III; EASA sect.2.2"},
+    "C208": {"capacity_total_gal": 335, "capacity_usable_gal": 332, "usable_lb_jet_a_6_7": 2224, "tcds_tank_arm_in": 183.8, "arm_table": null, "source": "TCDS A37CE Rev22 sect.I; Spec & Description 2016 (335.6 total)"},
+    "max_lateral_imbalance_lb": 200
+  },
+  "cabin": {
+    "C208B": {
+      "reference_stations_in": {"firewall": 100.0, "crew_door_zone_start": 118.0, "crew_door_zone_end_barrier_top": 166.0, "cargo_door_fwd": 282.0, "cargo_door_aft_raised_floor": 332.0, "aft_wall": 356.0},
+      "segments_in": [["100.0-118.0", 18], ["118.0-166.0", 48], ["166.0-282.0", 116], ["282.0-332.0", 50], ["332.0-356.0", 24]],
+      "length_firewall_to_aft_wall_in": 256,
+      "height_in": {"about_FS200": 51, "FS282": 54, "FS332": 52, "aft_332_356": 46},
+      "width_in": {"cockpit": 53, "about_FS200": {"max": 62, "floor": 54}, "FS282": {"max": 64, "floor": 59.5}, "FS332": {"max": 53, "floor": 51}, "aft": {"max": 46, "floor": 42}},
+      "cargo_door": {"side": "left", "width_in": 49, "height_in": 50, "fs_from": 282.0, "fs_to": 332.0},
+      "crew_doors": {"count": 2, "width_in": {"top": 11.875, "mid_overall": 35.625, "bottom": 31.875}, "height_in": {"front": 24.375, "mid_overall": 41.75, "rear": 44.75}, "location": "within FS 118 to 166 segment"},
+      "passenger_airstair_door": null,
+      "seat_rails": {"front_passenger_area_fs": [125.00, 159.98], "aft_rails_from_fs": 158.00, "aft_rails_to_fs": 332.0, "fitting_pitch_in": 1},
+      "cargo_barrier_fs": {"bottom": 153.0, "top": 166.0},
+      "cargo_volume_behind_barrier_ft3": 340,
+      "floor_loading_lb_ft2": 200,
+      "raised_floor_height_in": 5,
+      "lemac_fs": 177.57,
+      "wheelbase_in": 159.5,
+      "main_gear_fs": null,
+      "source": "POH 208BPHBUS Fig. 6-4 sheet 1 (PDF p.357), 6-18 to 6-20, Fig. 1-1 notes (PDF p.16)"
+    },
+    "C208": {
+      "reference_stations_in": {"firewall": 100, "s118": 118, "s180": 180, "cargo_door_fwd": 234, "cargo_door_aft_raised_floor": 284, "aft_wall": 308},
+      "segments_in": [["100-118", 18], ["118-284", 166], ["284-308", 24]],
+      "length_firewall_to_aft_wall_in": 208,
+      "height_in": {"about_FS180": 51, "FS234": 54, "FS284": 52, "aft": 46},
+      "width_in": {"cockpit": 53, "about_FS180": {"max": 62, "floor": 54}, "FS234": {"max": 64, "floor": 59.5}, "FS284": {"max": 53, "floor": 51}, "aft": {"max": 46, "floor": 42}},
+      "cargo_door": {"side": "left", "width_in": 49, "height_in": 50, "fs_from": 234, "fs_to": 284, "note": "FS bounds read from Spec & Description figure II stations"},
+      "crew_doors": {"count": 2, "width_in": {"top": 11.875, "mid_overall": 35.625, "bottom": 31.875}, "height_in": {"front": 24.375, "mid_overall": 41.75, "rear": 44.75}},
+      "passenger_airstair_door": {"width_in": 24, "height_in": 50, "note": "uncertain attribution from figure OCR"},
+      "lemac_fs": 157.57,
+      "wheelbase_in": 139.5,
+      "main_gear_fs": null,
+      "source": "Cessna Specification and Description Caravan Rev. D 2016, fig. II p.5, §1.2 p.6, §4 p.8"
+    },
+    "skydiving": {
+      "official_documents_found": false,
+      "third_party_notes": "caravanpilots.blogspot.com (2014): up to 17 jumpers, two longitudinal benches straddled facing aft, nobody against the aft wall (CG sensitivity), cargo door open max 155 KIAS, empty weight of that aircraft 4570 lb",
+      "roll_up_jump_door_dimensions": null,
+      "stc_holder": null
+    }
+  }
+}
