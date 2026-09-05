@@ -1,0 +1,55 @@
+{
+ "seat_rows_arm_in": [
+  129,
+  159,
+  189,
+  219,
+  249,
+  280,
+  315
+ ],
+ "seat_rows_status": "deduit : centres des rectangles sieges mesures sur le plan schematique fig. 1-10 du PTM FlightSafety (p. 37), echelle calee sur la cabine de 221 in entre FS 109.3 et FS 332 ; pas mesure 30.0 in ; precision +/- 5 in ; bras officiels dans le PSM 1-63-8 (non obtenu)",
+ "seat_rows_layout": "rangees 1 a 5 : 1 double (tribord) + 1 simple (babord) ; rangee 6 : 1 double seule ; rangee 7 : jusqu'a 3 simples optionnels devant la cloison arriere",
+ "floor_positions_in": null,
+ "floor_positions_hypothesis_in": [
+  325,
+  305,
+  285,
+  265,
+  245,
+  225,
+  205,
+  185,
+  165,
+  145,
+  125
+ ],
+ "floor_positions_hypothesis_note": "hypothese de travail non documentaire : 22 paras en deux files de 11 (une par paroi), pas 20 in, du seuil de porte (FS 325) a la cloison avant (FS 125) ; NTSB AAR-08/03 decrit bancs mousse le long des parois, paras face arriere, sans stations",
+ "floor_width_in": null,
+ "floor_width_note": "non trouvee ; largeur max cabine 69 in et hauteur 59 in (Viking) ; ordre de grandeur plancher 55 a 60 in deduit de la description NTSB (deux blocs de 15 a 18 in + allee + jeu contre les parois)",
+ "door": {
+  "from_sta_in": 268,
+  "to_sta_in": 328,
+  "clear_opening_from_sta_in": 270,
+  "clear_opening_to_sta_in": 326,
+  "width_in": 56,
+  "height_in": 50,
+  "split_airstair_cargo_sta_in": 302,
+  "precision_in": 5,
+  "status": "deduit : contours mesures sur la vue de cote cotee fig. 1-38 du PTM (ancrage bord arriere = cloison FS 332) et sur le plan fig. 1-10 (FS 267 a 325) ; dimensions 56 x 50 in officielles Viking ; l'ouverture commence au bord de fuite de l'aile (FS 266.24)"
+ },
+ "main_gear_sta_in": 232,
+ "nose_gear_sta_in": 53,
+ "gear_precision_in": 6,
+ "gear_status": "deduit : centres de roues mesures sur la vue de cote fig. 1-38 du PTM, echelle 1.879 px/in calee sur l'empattement 178.5 in ; PTM p. 405 : train avant fixe a la face avant de la cloison FS 60",
+ "wheelbase_in": 178.5,
+ "track_in": 146,
+ "nose_tip_sta_in_approx": -52,
+ "sources": [
+  "NTSB AAR-08/03/SUM Sullivan MO 2006, https://www.ntsb.gov/investigations/AccidentReports/Reports/AAR0803.pdf, fichier ntsb_aar0803_sullivan_dhc6.pdf p. 23 a 24 [officiel, qualitatif]",
+  "FAA TCDS A9EA Rev. 15, https://paracleteaviation.com/wp-content/uploads/2017/10/Twin-Otter-Type-Data-Sheet.pdf, fichier paraclete_twin_otter_type_data_sheet.pdf p. 12 [officiel]",
+  "Viking Twin Otter Series 400 Technical Specifications R-01-2018, https://www.vikingair.com/sites/default/files/Viking-Twin-Otter-Series-400-Technical-Specifications-R-01-2018.pdf, fichier viking_400_techspec_2018.pdf p. 2 et 9 [officiel, Series 400]",
+  "FlightSafety Twin Otter Pilot Training Manual Rev. 5.0 2010, https://archive.org/download/dhc-6-ptm/DHC-6%20Pilot%20Training%20Materials/DHC-6%20PTM.pdf, fichier ../dhc6/FlightSafety_DHC6_PTM_full.pdf p. 37, 40, 53, 405 [tiers formation]",
+  "Mesures pixel : ptm53_sideview.png, door_zoom.png, ptm37_layout_crop.png [deduit]"
+ ]
+}

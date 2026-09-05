@@ -42,7 +42,7 @@ Lire le fichier avant d'ecrire un chargeur generique.
 
 | Avion | Planches club | Manuel | Commentaire |
 |---|---|---|---|
-| C208B | MTOW 9062 lb, limite avant 199.15 in atteinte a 9062 lb | MTOW 8750 lb (POH, TCDS), 199.15 in a 8750 lb | le STC 9062 lb n'a pas ete retrouve ; l'enveloppe club prolonge la pente au-dela de 8750 lb, a verifier sur le supplement du STC |
+| C208B | MTOW 9062 lb, limite avant interpolee de (8000 lb, 193.37 in) a (9062 lb, 199.15 in) | STC APE II (SA00392SE, `c208b/stc_ape.json`) : 199.15 in a 8750 lb puis 200.23 in a 9062 lb, arriere 204.35 in | **les planches sont moins restrictives que le STC** : 1.65 in a 8750 lb, 1.08 in a 9062 lb ; l'IHM propose les deux variantes, STC par defaut |
 | C208B | enveloppe 179.60 / 193.37 / 199.15 / 204.35 in | identique (POH 2008, FAA rev. 22) | l'EASA TCDS 2025 donne 185.00 in a 6500 lb pour la limite avant, divergence notee dans `c208b/notes.md` |
 | C208B | bras carburant 200.0 a 203.1 in (table club) | 203.0 a 203.4 in (POH) | coherent, ecart maximal 3 in a faible quantite |
 | PC-6 B2-H4 | enveloppe 3.209 / 3.608 / 3.722 m | identique (TCDS F 56-10) | |

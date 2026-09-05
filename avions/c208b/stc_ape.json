@@ -1,0 +1,93 @@
+{
+ "ape2": {
+  "designation": "Aircraft Payload Extender II (APE II)",
+  "holder": "AeroAcoustics Aircraft Systems, Inc.",
+  "faa_stc": "SA00392SE",
+  "faa_stc_note": "le rapport TSB A12C0154 ecrit SA00392SA (coquille probable)",
+  "easa_stc": null,
+  "content": "deux strakes / stall fences de 16 in au bord d'attaque de l'aile, < 3 lb, pose < 2 h, PMA FAA",
+  "mtow_lb": 9062,
+  "mtow_kg": 4110.5,
+  "mtow_standard_lb": 8750,
+  "mtow_increase_lb": 312,
+  "max_ramp_lb": null,
+  "mlw_lb": 8500,
+  "mlw_note": "inchangee par l'APE II seul (aucune augmentation publiee) ; 9000 lb avec APE III",
+  "mzfw_lb": null,
+  "mzfw_note": "pas de MZFW pour le 208B",
+  "cg_forward_limit": [
+   {
+    "weight_lb": 5500,
+    "arm_in": 179.6
+   },
+   {
+    "weight_lb": 8000,
+    "arm_in": 193.37
+   },
+   {
+    "weight_lb": 8750,
+    "arm_in": 199.15
+   },
+   {
+    "weight_lb": 9062,
+    "arm_in": 200.23
+   }
+  ],
+  "cg_aft_limit_in": 204.35,
+  "cg_aft_note": "inchangee, toutes masses jusqu'a 9062 lb",
+  "known_icing_max_weight_lb": 8550,
+  "known_icing_note": "avec cargo pod, inchange (supplement S1) ; l'augmentation ne s'applique pas en givrage connu",
+  "stall_speed_clean_9062_kias": 63,
+  "sources": [
+   "https://aeroacoustics.com/files/208bapeii.htm [tiers, detenteur]",
+   "TSB A12C0154 https://www.bst.gc.ca/eng/rapports-reports/aviation/2012/a12c0154/a12c0154.html [officiel]",
+   "TSB A14W0181 https://www.tsb.gc.ca/eng/rapports-reports/aviation/2014/a14w0181/a14w0181.html section 1.6.4 [officiel] (limites CG)",
+   "POH Cessna 208B 208BPHBUS section 2 (valeurs standard), fichier ../c208/C208B_G1000_POH_208BPHBUS-01_caravannation.pdf [officiel]"
+  ]
+ },
+ "ape3": {
+  "designation": "Aircraft Payload Extender III (APE III)",
+  "holder": "AeroAcoustics Aircraft Systems, Inc.",
+  "faa_stc": "SA01213SE",
+  "easa_stc": null,
+  "content": "essieu de train principal high cycle remplacant l'essieu a vie limitee, pneus 29 in approuves Cessna, APE II inclus si absent ; < 2 lb",
+  "requires": "APE II (SA00392SE) et pneus 29 in",
+  "mtow_lb": 9062,
+  "mtow_kg": 4110.5,
+  "max_ramp_lb": null,
+  "mlw_lb": 9000,
+  "mlw_standard_lb": 8500,
+  "mzfw_lb": null,
+  "cg_forward_limit": [
+   {
+    "weight_lb": 5500,
+    "arm_in": 179.6
+   },
+   {
+    "weight_lb": 8000,
+    "arm_in": 193.37
+   },
+   {
+    "weight_lb": 8750,
+    "arm_in": 199.15
+   },
+   {
+    "weight_lb": 9062,
+    "arm_in": 200.23
+   }
+  ],
+  "cg_aft_limit_in": 204.35,
+  "known_icing_max_weight_lb": 8550,
+  "sources": [
+   "https://aeroacoustics.com/files/208bapeiii.htm [tiers, detenteur]",
+   "TSB A14W0181 https://www.tsb.gc.ca/eng/rapports-reports/aviation/2014/a14w0181/a14w0181.html section 1.6.4 [officiel]",
+   "https://www.wipaire.com/modification/ape-iii/ [tiers, revendeur ; chiffres 208 court : 8000 vers 8362 lb]",
+   "AOPA juin 2014 Blackhawk boost https://www.aopa.org/news-and-media/all-news/2014/june/pilot/t_fblackhawk [tiers ; kit APE inclus dans la conversion Blackhawk, 8750 vers 9062 lb]"
+  ]
+ },
+ "other_208b_mtow_stcs": {
+  "blackhawk_xp42a_xp140": "9062 lb via kit APE AeroAcoustics inclus (AOPA 2014), pas de STC de masse propre identifiee",
+  "texas_turbine_supervan_900": "conversion moteur TPE331-12JR ; MTOW non verifiee dans cette recherche",
+  "above_9062_lb": null
+ }
+}

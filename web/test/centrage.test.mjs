@@ -65,7 +65,8 @@ test('variantes : POH 8750 lb contre STC APE II 9062 lb', () => {
   const poh = appliquerVariante(base, 'poh'), ape2 = appliquerVariante(base, 'ape2');
   assert.equal(poh.mtow, 8750); assert.equal(ape2.mtow, 9062);
   assert.equal(interp(poh.enveloppe.avant, 8750), 199.15);
-  assert.equal(interp(ape2.enveloppe.avant, 9062), 199.15);
+  assert.equal(interp(ape2.enveloppe.avant, 9062), 200.23);   // STC APE II (TSB A14W0181)
+  assert.equal(interp(appliquerVariante(base, 'planches').enveloppe.avant, 9062), 199.15);   // planches club, moins restrictives
   const modif = appliquerVariante(base, 'ape2', { mtow: 9000, enveloppe: { avant: [[5500, 180], [9000, 200]], arriere: [[0, 205], [9000, 205]] } });
   assert.equal(modif.mtow, 9000); assert.equal(interp(modif.enveloppe.arriere, 7000), 205);
   assert.equal(base.mtow, undefined, 'la base n est pas modifiee');

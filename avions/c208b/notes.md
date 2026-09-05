@@ -213,3 +213,8 @@ Différence 208 → 208B : allongement total 48 in (4 ft), réparti en 20 in en 
 6. **MZFW** : inexistante dans les documents (aucune limite de masse sans carburant publiée pour 208/208B).
 7. **MTOW 9062 lb, winglets, conversions parachutisme** : rien trouvé.
 8. **Lecture des figures** : valeurs de stations et cotes lues sur rendus 150 à 200 dpi, texte net ; précision de lecture des graphiques CG ±0.3 in / ±50 lb, mais tous les sommets retenus proviennent du texte du POH ou des TCDS.
+
+
+## 9. STC APE II et APE III (Aircraft Payload Extender, AeroAcoustics)
+
+Voir `stc_ape.json` (valeurs) et `../dhc6/notes_stations_et_ape.md` section 6 (sources : AeroAcoustics, rapports TSB A12C0154 et A14W0181). APE II = STC FAA SA00392SE, MTOW 9062 lb, limite avant prolongee de 199.15 in a 8750 lb jusqu'a 200.23 in a 9062 lb, limite arriere 204.35 in inchangee. APE III = STC FAA SA01213SE, APE II + essieu de train principal renforce et pneus 29 in, MLW 9000 lb (8500 sans). Les planches du club prolongent la limite avant de (8000, 193.37) a (9062, 199.15) : moins restrictif que le STC de 1.65 in a 8750 lb et de 1.08 in a 9062 lb, a corriger.

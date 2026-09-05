@@ -520,39 +520,79 @@ export const AVIONS = [
    },
    {
     "id": "ape2",
-    "libelle": "STC APE II, MTOW 9062 lb (planches club)",
+    "libelle": "APE II : STC SA00392SE, MTOW 9062 lb",
     "mtow": 9062,
     "enveloppe": {
      "avant": [
       [
-       5500,
+       5500.0,
        179.6
       ],
       [
-       8000,
+       8000.0,
        193.37
       ],
       [
-       9062,
+       8750.0,
        199.15
+      ],
+      [
+       9062.0,
+       200.23
       ]
      ],
      "arriere": [
       [
-       0,
+       0.0,
        204.35
       ],
       [
-       9062,
+       9062.0,
        204.35
       ]
      ]
     },
-    "source": "planches club (avions/c208b/planches_club.json) ; STC APE II = MTOW 9062 lb"
+    "source": "avions/c208b/stc_ape.json : Aircraft Payload Extender II (APE II), STC FAA SA00392SE ; limites CG du rapport TSB A14W0181 (limite avant prolongee jusqu'a 200.23 in a 9062 lb, arriere 204.35 in)"
    },
    {
     "id": "ape3",
-    "libelle": "STC APE III (a renseigner : copie de APE II en attendant)",
+    "libelle": "APE III : STC SA01213SE, MTOW 9062 lb, MLW 9000 lb",
+    "mtow": 9062,
+    "enveloppe": {
+     "avant": [
+      [
+       5500.0,
+       179.6
+      ],
+      [
+       8000.0,
+       193.37
+      ],
+      [
+       8750.0,
+       199.15
+      ],
+      [
+       9062.0,
+       200.23
+      ]
+     ],
+     "arriere": [
+      [
+       0.0,
+       204.35
+      ],
+      [
+       9062.0,
+       204.35
+      ]
+     ]
+    },
+    "source": "avions/c208b/stc_ape.json : Aircraft Payload Extender III (APE III), STC FAA SA01213SE ; limites CG du rapport TSB A14W0181 (limite avant prolongee jusqu'a 200.23 in a 9062 lb, arriere 204.35 in) ; MLW 9000 lb (non modelisee ici)"
+   },
+   {
+    "id": "planches",
+    "libelle": "Planches club (MTOW 9062 lb, limite avant des planches)",
     "mtow": 9062,
     "enveloppe": {
      "avant": [
@@ -580,7 +620,7 @@ export const AVIONS = [
       ]
      ]
     },
-    "source": "valeurs du STC APE III non trouvees : enveloppe a modifier dans l application",
+    "source": "planches club (avions/c208b/planches_club.json) : limite avant interpolee de (8000, 193.37) a (9062, 199.15), moins restrictive que le STC APE II au-dessus de 8000 lb",
     "a_verifier": true
    }
   ],
@@ -1106,39 +1146,79 @@ export const AVIONS = [
    },
    {
     "id": "ape2",
-    "libelle": "STC APE II, MTOW 9062 lb (planches club)",
+    "libelle": "APE II : STC SA00392SE, MTOW 9062 lb",
     "mtow": 9062,
     "enveloppe": {
      "avant": [
       [
-       5500,
+       5500.0,
        179.6
       ],
       [
-       8000,
+       8000.0,
        193.37
       ],
       [
-       9062,
+       8750.0,
        199.15
+      ],
+      [
+       9062.0,
+       200.23
       ]
      ],
      "arriere": [
       [
-       0,
+       0.0,
        204.35
       ],
       [
-       9062,
+       9062.0,
        204.35
       ]
      ]
     },
-    "source": "planches club (avions/c208b/planches_club.json) ; STC APE II = MTOW 9062 lb"
+    "source": "avions/c208b/stc_ape.json : Aircraft Payload Extender II (APE II), STC FAA SA00392SE ; limites CG du rapport TSB A14W0181 (limite avant prolongee jusqu'a 200.23 in a 9062 lb, arriere 204.35 in)"
    },
    {
     "id": "ape3",
-    "libelle": "STC APE III (a renseigner : copie de APE II en attendant)",
+    "libelle": "APE III : STC SA01213SE, MTOW 9062 lb, MLW 9000 lb",
+    "mtow": 9062,
+    "enveloppe": {
+     "avant": [
+      [
+       5500.0,
+       179.6
+      ],
+      [
+       8000.0,
+       193.37
+      ],
+      [
+       8750.0,
+       199.15
+      ],
+      [
+       9062.0,
+       200.23
+      ]
+     ],
+     "arriere": [
+      [
+       0.0,
+       204.35
+      ],
+      [
+       9062.0,
+       204.35
+      ]
+     ]
+    },
+    "source": "avions/c208b/stc_ape.json : Aircraft Payload Extender III (APE III), STC FAA SA01213SE ; limites CG du rapport TSB A14W0181 (limite avant prolongee jusqu'a 200.23 in a 9062 lb, arriere 204.35 in) ; MLW 9000 lb (non modelisee ici)"
+   },
+   {
+    "id": "planches",
+    "libelle": "Planches club (MTOW 9062 lb, limite avant des planches)",
     "mtow": 9062,
     "enveloppe": {
      "avant": [
@@ -1166,7 +1246,7 @@ export const AVIONS = [
       ]
      ]
     },
-    "source": "valeurs du STC APE III non trouvees : enveloppe a modifier dans l application",
+    "source": "planches club (avions/c208b/planches_club.json) : limite avant interpolee de (8000, 193.37) a (9062, 199.15), moins restrictive que le STC APE II au-dessus de 8000 lb",
     "a_verifier": true
    }
   ],
@@ -1772,172 +1852,142 @@ export const AVIONS = [
    ]
   },
   "porte": {
-   "x": 300.0,
+   "x": 298.0,
    "y": -40.0,
    "cote": "gauche"
   },
   "places": [
    {
     "id": "D1",
-    "x": 123.3,
-    "y": 22.0
+    "x": 125.0,
+    "y": 20.0
    },
    {
     "id": "D2",
-    "x": 145.3,
-    "y": 22.0
+    "x": 145.0,
+    "y": 20.0
    },
    {
     "id": "D3",
-    "x": 167.3,
-    "y": 22.0
+    "x": 165.0,
+    "y": 20.0
    },
    {
     "id": "D4",
-    "x": 189.3,
-    "y": 22.0
+    "x": 185.0,
+    "y": 20.0
    },
    {
     "id": "D5",
-    "x": 211.3,
-    "y": 22.0
+    "x": 205.0,
+    "y": 20.0
    },
    {
     "id": "D6",
-    "x": 233.3,
-    "y": 22.0
+    "x": 225.0,
+    "y": 20.0
    },
    {
     "id": "D7",
-    "x": 255.3,
-    "y": 22.0
+    "x": 245.0,
+    "y": 20.0
    },
    {
     "id": "D8",
-    "x": 277.3,
-    "y": 22.0
+    "x": 265.0,
+    "y": 20.0
    },
    {
     "id": "D9",
-    "x": 299.3,
-    "y": 22.0
+    "x": 285.0,
+    "y": 20.0
    },
    {
     "id": "D10",
-    "x": 321.3,
-    "y": 22.0
+    "x": 305.0,
+    "y": 20.0
+   },
+   {
+    "id": "D11",
+    "x": 325.0,
+    "y": 20.0
    },
    {
     "id": "G1",
-    "x": 123.3,
-    "y": -22.0
+    "x": 125.0,
+    "y": -20.0
    },
    {
     "id": "G2",
-    "x": 145.3,
-    "y": -22.0
+    "x": 145.0,
+    "y": -20.0
    },
    {
     "id": "G3",
-    "x": 167.3,
-    "y": -22.0
+    "x": 165.0,
+    "y": -20.0
    },
    {
     "id": "G4",
-    "x": 189.3,
-    "y": -22.0
+    "x": 185.0,
+    "y": -20.0
    },
    {
     "id": "G5",
-    "x": 211.3,
-    "y": -22.0
+    "x": 205.0,
+    "y": -20.0
    },
    {
     "id": "G6",
-    "x": 233.3,
-    "y": -22.0
+    "x": 225.0,
+    "y": -20.0
    },
    {
     "id": "G7",
-    "x": 255.3,
-    "y": -22.0
+    "x": 245.0,
+    "y": -20.0
    },
    {
     "id": "G8",
-    "x": 277.3,
-    "y": -22.0
+    "x": 265.0,
+    "y": -20.0
    },
    {
     "id": "G9",
-    "x": 299.3,
-    "y": -22.0
+    "x": 285.0,
+    "y": -20.0
    },
    {
     "id": "G10",
-    "x": 321.3,
-    "y": -22.0
+    "x": 305.0,
+    "y": -20.0
    },
    {
-    "id": "C1",
-    "x": 156.3,
-    "y": 0.0
-   },
-   {
-    "id": "C2",
-    "x": 178.3,
-    "y": 0.0
-   },
-   {
-    "id": "C3",
-    "x": 200.3,
-    "y": 0.0
-   },
-   {
-    "id": "C4",
-    "x": 222.3,
-    "y": 0.0
-   },
-   {
-    "id": "C5",
-    "x": 244.3,
-    "y": 0.0
-   },
-   {
-    "id": "C6",
-    "x": 266.3,
-    "y": 0.0
-   },
-   {
-    "id": "C7",
-    "x": 288.3,
-    "y": 0.0
-   },
-   {
-    "id": "C8",
-    "x": 310.3,
-    "y": 0.0
+    "id": "G11",
+    "x": 325.0,
+    "y": -20.0
    }
   ],
   "rangees": [
    {
     "id": "D",
     "libelle": "droite",
-    "y": 22.0,
-    "xmin": 115.32,
+    "y": 20.0,
+    "xmin": 117.32,
     "xmax": 326.0
    },
    {
     "id": "C",
     "libelle": "centre",
     "y": 0.0,
-    "xmin": 115.32,
+    "xmin": 117.32,
     "xmax": 326.0
    },
    {
     "id": "G",
     "libelle": "gauche",
-    "y": -22.0,
-    "xmin": 115.32,
+    "y": -20.0,
+    "xmin": 117.32,
     "xmax": 326.0
    }
   ],
@@ -1953,10 +2003,21 @@ export const AVIONS = [
     }
    ],
    "porte": {
-    "x0": 275.0,
-    "x1": 325.0,
+    "x0": 270.0,
+    "x1": 326.0,
     "cote": "gauche"
-   }
+   },
+   "train_principal": 232,
+   "train_avant": 53,
+   "rangees_sieges_commuter": [
+    129,
+    159,
+    189,
+    219,
+    249,
+    280,
+    315
+   ]
   },
   "variantes": [
    {
@@ -2027,10 +2088,10 @@ export const AVIONS = [
   "variante_defaut": "decollage",
   "a_verifier": [
    "masse a vide 7400 lb et bras 200 in : ordre de grandeur, saisir la pesee reelle",
-   "positions des paras au sol : pas regulier construit sur la longueur de cabine (FS 109 a 332), pas de manuel de masse et centrage trouve",
+   "positions des paras au sol : hypothese (deux files, pas 20 in, FS 125 a 325), le manuel de masse et centrage PSM 1-63-8 n a pas ete trouve ; rangees commuter mesurees sur plan FS 129 a 315 (+/- 5 in)",
    "ordre de remplissage des reservoirs (avant puis arriere) suppose pour le bras carburant",
-   "position de la porte gauche (FS 275 a 325) estimee : arriere du bord de fuite"
+   "porte gauche FS 270 a 326 et trains (FS 232 et 53) mesures sur les plans FlightSafety, +/- 5 in"
   ],
-  "source": "avions/dhc6/envelope.json (TCDS FAA A9EA, Viking)"
+  "source": "avions/dhc6/envelope.json (TCDS FAA A9EA, Viking) et avions/dhc6/stations.json (mesures sur plans)"
  }
 ];

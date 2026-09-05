@@ -55,13 +55,17 @@ def caravan():
     variantes = []
     if env_poh:
         variantes.append({'id': 'poh', 'libelle': f'POH, MTOW {mtow_poh} lb', 'mtow': mtow_poh, 'enveloppe': env_poh, 'source': src_poh})
-    variantes.append({'id': 'ape2', 'libelle': f'STC APE II, MTOW {mtow_club} lb (planches club)', 'mtow': mtow_club,
+    ape = json.loads((AV / 'c208b' / 'stc_ape.json').read_text())
+    for vid, a in (('ape2', ape['ape2']), ('ape3', ape['ape3'])):
+        variantes.append({'id': vid, 'libelle': f"{a['designation'].split(' (')[1].rstrip(')')} : STC {a['faa_stc']}, MTOW {a['mtow_lb']} lb" + (f", MLW {a['mlw_lb']} lb" if vid == 'ape3' else ''),
+                          'mtow': a['mtow_lb'],
+                          'enveloppe': {'avant': [[float(q['weight_lb']), float(q['arm_in'])] for q in a['cg_forward_limit']],
+                                        'arriere': [[0.0, a['cg_aft_limit_in']], [float(a['mtow_lb']), a['cg_aft_limit_in']]]},
+                          'source': f"avions/c208b/stc_ape.json : {a['designation']}, STC FAA {a['faa_stc']} ; limites CG du rapport TSB A14W0181 (limite avant prolongee jusqu'a 200.23 in a 9062 lb, arriere 204.35 in)" + (" ; MLW 9000 lb (non modelisee ici)" if vid == 'ape3' else '')})
+    variantes.append({'id': 'planches', 'libelle': f'Planches club (MTOW {mtow_club} lb, limite avant des planches)', 'mtow': mtow_club,
                       'enveloppe': {'avant': [[w, a] for w, a in zip(env_club['forward_limit']['weight_lb'], env_club['forward_limit']['arm_in'])],
                                     'arriere': [[0, env_club['aft_limit_in']], [mtow_club, env_club['aft_limit_in']]]},
-                      'source': 'planches club (avions/c208b/planches_club.json) ; STC APE II = MTOW 9062 lb'})
-    variantes.append({'id': 'ape3', 'libelle': 'STC APE III (a renseigner : copie de APE II en attendant)', 'mtow': mtow_club,
-                      'enveloppe': json.loads(json.dumps(variantes[-1]['enveloppe'])),
-                      'source': 'valeurs du STC APE III non trouvees : enveloppe a modifier dans l application', 'a_verifier': True})
+                      'source': 'planches club (avions/c208b/planches_club.json) : limite avant interpolee de (8000, 193.37) a (9062, 199.15), moins restrictive que le STC APE II au-dessus de 8000 lb', 'a_verifier': True})
     out = []
     for lettre, (_, r) in zip('AB', d['registrations'].items()):
         out.append({
@@ -178,14 +182,13 @@ def dhc6():
                           'mtow': top, 'enveloppe': {'avant': [list(map(float, v)) for v in sorted(fwd)], 'arriere': [[0.0, aft], [float(top), aft]]},
                           'source': e.get('source', 'TCDS FAA A9EA')})
     variantes = [v for v in variantes if v['id'] != 'flotteurs']
-    # Positions de paras assis au sol : deux rangees laterales (bancs) et une rangee centrale,
-    # bras = station fuselage (le datum est en avant du nez, les stations croissent vers l'arriere).
-    # Faute de manuel de masse et centrage (PSM 1-63-8) : pas de 22 in depuis la cloison avant,
-    # a corriger avec les vraies positions quand elles seront trouvees (avions/dhc6/notes.md).
-    xs = [round(x0 + 14 + 22 * i, 1) for i in range(10) if x0 + 14 + 22 * i < x1 - 8]
-    places = [{'id': f'D{i+1}', 'x': x, 'y': 22.0} for i, x in enumerate(xs)]
-    places += [{'id': f'G{i+1}', 'x': x, 'y': -22.0} for i, x in enumerate(xs)]
-    places += [{'id': f'C{i+1}', 'x': round(x + 11, 1), 'y': 0.0} for i, x in enumerate(xs[1:-1])]
+    st2 = json.loads((AV / 'dhc6' / 'stations.json').read_text())
+    # Positions de paras au sol : hypothese de travail de stations.json (deux files le long des parois,
+    # pas 20 in du seuil de porte FS 325 a la cloison avant FS 125), bras = station fuselage.
+    xs = sorted(st2['floor_positions_hypothesis_in'])
+    places = [{'id': f'D{i+1}', 'x': float(x), 'y': 20.0} for i, x in enumerate(xs)]
+    places += [{'id': f'G{i+1}', 'x': float(x), 'y': -20.0} for i, x in enumerate(xs)]
+    porte = st2['door']
     return [{
         'id': 'dhc6-300', 'libelle': 'DHC-6 Twin Otter 300 (generique)', 'type': 'de Havilland DHC-6-300 Twin Otter', 'famille': 'dhc6',
         'unites': {'masse': 'lb', 'bras': 'in', 'carburant': 'lb'},
@@ -196,19 +199,21 @@ def dhc6():
         'carburant': {'capacite': int(378 * 6.7), 'par_rotation': None, 'reserve': None, 'defaut': 1200,
                       # avant (+162.5, 181 USG) rempli en premier puis arriere (+240) : bras moyen en fonction de la masse
                       'table': [[0, 162.5], [round(181 * 6.7), 162.5], [round(378 * 6.7), round((181 * 162.5 + 197 * 240.0) / 378, 2)]]},
-        'porte': {'x': 300.0, 'y': -40.0, 'cote': 'gauche'},
+        'porte': {'x': (porte['clear_opening_from_sta_in'] + porte['clear_opening_to_sta_in']) / 2, 'y': -40.0, 'cote': 'gauche'},
         'places': places,
-        'rangees': [{'id': 'D', 'libelle': 'droite', 'y': 22.0, 'xmin': x0 + 6, 'xmax': x1 - 6},
-                    {'id': 'C', 'libelle': 'centre', 'y': 0.0, 'xmin': x0 + 6, 'xmax': x1 - 6},
-                    {'id': 'G', 'libelle': 'gauche', 'y': -22.0, 'xmin': x0 + 6, 'xmax': x1 - 6}],
+        'rangees': [{'id': 'D', 'libelle': 'droite', 'y': 20.0, 'xmin': x0 + 8, 'xmax': x1 - 6},
+                    {'id': 'C', 'libelle': 'centre', 'y': 0.0, 'xmin': x0 + 8, 'xmax': x1 - 6},
+                    {'id': 'G', 'libelle': 'gauche', 'y': -20.0, 'xmin': x0 + 8, 'xmax': x1 - 6}],
         'cabine': {'x0': x0, 'x1': x1, 'zones': [{'nom': 'cabine', 'x0': x0, 'x1': x1, 'largeur': cab['width_max_in']}],
-                   'porte': {'x0': 275.0, 'x1': 325.0, 'cote': 'gauche'}},
+                   'porte': {'x0': float(porte['clear_opening_from_sta_in']), 'x1': float(porte['clear_opening_to_sta_in']), 'cote': 'gauche'},
+                   'train_principal': st2['main_gear_sta_in'], 'train_avant': st2['nose_gear_sta_in'],
+                   'rangees_sieges_commuter': st2['seat_rows_arm_in']},
         'variantes': variantes, 'variante_defaut': 'decollage',
         'a_verifier': ['masse a vide 7400 lb et bras 200 in : ordre de grandeur, saisir la pesee reelle',
-                       'positions des paras au sol : pas regulier construit sur la longueur de cabine (FS 109 a 332), pas de manuel de masse et centrage trouve',
+                       'positions des paras au sol : hypothese (deux files, pas 20 in, FS 125 a 325), le manuel de masse et centrage PSM 1-63-8 n a pas ete trouve ; rangees commuter mesurees sur plan FS 129 a 315 (+/- 5 in)',
                        'ordre de remplissage des reservoirs (avant puis arriere) suppose pour le bras carburant',
-                       'position de la porte gauche (FS 275 a 325) estimee : arriere du bord de fuite'],
-        'source': 'avions/dhc6/envelope.json (TCDS FAA A9EA, Viking)',
+                       'porte gauche FS 270 a 326 et trains (FS 232 et 53) mesures sur les plans FlightSafety, +/- 5 in'],
+        'source': 'avions/dhc6/envelope.json (TCDS FAA A9EA, Viking) et avions/dhc6/stations.json (mesures sur plans)',
     }]
 
 
