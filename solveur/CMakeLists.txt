@@ -12,6 +12,7 @@ set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(FAST_BUILD ON CACHE BOOL "" FORCE)
 set(HIGHS_NO_DEFAULT_THREADS ON CACHE BOOL "" FORCE)
+set(ZLIB OFF CACHE BOOL "" FORCE)   # pas de lecture de fichiers compresses ; evite libz.so dans le lien statique
 add_subdirectory(HiGHS EXCLUDE_FROM_ALL)
 
 add_executable(placement src/placement.cpp)
