@@ -1,0 +1,11 @@
+manifeste         N | A ancien (gap 1 %, san | B defaut (recuit 1 s,  | C recuit + gap 5 %, 3  | D rapide (recuit seul)
+                    |      cout / statut / t |      cout / statut / t |      cout / statut / t |      cout / statut / t
+exemple_groupes  16 |   58.7   limite  10.4s |   57.2   limite  11.4s |   58.2   limite   4.4s |   58.2   recuit   1.4s
+exemple_tandems  16 |   60.7   limite  10.3s |   60.4   limite  11.4s |   60.7   limite   4.4s |   65.1   recuit   1.4s
+2026-07-20-15    20 |  131.9  optimum   4.0s |  131.9  optimum   1.1s |  131.9  optimum   1.1s |  131.9   recuit   1.0s
+2026-07-22-7     20 |  132.4  optimum   5.7s |  132.4  optimum   1.2s |  132.4  optimum   1.2s |  132.4   recuit   1.0s
+2026-07-22-8     20 |  117.6  optimum   1.5s |  117.6  optimum   1.1s |  117.6  optimum   1.1s |  117.6   recuit   1.0s
+2026-07-23-5     20 |  111.5  optimum   4.5s |  111.5  optimum   1.1s |  111.5  optimum   1.1s |  111.5   recuit   1.0s
+2026-07-23-6     20 |   95.6   limite  10.1s |   95.6  optimum   5.1s |   95.6   limite   4.1s |   95.6   recuit   1.1s
+2026-07-23-8     20 |  161.0  optimum   8.9s |  160.6  optimum   1.2s |  160.6  optimum   1.2s |  160.6   recuit   1.0s
+total               |  869.3           55.3s |  867.1           33.5s |  868.4           18.6s |  872.8            9.0s

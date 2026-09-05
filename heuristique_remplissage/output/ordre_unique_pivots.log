@@ -1,0 +1,25 @@
+N=10 realiste : bras moyen >= 238.2 in impose par C208B-B pilote 86 fuel 2224 uniforme_70 ; <= 240.6 in impose par C208B-A pilote 80 fuel 400 uniforme_110
+N=11 realiste : bras moyen >= 237.5 in impose par C208B-B pilote 80 fuel 2200 uniforme_70 ; <= 237.3 in impose par C208B-A pilote 80 fuel 400 uniforme_110
+N=12 realiste : bras moyen >= 234.4 in impose par C208B-B pilote 86 fuel 2000 uniforme_70 ; <= 234.5 in impose par C208B-A pilote 80 fuel 400 uniforme_110
+
+Un seul ordre equilibre par avion : echecs (domaine realiste / complet), marge min realiste
+pivot      C208B-A                          C208B-B
+ 222.5    298/7092 ,  334/9604  min -2.12      1404/6850 , 1648/9263  min -4.08
+ 225.0    201/7092 ,  229/9604  min -1.41      1237/6850 , 1449/9263  min -3.52
+ 227.5     63/7092 ,  122/9604  min -0.83       708/6850 ,  831/9263  min -2.70
+ 230.0     63/7092 ,  122/9604  min -0.83       708/6850 ,  831/9263  min -2.70
+ 232.5    269/7092 ,  452/9604  min -2.63       374/6850 ,  468/9263  min -1.92
+ 235.0    269/7092 ,  452/9604  min -2.63       374/6850 ,  468/9263  min -1.92
+ 237.5    693/7092 ,  985/9604  min -4.12       313/6850 ,  474/9263  min -2.39
+ 240.0    722/7092 , 1019/9604  min -4.14       259/6850 ,  420/9263  min -2.61
+ 242.5   1162/7092 , 1557/9604  min -6.03       513/6850 ,  768/9263  min -3.98
+ 245.0   1653/7092 , 2161/9604  min -6.78       893/6850 , 1242/9263  min -5.16
+ 247.5   1653/7092 , 2161/9604  min -6.78       893/6850 , 1242/9263  min -5.16
+ 250.0   2138/7092 , 2773/9604  min -9.02      1301/6850 , 1744/9263  min -7.40
+
+Un seul ordre equilibre pour les deux avions, domaines restreints : echecs / n, marge min
+  realiste                                 meilleur pivot 232.5 : 643 echecs / 13942, marge min -2.63 in
+  realiste + fuel <= 1900                  meilleur pivot 227.5 : 169 echecs / 11900, marge min -1.61 in
+  realiste + moy 75-105                    meilleur pivot 232.5 : 570 echecs / 11470, marge min -2.63 in
+  realiste + fuel <= 1900 + moy 75-105     meilleur pivot 227.5 : 146 echecs / 9799, marge min -1.61 in
+  realiste + fuel <= 1600 + moy 75-105     meilleur pivot 227.5 : 50 echecs / 8431, marge min -0.83 in

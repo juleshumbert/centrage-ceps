@@ -1,0 +1,71 @@
+Recoupement des bandes (masses uniformes) : largeur minimale sur N, et N concernes
+
+  complet                                    largeur min   -6.6 in   N sans solution : [10, 11, 12, 13, 14, 15, 16, 17]
+  realiste (fuel >= 320, moy 70-110 kg)      largeur min   -0.3 in   N sans solution : [11]
+  realiste + pilote 70-100                   largeur min   -0.3 in   N sans solution : [11]
+  realiste + fuel <= 1900                    largeur min   +0.2 in   N sans solution : aucun
+  realiste + fuel <= 1600                    largeur min   +2.3 in   N sans solution : aucun
+  realiste + moy 75-105 kg                   largeur min   +6.0 in   N sans solution : aucun
+  realiste + moy 80-100 kg                   largeur min   +6.0 in   N sans solution : aucun
+  realiste, C208B-A seul                      largeur min   +6.4 in   N sans solution : aucun
+  realiste, C208B-B seul                      largeur min   +4.2 in   N sans solution : aucun
+  realiste + fuel <= 1600 + moy 75-105       largeur min   +6.0 in   N sans solution : aucun
+  realiste + fuel <= 1900 + moy 75-105       largeur min   +6.0 in   N sans solution : aucun
+  realiste + fuel <= 1900 + moy 80-100       largeur min   +6.0 in   N sans solution : aucun
+  C208B-A, realiste + fuel <= 1900            largeur min   +6.4 in   N sans solution : aucun
+  C208B-B, realiste + fuel <= 1900            largeur min   +4.2 in   N sans solution : aucun
+
+Recuit d un ordre unique sur les domaines ou le recoupement existe (ou presque) :
+
+  realiste (fuel >= 320, moy 70-110 kg)
+     ordre (bras) : 282 256 263 282 181 200 256 206 231 231 181 231 206 168 155 307 155 294 136 307
+     sur ce domaine : 35 echecs / 13942, marge min -1.39 in, 1er centile 0.52 in
+     sur le realiste : 35 echecs / 13942 (marge min -1.39) ; sur le complet : 156 / 18867 (marge min -2.43)
+  realiste + pilote 70-100
+     ordre (bras) : 282 200 294 263 155 256 231 231 256 206 231 181 206 168 282 136 307 155 181 307
+     sur ce domaine : 28 echecs / 11101, marge min -1.01 in, 1er centile 0.39 in
+     sur le realiste : 38 echecs / 13942 (marge min -1.06) ; sur le complet : 143 / 18867 (marge min -1.76)
+  realiste + fuel <= 1900
+     ordre (bras) : 282 181 307 206 294 155 263 181 231 231 256 168 256 200 231 136 282 206 155 307
+     sur ce domaine : 9 echecs / 11900, marge min -0.86 in, 1er centile 0.66 in
+     sur le realiste : 113 echecs / 13942 (marge min -1.29) ; sur le complet : 214 / 18867 (marge min -1.57)
+  realiste + fuel <= 1600
+     ordre (bras) : 181 263 282 294 136 206 307 168 231 231 282 181 231 200 256 206 155 307 155 256
+     sur ce domaine : 1 echecs / 10226, marge min -0.16 in, 1er centile 0.80 in
+     sur le realiste : 563 echecs / 13942 (marge min -2.15) ; sur le complet : 746 / 18867 (marge min -2.15)
+  realiste + moy 75-105 kg
+     ordre (bras) : 282 294 307 206 168 231 256 181 263 155 256 155 231 200 206 181 231 136 282 307
+     sur ce domaine : 8 echecs / 11470, marge min -1.00 in, 1er centile 0.72 in
+     sur le realiste : 43 echecs / 13942 (marge min -1.68) ; sur le complet : 166 / 18867 (marge min -2.38)
+  realiste + moy 80-100 kg
+     ordre (bras) : 307 263 256 136 282 294 155 256 206 231 200 181 231 181 206 168 282 155 231 307
+     sur ce domaine : 4 echecs / 10256, marge min -0.34 in, 1er centile 0.66 in
+     sur le realiste : 28 echecs / 13942 (marge min -1.29) ; sur le complet : 143 / 18867 (marge min -1.79)
+  realiste, C208B-A seul
+     ordre (bras) : 282 256 307 136 155 307 282 155 206 231 263 200 168 256 181 206 181 231 231 294
+     sur ce domaine : 0 echecs / 7092, marge min +0.51 in, 1er centile 0.97 in
+     sur le realiste : 161 echecs / 13942 (marge min -1.34) ; sur le complet : 257 / 18867 (marge min -1.75)
+  realiste, C208B-B seul
+     ordre (bras) : 307 307 294 136 282 155 263 231 200 256 206 206 181 231 181 231 168 256 155 282
+     sur ce domaine : 0 echecs / 6850, marge min +0.27 in, 1er centile 0.87 in
+     sur le realiste : 390 echecs / 13942 (marge min -1.54) ; sur le complet : 703 / 18867 (marge min -1.90)
+  realiste + fuel <= 1600 + moy 75-105
+     ordre (bras) : 294 263 155 307 136 200 307 155 282 206 282 231 181 206 231 168 231 181 256 256
+     sur ce domaine : 0 echecs / 8431, marge min +0.47 in, 1er centile 1.00 in
+     sur le realiste : 326 echecs / 13942 (marge min -2.36) ; sur le complet : 469 / 18867 (marge min -2.36)
+  realiste + fuel <= 1900 + moy 75-105
+     ordre (bras) : 307 155 307 282 136 282 168 263 206 256 256 155 231 181 231 181 231 206 200 294
+     sur ce domaine : 0 echecs / 9799, marge min +0.17 in, 1er centile 0.92 in
+     sur le realiste : 121 echecs / 13942 (marge min -1.10) ; sur le complet : 213 / 18867 (marge min -1.40)
+  realiste + fuel <= 1900 + moy 80-100
+     ordre (bras) : 307 155 231 282 282 136 294 181 256 231 263 168 231 181 200 206 206 256 155 307
+     sur ce domaine : 0 echecs / 8809, marge min +0.14 in, 1er centile 0.90 in
+     sur le realiste : 179 echecs / 13942 (marge min -1.33) ; sur le complet : 294 / 18867 (marge min -1.43)
+  C208B-A, realiste + fuel <= 1900
+     ordre (bras) : 200 231 294 136 307 256 155 307 256 206 155 282 181 206 231 168 231 181 263 282
+     sur ce domaine : 0 echecs / 6030, marge min +0.50 in, 1er centile 1.11 in
+     sur le realiste : 681 echecs / 13942 (marge min -2.88) ; sur le complet : 877 / 18867 (marge min -2.88)
+  C208B-B, realiste + fuel <= 1900
+     ordre (bras) : 256 307 181 282 206 294 136 307 155 263 231 231 206 200 181 231 168 282 256 155
+     sur ce domaine : 0 echecs / 5870, marge min +0.27 in, 1er centile 0.98 in
+     sur le realiste : 218 echecs / 13942 (marge min -1.91) ; sur le complet : 435 / 18867 (marge min -2.18)

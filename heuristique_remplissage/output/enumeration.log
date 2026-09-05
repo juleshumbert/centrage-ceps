@@ -1,0 +1,95 @@
+1,048,575 configurations non vides, 2.433e+18 ordres possibles
+
+places  avion       domaine                                        critere            valides N=10 valides N=20 N max   ordres valides      part  marge min (in bras moyen)
+legacy  C208B-A      forfait 90 kg, pilote 80                       enveloppe complete        87171            1    20        1.393e+17  5.72e-02                       5.88
+legacy  C208B-A      forfait 90 kg, pilote 80                       arriere seule            179433            1    20        1.186e+18  4.87e-01                       5.88
+legacy  C208B-B      forfait 90 kg, pilote 80                       enveloppe complete        68690            1    20        7.085e+16  2.91e-02                       6.63
+legacy  C208B-B      forfait 90 kg, pilote 80                       arriere seule            182530            1    20        1.692e+18  6.95e-01                      12.74
+legacy  deux avions forfait 90 kg, pilote 80                       enveloppe complete        65593            1    20        3.227e+16  1.33e-02                       5.88
+legacy  deux avions forfait 90 kg, pilote 80                       arriere seule            179433            1    20        1.186e+18  4.87e-01                       5.88
+legacy  C208B-A      forfait 80 kg, pilote 86                       enveloppe complete        76555            1    20        3.562e+17  1.46e-01                       3.47
+legacy  C208B-A      forfait 80 kg, pilote 86                       arriere seule            183355            1    20        2.063e+18  8.48e-01                       3.47
+legacy  C208B-B      forfait 80 kg, pilote 86                       enveloppe complete        50784            1    20        1.066e+17  4.38e-02                       4.35
+legacy  C208B-B      forfait 80 kg, pilote 86                       arriere seule            184382            1    20        2.245e+18  9.23e-01                       4.35
+legacy  deux avions forfait 80 kg, pilote 86                       enveloppe complete        49757            1    20        7.492e+16  3.08e-02                       3.47
+legacy  deux avions forfait 80 kg, pilote 86                       arriere seule            183355            1    20        2.063e+18  8.48e-01                       3.47
+legacy  C208B-A      moyen 70-110 kg, pilotes 80/86                 enveloppe complete        56487            1    20        1.533e+15  6.30e-04                       1.75
+legacy  C208B-B      moyen 70-110 kg, pilotes 80/86                 enveloppe complete        24668            1    20        2.844e+13  1.17e-05                       1.58
+legacy  deux avions moyen 70-110 kg, pilotes 80/86                 enveloppe complete        18145            1    20        1.098e+11  4.51e-08                       0.76
+legacy  C208B-A      moyen 60-120 kg, pilotes 80/86                 enveloppe complete        45457            1    20        5.138e+10  2.11e-08                       0.27
+legacy  C208B-B      moyen 60-120 kg, pilotes 80/86                 enveloppe complete        14263            1    11        0.000e+00  0.00e+00                       0.31
+legacy  deux avions moyen 60-120 kg, pilotes 80/86                 enveloppe complete         7115            1    10        0.000e+00  0.00e+00                       0.63
+legacy  C208B-A      moyen 70-110 kg, pilotes 65-110                enveloppe complete        32112            1    20        5.724e+12  2.35e-06                       1.15
+legacy  C208B-B      moyen 70-110 kg, pilotes 65-110                enveloppe complete         7459            1    20        3.195e+08  1.31e-10                       0.41
+legacy  deux avions moyen 70-110 kg, pilotes 65-110                enveloppe complete            0            1     9        0.000e+00  0.00e+00                       1.74
+legacy  C208B-A      moyen 70-110 kg, pilotes 80/86, fuel 320-1900  enveloppe complete        78158            1    20        1.334e+16  5.48e-03                       3.18
+legacy  C208B-B      moyen 70-110 kg, pilotes 80/86, fuel 320-1900  enveloppe complete        55501            1    20        1.336e+15  5.49e-04                       1.88
+legacy  deux avions moyen 70-110 kg, pilotes 80/86, fuel 320-1900  enveloppe complete        48978            1    20        3.568e+13  1.47e-05                       1.50
+legacy  C208B-A      moyen 75-105 kg, pilotes 80/86, fuel 320-1900  enveloppe complete        82304            1    20        3.854e+16  1.58e-02                       3.29
+legacy  C208B-B      moyen 75-105 kg, pilotes 80/86, fuel 320-1900  enveloppe complete        60462            1    20        1.106e+16  4.55e-03                       3.30
+legacy  deux avions moyen 75-105 kg, pilotes 80/86, fuel 320-1900  enveloppe complete        53124            1    20        1.395e+15  5.74e-04                       2.60
+n20     C208B-A      forfait 90 kg, pilote 80                       enveloppe complete        92379            1    20        1.442e+17  5.93e-02                       5.39
+n20     C208B-A      forfait 90 kg, pilote 80                       arriere seule            178995            1    20        1.153e+18  4.74e-01                       5.39
+n20     C208B-B      forfait 90 kg, pilote 80                       enveloppe complete        58113            1    20        7.493e+16  3.08e-02                       6.67
+n20     C208B-B      forfait 90 kg, pilote 80                       arriere seule            183599            1    20        2.069e+18  8.50e-01                      15.22
+n20     deux avions forfait 90 kg, pilote 80                       enveloppe complete        53509            1    20        1.313e+16  5.40e-03                       4.38
+n20     deux avions forfait 90 kg, pilote 80                       arriere seule            178995            1    20        1.153e+18  4.74e-01                       5.39
+n20     C208B-A      forfait 80 kg, pilote 86                       enveloppe complete        77645            1    20        3.405e+17  1.40e-01                       3.01
+n20     C208B-A      forfait 80 kg, pilote 86                       arriere seule            183120            1    20        1.959e+18  8.05e-01                       3.01
+n20     C208B-B      forfait 80 kg, pilote 86                       enveloppe complete        39219            1    20        8.846e+16  3.64e-02                       6.88
+n20     C208B-B      forfait 80 kg, pilote 86                       arriere seule            184621            1    20        2.382e+18  9.79e-01                       6.88
+n20     deux avions forfait 80 kg, pilote 86                       enveloppe complete        37718            1    20        3.489e+16  1.43e-02                       3.01
+n20     deux avions forfait 80 kg, pilote 86                       arriere seule            183120            1    20        1.959e+18  8.05e-01                       3.01
+n20     C208B-A      moyen 70-110 kg, pilotes 80/86                 enveloppe complete        56054            1    20        1.535e+15  6.31e-04                       1.29
+n20     C208B-B      moyen 70-110 kg, pilotes 80/86                 enveloppe complete        18116            1    20        3.407e+13  1.40e-05                       1.67
+n20     deux avions moyen 70-110 kg, pilotes 80/86                 enveloppe complete         4249            1    10        0.000e+00  0.00e+00                       0.55
+n20     C208B-A      moyen 60-120 kg, pilotes 80/86                 enveloppe complete        45281            1    20        1.931e+11  7.94e-08                       0.39
+n20     C208B-B      moyen 60-120 kg, pilotes 80/86                 enveloppe complete        11460            1    11        0.000e+00  0.00e+00                       0.24
+n20     deux avions moyen 60-120 kg, pilotes 80/86                 enveloppe complete            0            1     9        0.000e+00  0.00e+00                       1.14
+n20     C208B-A      moyen 70-110 kg, pilotes 65-110                enveloppe complete        37372            1    20        7.485e+12  3.08e-06                       0.68
+n20     C208B-B      moyen 70-110 kg, pilotes 65-110                enveloppe complete         7103            1    20        6.013e+08  2.47e-10                       0.23
+n20     deux avions moyen 70-110 kg, pilotes 65-110                enveloppe complete            0            1     9        0.000e+00  0.00e+00                       0.39
+n20     C208B-A      moyen 70-110 kg, pilotes 80/86, fuel 320-1900  enveloppe complete        80526            1    20        1.534e+16  6.30e-03                       2.83
+n20     C208B-B      moyen 70-110 kg, pilotes 80/86, fuel 320-1900  enveloppe complete        45290            1    20        1.268e+15  5.21e-04                       2.07
+n20     deux avions moyen 70-110 kg, pilotes 80/86, fuel 320-1900  enveloppe complete        31423            1    13        0.000e+00  0.00e+00                       0.59
+n20     C208B-A      moyen 75-105 kg, pilotes 80/86, fuel 320-1900  enveloppe complete        86098            1    20        4.239e+16  1.74e-02                       2.83
+n20     C208B-B      moyen 75-105 kg, pilotes 80/86, fuel 320-1900  enveloppe complete        48169            1    20        1.096e+16  4.50e-03                       3.28
+n20     deux avions moyen 75-105 kg, pilotes 80/86, fuel 320-1900  enveloppe complete        36995            1    20        6.757e+12  2.78e-06                       1.03
+
+Verification au banc Python (masses uniformes de la grille + tirages individuels) :
+  legacy C208B-A      forfait 90 kg, pilote 80                       uniformes   0/  297 (min +1.92)  individuelles   0/  297 (min +1.92)
+  legacy C208B-B      forfait 90 kg, pilote 80                       uniformes   0/  286 (min +1.83)  individuelles   0/  286 (min +1.83)
+  legacy deux avions forfait 90 kg, pilote 80                       uniformes   0/  583 (min +1.50)  individuelles   0/  583 (min +1.50)
+  legacy C208B-A      forfait 80 kg, pilote 86                       uniformes   0/  329 (min +1.39)  individuelles   0/  329 (min +1.39)
+  legacy C208B-B      forfait 80 kg, pilote 86                       uniformes   0/  318 (min +1.72)  individuelles   0/  318 (min +1.72)
+  legacy deux avions forfait 80 kg, pilote 86                       uniformes   0/  647 (min +1.39)  individuelles   0/  647 (min +1.39)
+  legacy C208B-A      moyen 70-110 kg, pilotes 80/86                 uniformes   0/ 2983 (min +0.54)  individuelles   0/ 2983 (min +0.54)
+  legacy C208B-B      moyen 70-110 kg, pilotes 80/86                 uniformes   0/ 2883 (min +0.31)  individuelles   0/ 2883 (min +0.31)
+  legacy deux avions moyen 70-110 kg, pilotes 80/86                 uniformes   0/ 5866 (min +0.24)  individuelles   0/ 5866 (min +0.24)
+  legacy C208B-A      moyen 60-120 kg, pilotes 80/86                 uniformes   0/ 4212 (min +0.06)  individuelles   0/ 4212 (min +0.06)
+  legacy C208B-A      moyen 70-110 kg, pilotes 65-110                uniformes   0/ 2983 (min +0.54)  individuelles   8/ 8013 (min -0.84)
+  legacy C208B-B      moyen 70-110 kg, pilotes 65-110                uniformes   0/ 2883 (min +0.28)  individuelles  28/ 7723 (min -1.08)
+  legacy C208B-A      moyen 70-110 kg, pilotes 80/86, fuel 320-1900  uniformes   0/ 2258 (min +0.76)  individuelles   0/ 2258 (min +0.76)
+  legacy C208B-B      moyen 70-110 kg, pilotes 80/86, fuel 320-1900  uniformes   0/ 2185 (min +0.55)  individuelles   0/ 2185 (min +0.55)
+  legacy deux avions moyen 70-110 kg, pilotes 80/86, fuel 320-1900  uniformes   0/ 4443 (min +0.37)  individuelles   0/ 4443 (min +0.37)
+  legacy C208B-A      moyen 75-105 kg, pilotes 80/86, fuel 320-1900  uniformes   0/ 1341 (min +1.25)  individuelles   0/ 1341 (min +1.25)
+  legacy C208B-B      moyen 75-105 kg, pilotes 80/86, fuel 320-1900  uniformes   0/ 1295 (min +0.85)  individuelles   0/ 1295 (min +0.85)
+  legacy deux avions moyen 75-105 kg, pilotes 80/86, fuel 320-1900  uniformes   0/ 2636 (min +0.64)  individuelles   0/ 2636 (min +0.64)
+  n20    C208B-A      forfait 90 kg, pilote 80                       uniformes   0/  297 (min +1.71)  individuelles   0/  297 (min +1.71)
+  n20    C208B-B      forfait 90 kg, pilote 80                       uniformes   0/  286 (min +1.90)  individuelles   0/  286 (min +1.90)
+  n20    deux avions forfait 90 kg, pilote 80                       uniformes   0/  583 (min +1.31)  individuelles   0/  583 (min +1.31)
+  n20    C208B-A      forfait 80 kg, pilote 86                       uniformes   0/  329 (min +1.20)  individuelles   0/  329 (min +1.20)
+  n20    C208B-B      forfait 80 kg, pilote 86                       uniformes   0/  318 (min +1.90)  individuelles   0/  318 (min +1.90)
+  n20    deux avions forfait 80 kg, pilote 86                       uniformes   0/  647 (min +1.20)  individuelles   0/  647 (min +1.20)
+  n20    C208B-A      moyen 70-110 kg, pilotes 80/86                 uniformes   0/ 2983 (min +0.73)  individuelles   0/ 2983 (min +0.73)
+  n20    C208B-B      moyen 70-110 kg, pilotes 80/86                 uniformes   0/ 2883 (min +0.43)  individuelles   0/ 2883 (min +0.43)
+  n20    C208B-A      moyen 60-120 kg, pilotes 80/86                 uniformes   0/ 4212 (min +0.08)  individuelles   0/ 4212 (min +0.08)
+  n20    C208B-A      moyen 70-110 kg, pilotes 65-110                uniformes   0/ 2983 (min +0.56)  individuelles  10/ 8013 (min -1.13)
+  n20    C208B-B      moyen 70-110 kg, pilotes 65-110                uniformes   0/ 2883 (min +0.31)  individuelles  24/ 7723 (min -0.77)
+  n20    C208B-A      moyen 70-110 kg, pilotes 80/86, fuel 320-1900  uniformes   0/ 2258 (min +0.78)  individuelles   0/ 2258 (min +0.78)
+  n20    C208B-B      moyen 70-110 kg, pilotes 80/86, fuel 320-1900  uniformes   0/ 2185 (min +0.50)  individuelles   0/ 2185 (min +0.50)
+  n20    C208B-A      moyen 75-105 kg, pilotes 80/86, fuel 320-1900  uniformes   0/ 1341 (min +1.11)  individuelles   0/ 1341 (min +1.11)
+  n20    C208B-B      moyen 75-105 kg, pilotes 80/86, fuel 320-1900  uniformes   0/ 1295 (min +1.02)  individuelles   0/ 1295 (min +1.02)
+  n20    deux avions moyen 75-105 kg, pilotes 80/86, fuel 320-1900  uniformes   0/ 2636 (min +0.41)  individuelles   0/ 2636 (min +0.41)
+
+ecrit output/enumeration.md et output/enumeration_meilleurs_ordres.json

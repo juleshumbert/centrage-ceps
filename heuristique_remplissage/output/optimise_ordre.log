@@ -1,0 +1,110 @@
+=== 1. Recuit sur tous les scenarios
+--- meilleur ordre fixe (tous scenarios): 127 echecs / 18867 faisables (0.67 %), marge min -2.21 in
+    ordre (bras in) : 282 256 282 231 206 181 231 256 231 155 263 206 136 307 200 155 294 168 181 307
+    ordre (places)  : 18 5 6 4 3 14 16 17 10 1 11 15 0 7 9 13 12 8 2 19
+    N : echecs avant/arriere
+      N= 8 :    1 /    0   (sur 1356)
+      N= 9 :    1 /    0   (sur 1277)
+      N=10 :   25 /    0   (sur 1165)
+      N=11 :    7 /    0   (sur 1044)
+      N=12 :   10 /    0   (sur 921)
+      N=13 :   30 /    0   (sur 794)
+      N=14 :    4 /    7   (sur 660)
+      N=15 :    5 /    0   (sur 544)
+      N=16 :   10 /    0   (sur 439)
+      N=17 :    2 /   12   (sur 329)
+      N=18 :    4 /    1   (sur 246)
+      N=19 :    5 /    0   (sur 152)
+      N=20 :    0 /    3   (sur 97)
+
+=== 2. Recuit sur un sous-ensemble "realiste" (fuel >= 320 lbs, masses uniformes 70-110 seulement)
+--- meilleur ordre fixe (realiste), evalue sur le realiste: 24 echecs / 14590 faisables (0.16 %), marge min -1.31 in
+    ordre (bras in) : 307 307 155 282 231 231 155 256 231 181 263 136 282 200 206 206 168 256 181 294
+    ordre (places)  : 7 19 13 6 4 16 1 17 10 14 11 0 18 9 3 15 8 5 2 12
+    N : echecs avant/arriere
+      N=10 :    7 /    0   (sur 932)
+      N=11 :    1 /    0   (sur 820)
+      N=12 :    8 /    0   (sur 703)
+      N=14 :    1 /    1   (sur 482)
+      N=16 :    0 /    2   (sur 285)
+      N=17 :    2 /    0   (sur 185)
+      N=18 :    0 /    2   (sur 111)
+--- meme ordre, evalue sur TOUS les scenarios: 111 echecs / 18867 faisables (0.59 %), marge min -1.86 in
+    ordre (bras in) : 307 307 155 282 231 231 155 256 231 181 263 136 282 200 206 206 168 256 181 294
+    ordre (places)  : 7 19 13 6 4 16 1 17 10 14 11 0 18 9 3 15 8 5 2 12
+    N : echecs avant/arriere
+      N=10 :   11 /    0   (sur 1165)
+      N=11 :    4 /   18   (sur 1044)
+      N=12 :   18 /    0   (sur 921)
+      N=13 :    4 /    8   (sur 794)
+      N=14 :    5 /    3   (sur 660)
+      N=15 :    5 /    1   (sur 544)
+      N=16 :    4 /    3   (sur 439)
+      N=17 :    8 /    0   (sur 329)
+      N=18 :    4 /    6   (sur 246)
+      N=19 :    4 /    0   (sur 152)
+      N=20 :    0 /    5   (sur 97)
+
+=== 3. Deux ordres selon le carburant (seuil T)
+--- T=800: fuel < 800: 0 echecs / 6861 faisables (0.00 %), marge min +0.20 in
+    ordre (bras in) : 282 200 307 263 168 155 231 231 136 307 155 294 206 206 256 231 181 256 181 282
+    ordre (places)  : 18 9 7 11 8 13 16 4 0 19 1 12 3 15 17 10 2 5 14 6
+    N : echecs avant/arriere
+--- T=800: fuel >= 800: 43 echecs / 12006 faisables (0.36 %), marge min -1.47 in
+    ordre (bras in) : 282 206 307 200 282 168 231 231 263 206 231 155 294 155 256 181 256 181 307 136
+    ordre (places)  : 6 3 19 9 18 8 4 10 11 15 16 13 12 1 17 14 5 2 7 0
+    N : echecs avant/arriere
+      N= 8 :    3 /    0   (sur 958)
+      N=10 :    1 /    0   (sur 762)
+      N=11 :    2 /    6   (sur 645)
+      N=12 :   12 /    0   (sur 522)
+      N=13 :    1 /    4   (sur 396)
+      N=14 :    6 /    0   (sur 292)
+      N=15 :    2 /    2   (sur 200)
+      N=16 :    2 /    0   (sur 128)
+      N=18 :    2 /    0   (sur 54)
+    ==> total 43 echecs pour T=800
+--- T=1000: fuel < 1000: 0 echecs / 8848 faisables (0.00 %), marge min +0.03 in
+    ordre (bras in) : 231 231 256 155 282 256 206 181 282 181 231 206 263 155 307 136 307 168 200 294
+    ordre (places)  : 16 10 5 13 6 17 3 2 18 14 4 15 11 1 7 0 19 8 9 12
+    N : echecs avant/arriere
+--- T=1000: fuel >= 1000: 30 echecs / 10019 faisables (0.30 %), marge min -1.31 in
+    ordre (bras in) : 256 282 200 263 206 256 294 181 231 206 231 168 282 136 307 181 307 231 155 155
+    ordre (places)  : 17 18 9 11 15 5 12 14 16 3 4 8 6 0 19 2 7 10 13 1
+    N : echecs avant/arriere
+      N=10 :    1 /    0   (sur 634)
+      N=11 :    2 /    2   (sur 516)
+      N=12 :   11 /    0   (sur 395)
+      N=13 :    1 /    5   (sur 287)
+      N=14 :    8 /    0   (sur 179)
+    ==> total 30 echecs pour T=1000
+--- T=1200: fuel < 1200: 0 echecs / 10671 faisables (0.00 %), marge min +0.03 in
+    ordre (bras in) : 307 307 155 282 136 200 231 206 282 206 155 256 231 231 181 263 168 256 181 294
+    ordre (places)  : 19 7 13 6 0 9 16 15 18 3 1 5 4 10 14 11 8 17 2 12
+    N : echecs avant/arriere
+--- T=1200: fuel >= 1200: 19 echecs / 8196 faisables (0.23 %), marge min -0.76 in
+    ordre (bras in) : 256 294 181 282 206 231 231 256 231 206 200 282 181 263 168 307 136 307 155 155
+    ordre (places)  : 17 12 14 18 3 10 16 5 4 15 9 6 2 11 8 19 0 7 1 13
+    N : echecs avant/arriere
+      N= 9 :    1 /    0   (sur 619)
+      N=10 :    1 /    0   (sur 509)
+      N=11 :    7 /    0   (sur 396)
+      N=12 :    1 /    5   (sur 281)
+      N=13 :    2 /    0   (sur 185)
+      N=15 :    2 /    0   (sur 61)
+    ==> total 19 echecs pour T=1200
+--- T=1400: fuel < 1400: 4 echecs / 12400 faisables (0.03 %), marge min -0.53 in
+    ordre (bras in) : 307 206 136 307 181 282 168 263 200 231 206 294 155 256 231 181 231 256 155 282
+    ordre (places)  : 7 15 0 19 14 6 8 11 9 10 3 12 13 5 16 2 4 17 1 18
+    N : echecs avant/arriere
+      N=13 :    1 /    0   (sur 696)
+      N=19 :    3 /    0   (sur 150)
+--- T=1400: fuel >= 1400: 13 echecs / 6467 faisables (0.20 %), marge min -1.01 in
+    ordre (bras in) : 282 231 256 231 231 206 256 263 206 282 181 168 294 200 307 155 181 307 136 155
+    ordre (places)  : 18 16 5 10 4 15 17 11 3 6 14 8 12 9 19 13 2 7 0 1
+    N : echecs avant/arriere
+      N=10 :    0 /    4   (sur 382)
+      N=11 :    0 /    1   (sur 270)
+      N=12 :    8 /    0   (sur 177)
+    ==> total 17 echecs pour T=1400
+ecrit /home/jules/Documents/centrage_c208/heuristique_remplissage/output/ordres.json

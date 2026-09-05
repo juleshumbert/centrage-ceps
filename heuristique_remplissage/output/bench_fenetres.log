@@ -1,0 +1,6 @@
+fenetres ordonnes=False: fenetres par groupe {'A': 172, 'B': 213, 'C': 143}, nvar=849 (binaires 848), ncontraintes=2338, nnz=38326, mu*=2.771
+  relaxation LP phase 2 : 30.927 (0.06 s)
+  MILP 60 s : cout 39.790, status 1, gap 0.15407531121210905, borne duale 33.659307113695476, noeuds 67 (60.0 s) ; boites 5.90 sortie 28
+fenetres ordonnes=True: fenetres par groupe {'A': 172, 'B': 213, 'C': 143}, nvar=849 (binaires 848), ncontraintes=2341, nnz=39382, mu*=2.771
+  relaxation LP phase 2 : 30.938 (0.11 s)
+  MILP 60 s : cout 41.801, status 0, gap 0.007974509644978974, borne duale 41.467214008997075, noeuds 89 (27.4 s) ; boites 6.40 sortie 29

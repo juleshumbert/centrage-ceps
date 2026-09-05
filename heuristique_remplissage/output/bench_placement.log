@@ -1,0 +1,14 @@
+=== exemple_groupes (16 paras), temps limite 60 s par phase
+  variante                            ph.2 (s)             etat  boites  sortie  CG (in)  marge
+  boite                                   60.0        ecart 18%    7.66    24.0   203.57  +0.78
+  boite + ordonnes                        17.9          optimum    6.40    29.0   203.63  +0.72
+  boite + ordonnes + CG avant             17.6          optimum    6.47    30.0   203.59  +0.76 (ph.3 18 s, optimum)
+  ancre                                   60.1        ecart 13%    5.90    27.0   203.77  +0.58
+  ancre + ordonnes                        60.1        ecart 24%    5.14    35.0   203.80  +0.55
+=== exemple_tandems (16 paras), temps limite 60 s par phase
+  variante                            ph.2 (s)             etat  boites  sortie  CG (in)  marge
+  boite                                   19.6          optimum    5.00    26.0   203.74  +0.61
+  boite + ordonnes                        16.2          optimum    3.99    33.0   203.75  +0.60
+  boite + ordonnes + CG avant             16.5          optimum    3.99    33.0   203.78  +0.57 (ph.3 13 s, optimum)
+  ancre                                   17.4          optimum    4.68    27.0   203.84  +0.51
+  ancre + ordonnes                        51.2          optimum    5.07    33.0   203.80  +0.55

@@ -1,0 +1,20 @@
+6 fiches a 20 paras placees en juillet
+fiche            ord tmax | marge ar. max ar. rendue av. min |      ph1 t1 (s)           ph2 t2 (s) boites sortie |  total
+2026-07-20-15      F   10 |          4.05       3.80    0.70 |  optimum    0.0       optimum    4.2  12.44  107.0 |    4.3
+2026-07-20-15      T   10 |          2.63       2.46    0.54 |  optimum    9.1  temps limite   10.0   5.11   67.0 |   19.1
+2026-07-20-15      F    3 |          4.05       3.80    0.70 |  optimum    0.0  temps limite    3.0  13.08  107.0 |    3.1
+2026-07-22-7       F   10 |          3.72       3.48    1.69 |  optimum    0.0       optimum    5.9  17.69   97.0 |    5.9
+2026-07-22-7       T   10 | aucun placement avec marge avant >= 0.500000 a toutes les etapes ; au  (40.6 s)
+2026-07-22-7       F    3 |          3.72       3.48    1.69 |  optimum    0.0  temps limite    3.0  17.69   97.0 |    3.1
+2026-07-22-8       F   10 |          4.07       3.84    0.61 |  optimum    0.0       optimum    2.9  15.03   89.0 |    2.9
+2026-07-22-8       T   10 | aucun placement avec marge avant >= 0.500000 a toutes les etapes ; au  (32.9 s)
+2026-07-22-8       F    3 |          4.07       3.84    0.61 |  optimum    0.0  temps limite    3.0  15.03   89.0 |    3.1
+2026-07-23-5       F   10 |          4.31       4.07    0.52 |  optimum    0.0  temps limite   10.0  12.37   98.0 |   10.1
+2026-07-23-5       T   10 |          2.62       2.43    0.52 |  optimum    7.3  temps limite   10.0   6.37   69.0 |   17.3
+2026-07-23-5       F    3 |          4.31       4.08    0.52 |  optimum    0.0  temps limite    3.0  13.77   96.0 |    3.1
+2026-07-23-6       F   10 |          3.78       3.53    0.50 |  optimum    0.7  temps limite   10.0  12.73   89.0 |   10.8
+2026-07-23-6       T   10 | aucun placement avec marge avant >= 0.500000 a toutes les etapes ; au  (45.0 s)
+2026-07-23-6       F    3 |          3.78       3.53    0.50 |  optimum    0.7  temps limite    3.0  12.73   89.0 |    3.8
+2026-07-23-8       F   10 |          4.27       4.03    1.60 |  optimum    0.0       optimum    7.3  12.81  135.0 |    7.4
+2026-07-23-8       T   10 |          1.88       1.78    1.04 | temps limite   10.1  temps limite   10.0   6.76   82.0 |   20.1
+2026-07-23-8       F    3 |          4.27       4.02    1.61 |  optimum    0.0  temps limite    3.0  12.81  135.0 |    3.1

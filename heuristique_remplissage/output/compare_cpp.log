@@ -1,0 +1,17 @@
+manifeste           N ord | marge ar. max ar. rendue av. min  verif av/ar |      ph1          ph2 boites sortie | t (s) | py mu sym
+exemple_groupes    16   F |          5.04       4.91    0.63  0.63/ 4.91 |  optimum temps limite   9.50   46.0 |  10.4 |      2.76
+exemple_groupes    16   T |          5.04       5.04    0.51  0.51/ 5.04 |  optimum temps limite   5.75  116.0 |  12.5 |      2.77
+exemple_tandems    16   F |          5.69       5.59    0.58  0.58/ 5.59 |  optimum temps limite   9.34   50.0 |  10.5 |      3.10
+exemple_tandems    16   T |          5.69       5.66    0.52  0.52/ 5.66 |  optimum temps limite   5.32   86.0 |  10.4 |      3.07
+2026-07-10-1       11   F |          9.98       9.83    0.65  0.65/ 9.83 |  optimum temps limite   4.38   67.0 |  10.4 |      5.24
+2026-07-10-1       11   T |          9.90       9.70    0.58  0.58/ 9.70 |  optimum      optimum   3.37   67.0 |   7.8 |      4.83
+2026-07-10-2        6   F |         15.59      15.54    0.55  0.55/15.54 |  optimum      optimum   2.19   62.0 |   7.2 |      8.03
+2026-07-10-2        6   T |         15.46      15.29    0.53  0.53/15.29 |  optimum      optimum   2.13   64.0 |   3.8 |      6.81
+2026-07-10-3       10   F |         11.38      11.15    0.73  0.73/11.15 |  optimum temps limite   2.68   64.0 |  10.2 |      5.92
+2026-07-10-3       10   T |         11.00      10.78    0.57  0.57/10.78 |  optimum temps limite   3.74   67.0 |  13.1 |      5.28
+2026-07-10-4        7   F |         15.98      15.76    0.73  0.73/15.76 |  optimum temps limite   4.10   69.0 |  10.2 |      8.24
+2026-07-10-4        7   T |         15.87      15.66    0.54  0.54/15.66 |  optimum      optimum   3.27   73.0 |   5.8 |      7.10
+2026-07-10-5        9   F |         14.00      13.92    0.55  0.55/13.92 |  optimum temps limite   4.45   73.0 |  10.2 |      7.23
+2026-07-10-5        9   T |         13.77      13.60    0.73  0.73/13.60 |  optimum      optimum   2.75   76.0 |   8.3 |      6.31
+2026-07-10-6        7   F |         16.77      16.62    0.67  0.67/16.62 |  optimum temps limite   3.64   69.0 |  10.2 |      8.63
+2026-07-10-6        7   T |         16.78      16.58    0.71  0.71/16.58 |  optimum      optimum   3.52   75.0 |   6.6 |      7.57

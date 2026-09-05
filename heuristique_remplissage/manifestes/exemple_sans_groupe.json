@@ -1,0 +1,6 @@
+{"immat": "C208B-B", "pilote_kg": 95, "fuel_lbs": 1900,
+ "paras": [
+  {"nom": "P1", "kg": 72}, {"nom": "P2", "kg": 66}, {"nom": "P3", "kg": 80},
+  {"nom": "P4", "kg": 75}, {"nom": "P5", "kg": 69}, {"nom": "P6", "kg": 84},
+  {"nom": "P7", "kg": 71}, {"nom": "P8", "kg": 78}
+ ]}

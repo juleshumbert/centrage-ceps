@@ -1,0 +1,19 @@
+{"immat": "C208B-A", "pilote_kg": 80, "fuel_lbs": 800,
+ "paras": [
+  {"nom": "A1", "kg": 98, "groupe": "A", "sortie": 1},
+  {"nom": "A2", "kg": 84, "groupe": "A", "sortie": 1},
+  {"nom": "A3", "kg": 91, "groupe": "A", "sortie": 1},
+  {"nom": "A4", "kg": 77, "groupe": "A", "sortie": 1},
+  {"nom": "B1", "kg": 105, "groupe": "B", "sortie": 2},
+  {"nom": "B2", "kg": 88, "groupe": "B", "sortie": 2},
+  {"nom": "B3", "kg": 70, "groupe": "B", "sortie": 2},
+  {"nom": "C1", "kg": 112, "groupe": "C", "sortie": 3},
+  {"nom": "C2", "kg": 96, "groupe": "C", "sortie": 3},
+  {"nom": "C3", "kg": 82, "groupe": "C", "sortie": 3},
+  {"nom": "C4", "kg": 90, "groupe": "C", "sortie": 3},
+  {"nom": "C5", "kg": 65, "groupe": "C", "sortie": 3},
+  {"nom": "S1", "kg": 101, "sortie": 4},
+  {"nom": "S2", "kg": 74, "sortie": 5},
+  {"nom": "T1", "kg": 120, "sortie": 6},
+  {"nom": "T2", "kg": 68, "sortie": 6}
+ ]}

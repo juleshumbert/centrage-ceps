@@ -1,0 +1,296 @@
+{
+ "unites": {
+  "masse": "lbs",
+  "bras": "in"
+ },
+ "avion": {
+  "immat": "C208B-A",
+  "masse_vide": 4890.0,
+  "moment_vide": 924161.0
+ },
+ "enveloppe": {
+  "avant": [
+   [
+    5500.0,
+    179.6
+   ],
+   [
+    8000.0,
+    193.37
+   ],
+   [
+    9062.0,
+    199.15
+   ]
+  ],
+  "arriere": [
+   [
+    0.0,
+    204.35
+   ],
+   [
+    9062,
+    204.35
+   ]
+  ],
+  "mtow": 9062
+ },
+ "carburant": {
+  "masse": 800.0597014925373,
+  "bras": 203.21990896201777
+ },
+ "pilote": {
+  "masse": 176.3696,
+  "bras": 135.5
+ },
+ "porte": {
+  "x": 307.0,
+  "y": -32.0
+ },
+ "places": [
+  {
+   "id": "0",
+   "x": 135.5,
+   "y": 16.0,
+   "copilote": true,
+   "centre": false
+  },
+  {
+   "id": "1",
+   "x": 155.4,
+   "y": 16.0,
+   "copilote": false,
+   "centre": false
+  },
+  {
+   "id": "2",
+   "x": 180.66666666666669,
+   "y": 16.0,
+   "copilote": false,
+   "centre": false
+  },
+  {
+   "id": "3",
+   "x": 205.93333333333334,
+   "y": 16.0,
+   "copilote": false,
+   "centre": false
+  },
+  {
+   "id": "4",
+   "x": 231.2,
+   "y": 16.0,
+   "copilote": false,
+   "centre": false
+  },
+  {
+   "id": "5",
+   "x": 256.4666666666667,
+   "y": 16.0,
+   "copilote": false,
+   "centre": false
+  },
+  {
+   "id": "6",
+   "x": 281.73333333333335,
+   "y": 16.0,
+   "copilote": false,
+   "centre": false
+  },
+  {
+   "id": "7",
+   "x": 307.0,
+   "y": 16.0,
+   "copilote": false,
+   "centre": false
+  },
+  {
+   "id": "8",
+   "x": 168.03333333333333,
+   "y": 0.0,
+   "copilote": false,
+   "centre": true
+  },
+  {
+   "id": "9",
+   "x": 199.61666666666667,
+   "y": 0.0,
+   "copilote": false,
+   "centre": true
+  },
+  {
+   "id": "10",
+   "x": 231.2,
+   "y": 0.0,
+   "copilote": false,
+   "centre": true
+  },
+  {
+   "id": "11",
+   "x": 262.7833333333333,
+   "y": 0.0,
+   "copilote": false,
+   "centre": true
+  },
+  {
+   "id": "12",
+   "x": 294.3666666666667,
+   "y": 0.0,
+   "copilote": false,
+   "centre": true
+  },
+  {
+   "id": "13",
+   "x": 155.4,
+   "y": -16.0,
+   "copilote": false,
+   "centre": false
+  },
+  {
+   "id": "14",
+   "x": 180.66666666666669,
+   "y": -16.0,
+   "copilote": false,
+   "centre": false
+  },
+  {
+   "id": "15",
+   "x": 205.93333333333334,
+   "y": -16.0,
+   "copilote": false,
+   "centre": false
+  },
+  {
+   "id": "16",
+   "x": 231.2,
+   "y": -16.0,
+   "copilote": false,
+   "centre": false
+  },
+  {
+   "id": "17",
+   "x": 256.4666666666667,
+   "y": -16.0,
+   "copilote": false,
+   "centre": false
+  },
+  {
+   "id": "18",
+   "x": 281.73333333333335,
+   "y": -16.0,
+   "copilote": false,
+   "centre": false
+  },
+  {
+   "id": "19",
+   "x": 307.0,
+   "y": -16.0,
+   "copilote": false,
+   "centre": false
+  }
+ ],
+ "paras": [
+  {
+   "nom": "A1",
+   "masse": 216.053,
+   "groupe": "A",
+   "sortie": 1
+  },
+  {
+   "nom": "A2",
+   "masse": 185.188,
+   "groupe": "A",
+   "sortie": 1
+  },
+  {
+   "nom": "A3",
+   "masse": 200.62,
+   "groupe": "A",
+   "sortie": 1
+  },
+  {
+   "nom": "A4",
+   "masse": 169.756,
+   "groupe": "A",
+   "sortie": 1
+  },
+  {
+   "nom": "B1",
+   "masse": 231.485,
+   "groupe": "B",
+   "sortie": 2
+  },
+  {
+   "nom": "B2",
+   "masse": 194.007,
+   "groupe": "B",
+   "sortie": 2
+  },
+  {
+   "nom": "B3",
+   "masse": 154.323,
+   "groupe": "B",
+   "sortie": 2
+  },
+  {
+   "nom": "C1",
+   "masse": 246.917,
+   "groupe": "C",
+   "sortie": 3
+  },
+  {
+   "nom": "C2",
+   "masse": 211.644,
+   "groupe": "C",
+   "sortie": 3
+  },
+  {
+   "nom": "C3",
+   "masse": 180.779,
+   "groupe": "C",
+   "sortie": 3
+  },
+  {
+   "nom": "C4",
+   "masse": 198.416,
+   "groupe": "C",
+   "sortie": 3
+  },
+  {
+   "nom": "C5",
+   "masse": 143.3,
+   "groupe": "C",
+   "sortie": 3
+  },
+  {
+   "nom": "S1",
+   "masse": 222.667,
+   "sortie": 4
+  },
+  {
+   "nom": "S2",
+   "masse": 163.142,
+   "sortie": 5
+  },
+  {
+   "nom": "T1",
+   "masse": 264.554,
+   "sortie": 6
+  },
+  {
+   "nom": "T2",
+   "masse": 149.914,
+   "sortie": 6
+  }
+ ],
+ "options": {
+  "marge_cible": 0.5,
+  "sequence": true,
+  "groupes_ordonnes": false,
+  "poids_groupe": 2.0,
+  "poids_sortie": 1.0,
+  "poids_lateral": 0.5,
+  "pas": 25.0,
+  "temps_max_s": 1.5
+ }
+}

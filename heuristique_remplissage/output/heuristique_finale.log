@@ -1,0 +1,86 @@
+auto-test ok (200 scenarios x 3 pivots)
+--- masse seule, 3 classes
+  seuils masse [900, 1200] kg, carburant [] lbs
+  pivots par case : {0: 245.0, 1: 232.5, 2: 225.0}
+  realiste : 28 echecs (0.20 %), 175 sous 0.5 in (1.26 %)
+  complet  : 31 echecs (0.16 %), 214 sous 0.5 in (1.13 %)
+--- masse seule, 4 classes
+  seuils masse [900, 1200, 1400] kg, carburant [] lbs
+  pivots par case : {0: 245.0, 1: 232.5, 2: 230.0, 3: 225.0}
+  realiste : 3 echecs (0.02 %), 110 sous 0.5 in (0.79 %)
+  complet  : 5 echecs (0.03 %), 146 sous 0.5 in (0.77 %)
+--- carburant 2 classes x masse 3 classes
+  seuils masse [900, 1400] kg, carburant [1200] lbs
+  pivots par case : {0: 232.5, 1: 230.0, 2: 225.0, 3: 245.0, 4: 232.5}
+  realiste : 3 echecs (0.02 %), 83 sous 0.5 in (0.60 %)
+  complet  : 5 echecs (0.03 %), 102 sous 0.5 in (0.54 %)
+--- carburant 2 classes x masse 4 classes
+  seuils masse [800, 1200, 1400] kg, carburant [1600] lbs
+  pivots par case : {0: 240.0, 1: 232.5, 2: 230.0, 3: 225.0, 4: 252.5, 5: 240.0}
+  realiste : 0 echecs (0.00 %), 28 sous 0.5 in (0.20 %)
+  complet  : 0 echecs (0.00 %), 43 sous 0.5 in (0.23 %)
+--- carburant 3 classes x masse 3 classes
+  seuils masse [800, 1400] kg, carburant [1200, 1600] lbs
+  pivots par case : {0: 232.5, 1: 230.0, 2: 225.0, 3: 240.0, 4: 232.5, 6: 252.5, 7: 240.0}
+  realiste : 0 echecs (0.00 %), 32 sous 0.5 in (0.23 %)
+  complet  : 0 echecs (0.00 %), 48 sous 0.5 in (0.25 %)
+
+=== detail masse4 : 5 echecs sur l espace complet
+  N        : [(9, 2), (11, 1), (15, 2)]
+  avion    : {'C208B-B': 5}
+  famille  : {'uniforme_60': 2, 'uniforme_100': 2, 'N85-12': 1}
+  fuel     : [(1700, 1), (1900, 4)]
+  moy kg   : [(60, 2), (80, 1), (100, 2)]
+  pilote   : [(80, 2), (90, 2), (100, 1)]
+  depassement max : 0.40 in (0.60 %MAC)
+    C208B-B pil  86.0 fuel   1900 N=15 uniforme_60  moy  60.0 kg  pivot 232.5  marge -0.40 in
+    C208B-B pil  86.0 fuel   1900 N= 9 uniforme_100 moy 100.0 kg  pivot 232.5  marge -0.40 in
+    C208B-B pil  80.0 fuel   1900 N=15 uniforme_60  moy  60.0 kg  pivot 232.5  marge -0.23 in
+    C208B-B pil  80.0 fuel   1900 N= 9 uniforme_100 moy 100.0 kg  pivot 232.5  marge -0.23 in
+    C208B-B pil 104.4 fuel   1743 N=11 N85-12       moy  84.6 kg  pivot 232.5  marge -0.14 in
+  marges (espace complet) : min -0.40, 1% 0.57, 5% 1.26, mediane 3.82 in
+  embarquement aleatoire (3 tirages/scenario) : 191/56601 echecs (0.34 %)
+  legers d abord : 29 echecs
+
+=== detail fuel2_masse4 : 0 echecs sur l espace complet
+  N        : []
+  avion    : {}
+  famille  : {}
+  fuel     : []
+  moy kg   : []
+  pilote   : []
+  marges (espace complet) : min 0.01, 1% 0.87, 5% 1.42, mediane 4.23 in
+  embarquement aleatoire (3 tirages/scenario) : 109/56601 echecs (0.19 %)
+  legers d abord : 6 echecs
+
+=== detail fuel3_masse3 : 0 echecs sur l espace complet
+  N        : []
+  avion    : {}
+  famille  : {}
+  fuel     : []
+  moy kg   : []
+  pilote   : []
+  marges (espace complet) : min 0.01, 1% 0.87, 5% 1.48, mediane 4.45 in
+  embarquement aleatoire (3 tirages/scenario) : 105/56601 echecs (0.19 %)
+  legers d abord : 6 echecs
+
+Ordres equilibres (bras dans l ordre de remplissage) :
+  210.0 : 206 206 231 200 231 181 231 181 256 168 256 155 263 155 282 136 282 294 307 307
+  212.5 : 206 231 200 206 231 181 231 181 256 168 256 155 263 155 282 136 282 294 307 307
+  215.0 : 206 231 206 231 200 231 181 256 181 256 168 263 155 282 155 282 136 294 307 307
+  217.5 : 206 231 206 231 200 231 181 256 181 256 168 263 155 282 155 282 136 294 307 307
+  220.0 : 231 206 231 206 231 200 256 181 256 181 263 168 282 155 282 155 294 136 307 307
+  222.5 : 231 206 231 231 206 256 200 181 263 256 181 282 168 282 155 294 155 307 136 307
+  225.0 : 231 231 206 231 206 256 200 256 181 263 181 282 168 282 155 294 155 307 136 307
+  227.5 : 231 231 231 206 256 206 256 200 263 181 282 181 282 168 294 155 307 155 307 136
+  230.0 : 231 231 231 206 256 206 256 200 263 181 282 181 282 168 294 155 307 155 307 136
+  232.5 : 231 231 231 256 206 256 206 263 200 282 181 282 181 294 168 307 155 307 155 136
+  235.0 : 231 231 231 256 206 256 206 263 200 282 181 282 181 294 168 307 155 307 155 136
+  237.5 : 231 231 256 231 256 206 263 206 282 200 282 181 294 181 307 168 307 155 155 136
+  240.0 : 231 256 231 231 256 206 263 282 206 200 282 181 294 181 307 168 307 155 155 136
+  242.5 : 231 256 231 256 231 263 206 282 206 282 200 294 181 307 181 307 168 155 155 136
+  245.0 : 256 231 256 231 263 231 282 206 282 206 294 200 307 181 307 181 168 155 155 136
+  247.5 : 256 231 256 231 263 231 282 206 282 206 294 200 307 181 307 181 168 155 155 136
+  250.0 : 256 231 263 256 231 282 231 282 206 294 206 307 200 307 181 181 168 155 155 136
+  252.5 : 256 256 231 263 231 282 231 282 206 294 206 307 200 307 181 181 168 155 155 136
+  255.0 : 256 256 263 231 282 231 282 231 294 206 307 206 307 200 181 181 168 155 155 136

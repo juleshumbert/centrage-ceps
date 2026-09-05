@@ -1,0 +1,158 @@
+{
+ "boites": 9.365333333333332,
+ "cout_realisme": 58.73066666666667,
+ "ecart_phase2": 0.21002195466346008,
+ "ecart_sortie": 40.0,
+ "etapes": [
+  {
+   "cg": 199.55232102133704,
+   "etape": "decollage",
+   "marge_arriere": 4.797678978662958,
+   "marge_avant": 0.744144879503807,
+   "masse": 8999.194301492538,
+   "restants": 16
+  },
+  {
+   "cg": 195.13880542456167,
+   "etape": "apres le premier groupe (4 sorti(s))",
+   "marge_arriere": 9.211194575438327,
+   "marge_avant": 0.5302020322576482,
+   "masse": 8227.577301492538,
+   "restants": 12
+  }
+ ],
+ "etapes_mode": "premier_groupe",
+ "marge_arriere": 4.797678978662958,
+ "marge_arriere_max": 5.040305947276259,
+ "marge_avant_min": 0.5,
+ "marge_avant_min_obtenue": 0.5302020322576482,
+ "masse_decollage": 8999.194301492538,
+ "objectif": "marge arriere maximale au decollage sous marge avant garantie",
+ "ok": true,
+ "pdf": "output/exemple_groupes_cpp.pdf",
+ "phase1": "optimum",
+ "phase2": "temps limite",
+ "placement": [
+  {
+   "nom": "A1",
+   "place": "8",
+   "rang_porte": 17.0,
+   "x": 168.03333333333333,
+   "y": 0.0
+  },
+  {
+   "nom": "A2",
+   "place": "17",
+   "rang_porte": 5.0,
+   "x": 256.4666666666667,
+   "y": -16.0
+  },
+  {
+   "nom": "A3",
+   "place": "18",
+   "rang_porte": 2.0,
+   "x": 281.73333333333335,
+   "y": -16.0
+  },
+  {
+   "nom": "A4",
+   "place": "12",
+   "rang_porte": 3.0,
+   "x": 294.3666666666667,
+   "y": 0.0
+  },
+  {
+   "nom": "B1",
+   "place": "6",
+   "rang_porte": 6.0,
+   "x": 281.73333333333335,
+   "y": 16.0
+  },
+  {
+   "nom": "B2",
+   "place": "11",
+   "rang_porte": 7.0,
+   "x": 262.7833333333333,
+   "y": 0.0
+  },
+  {
+   "nom": "B3",
+   "place": "5",
+   "rang_porte": 8.0,
+   "x": 256.4666666666667,
+   "y": 16.0
+  },
+  {
+   "nom": "C1",
+   "place": "14",
+   "rang_porte": 15.0,
+   "x": 180.66666666666669,
+   "y": -16.0
+  },
+  {
+   "nom": "C2",
+   "place": "15",
+   "rang_porte": 12.0,
+   "x": 205.93333333333334,
+   "y": -16.0
+  },
+  {
+   "nom": "C3",
+   "place": "10",
+   "rang_porte": 10.0,
+   "x": 231.2,
+   "y": 0.0
+  },
+  {
+   "nom": "C4",
+   "place": "4",
+   "rang_porte": 11.0,
+   "x": 231.2,
+   "y": 16.0
+  },
+  {
+   "nom": "C5",
+   "place": "16",
+   "rang_porte": 9.0,
+   "x": 231.2,
+   "y": -16.0
+  },
+  {
+   "nom": "S1",
+   "place": "13",
+   "rang_porte": 18.0,
+   "x": 155.4,
+   "y": -16.0
+  },
+  {
+   "nom": "S2",
+   "place": "9",
+   "rang_porte": 14.0,
+   "x": 199.61666666666667,
+   "y": 0.0
+  },
+  {
+   "nom": "T1",
+   "place": "0",
+   "rang_porte": 20.0,
+   "x": 135.5,
+   "y": 16.0
+  },
+  {
+   "nom": "T2",
+   "place": "2",
+   "rang_porte": 16.0,
+   "x": 180.66666666666669,
+   "y": 16.0
+  }
+ ],
+ "premier_groupe": [
+  "A1",
+  "A2",
+  "A3",
+  "A4"
+ ],
+ "temps_phase1_s": 0.397783908,
+ "temps_phase2_s": 5.004337176,
+ "temps_s": 5.409941802
+}

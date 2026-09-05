@@ -1,0 +1,153 @@
+{
+ "boites": 10.308,
+ "cout_realisme": 67.616,
+ "cout_recuit": 72.91199999999999,
+ "ecart_phase2": 0.17917613194626633,
+ "ecart_sortie": 47.0,
+ "etapes": [
+  {
+   "cg": 198.87949923513006,
+   "etape": "decollage",
+   "marge_arriere": 5.470500764869939,
+   "marge_avant": 0.6634427379549095,
+   "masse": 8890.4,
+   "restants": 15
+  },
+  {
+   "cg": 194.21203662349265,
+   "etape": "apres le premier groupe (4 sorti(s))",
+   "marge_arriere": 10.137963376507344,
+   "marge_avant": 0.5133059266941586,
+   "masse": 8060.4,
+   "restants": 11
+  }
+ ],
+ "etapes_mode": "premier_groupe",
+ "marge_arriere": 5.470500764869939,
+ "marge_arriere_max": 5.617434536128854,
+ "marge_avant_min": 0.5,
+ "marge_avant_min_obtenue": 0.5133059266941586,
+ "masse_decollage": 8890.4,
+ "objectif": "marge arriere maximale au decollage sous marge avant garantie",
+ "ok": true,
+ "pdf": "exemple_stick.pdf",
+ "phase1": "optimum",
+ "phase2": "temps limite",
+ "placement": [
+  {
+   "nom": "Alice",
+   "place": "G6",
+   "rang_porte": 2.0,
+   "x": 281.7,
+   "y": -16.0
+  },
+  {
+   "nom": "Bruno",
+   "place": "G5",
+   "rang_porte": 5.0,
+   "x": 256.5,
+   "y": -16.0
+  },
+  {
+   "nom": "Chloe",
+   "place": "C5",
+   "rang_porte": 3.0,
+   "x": 294.4,
+   "y": 0.0
+  },
+  {
+   "nom": "David",
+   "place": "G1",
+   "rang_porte": 18.0,
+   "x": 155.4,
+   "y": -16.0
+  },
+  {
+   "nom": "Emma",
+   "place": "C4",
+   "rang_porte": 7.0,
+   "x": 262.8,
+   "y": 0.0
+  },
+  {
+   "nom": "Farid",
+   "place": "C3",
+   "rang_porte": 10.0,
+   "x": 231.2,
+   "y": 0.0
+  },
+  {
+   "nom": "Gael",
+   "place": "D4",
+   "rang_porte": 11.0,
+   "x": 231.2,
+   "y": 16.0
+  },
+  {
+   "nom": "Hugo",
+   "place": "D5",
+   "rang_porte": 8.0,
+   "x": 256.5,
+   "y": 16.0
+  },
+  {
+   "nom": "Ines",
+   "place": "G4",
+   "rang_porte": 9.0,
+   "x": 231.2,
+   "y": -16.0
+  },
+  {
+   "nom": "Julie",
+   "place": "G2",
+   "rang_porte": 15.0,
+   "x": 180.7,
+   "y": -16.0
+  },
+  {
+   "nom": "Karim",
+   "place": "G3",
+   "rang_porte": 12.0,
+   "x": 205.9,
+   "y": -16.0
+  },
+  {
+   "nom": "Lea",
+   "place": "D2",
+   "rang_porte": 16.0,
+   "x": 180.7,
+   "y": 16.0
+  },
+  {
+   "nom": "Marc",
+   "place": "D3",
+   "rang_porte": 13.0,
+   "x": 205.9,
+   "y": 16.0
+  },
+  {
+   "nom": "Nadia",
+   "place": "C1",
+   "rang_porte": 17.0,
+   "x": 168.0,
+   "y": 0.0
+  },
+  {
+   "nom": "Olivier",
+   "place": "COPI",
+   "rang_porte": 20.0,
+   "x": 135.5,
+   "y": 16.0
+  }
+ ],
+ "premier_groupe": [
+  "Alice",
+  "Bruno",
+  "Chloe",
+  "David"
+ ],
+ "temps_phase1_s": 0.273534292,
+ "temps_phase2_s": 10.002681998,
+ "temps_recuit_s": 1.000160382,
+ "temps_s": 11.285292267
+}

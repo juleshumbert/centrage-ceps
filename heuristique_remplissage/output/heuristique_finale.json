@@ -1,0 +1,106 @@
+{
+ "masse3": {
+  "name": "masse3",
+  "mass_edges": [
+   900,
+   1200
+  ],
+  "fuel_edges": [],
+  "table": {
+   "0": 245.0,
+   "1": 232.5,
+   "2": 225.0
+  },
+  "echecs_realiste": 28,
+  "sous_marge_realiste": 175,
+  "echecs_complet": 31,
+  "sous_marge_complet": 214
+ },
+ "masse4": {
+  "name": "masse4",
+  "mass_edges": [
+   900,
+   1200,
+   1400
+  ],
+  "fuel_edges": [],
+  "table": {
+   "0": 245.0,
+   "1": 232.5,
+   "2": 230.0,
+   "3": 225.0
+  },
+  "echecs_realiste": 3,
+  "sous_marge_realiste": 110,
+  "echecs_complet": 5,
+  "sous_marge_complet": 146
+ },
+ "fuel2_masse3": {
+  "name": "fuel2_masse3",
+  "mass_edges": [
+   900,
+   1400
+  ],
+  "fuel_edges": [
+   1200
+  ],
+  "table": {
+   "0": 232.5,
+   "1": 230.0,
+   "2": 225.0,
+   "3": 245.0,
+   "4": 232.5
+  },
+  "echecs_realiste": 3,
+  "sous_marge_realiste": 83,
+  "echecs_complet": 5,
+  "sous_marge_complet": 102
+ },
+ "fuel2_masse4": {
+  "name": "fuel2_masse4",
+  "mass_edges": [
+   800,
+   1200,
+   1400
+  ],
+  "fuel_edges": [
+   1600
+  ],
+  "table": {
+   "0": 240.0,
+   "1": 232.5,
+   "2": 230.0,
+   "3": 225.0,
+   "4": 252.5,
+   "5": 240.0
+  },
+  "echecs_realiste": 0,
+  "sous_marge_realiste": 28,
+  "echecs_complet": 0,
+  "sous_marge_complet": 43
+ },
+ "fuel3_masse3": {
+  "name": "fuel3_masse3",
+  "mass_edges": [
+   800,
+   1400
+  ],
+  "fuel_edges": [
+   1200,
+   1600
+  ],
+  "table": {
+   "0": 232.5,
+   "1": 230.0,
+   "2": 225.0,
+   "3": 240.0,
+   "4": 232.5,
+   "6": 252.5,
+   "7": 240.0
+  },
+  "echecs_realiste": 0,
+  "sous_marge_realiste": 32,
+  "echecs_complet": 0,
+  "sous_marge_complet": 48
+ }
+}

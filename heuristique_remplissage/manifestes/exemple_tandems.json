@@ -1,0 +1,19 @@
+{"immat": "C208B-B", "pilote_kg": 86, "fuel_lbs": 700,
+ "paras": [
+  {"nom": "A1", "kg": 96, "groupe": "A", "sortie": 1},
+  {"nom": "A2", "kg": 83, "groupe": "A", "sortie": 1},
+  {"nom": "A3", "kg": 90, "groupe": "A", "sortie": 1},
+  {"nom": "A4", "kg": 79, "groupe": "A", "sortie": 1},
+  {"nom": "A5", "kg": 102, "groupe": "A", "sortie": 1},
+  {"nom": "B1", "kg": 88, "groupe": "B", "sortie": 2},
+  {"nom": "B2", "kg": 75, "groupe": "B", "sortie": 2},
+  {"nom": "B3", "kg": 93, "groupe": "B", "sortie": 2},
+  {"nom": "T1p", "kg": 95, "tandem": "T1", "role": "porteur", "sortie": 3},
+  {"nom": "T1x", "kg": 68, "tandem": "T1", "role": "passager", "sortie": 3},
+  {"nom": "T2p", "kg": 98, "tandem": "T2", "role": "porteur", "sortie": 4},
+  {"nom": "T2x", "kg": 82, "tandem": "T2", "role": "passager", "sortie": 4},
+  {"nom": "T3p", "kg": 91, "tandem": "T3", "role": "porteur", "sortie": 5},
+  {"nom": "T3x", "kg": 60, "tandem": "T3", "role": "passager", "sortie": 5},
+  {"nom": "V1", "kg": 85, "sortie": 6},
+  {"nom": "V2", "kg": 77, "sortie": 6}
+ ]}

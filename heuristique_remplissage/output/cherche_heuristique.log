@@ -1,0 +1,112 @@
+18867 scenarios complets, 13942 realistes
+
+Reference : pivots fixes, critere pire affectation, espace realiste
+  pivot 202                                            echecs  8474/13942 (60.78 %)  sous marge  9102  marge min -10.02 in
+  pivot 225                                            echecs  2179/13942 (15.63 %)  sous marge  3040  marge min  -4.85 in
+  pivot 230                                            echecs  1898/13942 (13.61 %)  sous marge  2701  marge min  -4.85 in
+  pivot 235                                            echecs  1369/13942 ( 9.82 %)  sous marge  2014  marge min  -8.00 in
+
+== aucune () libre
+    regime 0 realiste (13942 sc.)                      echecs   679/13942 ( 4.87 %)  sous marge  1019  marge min  -3.72 in
+    regime 0 complet  (18867 sc.)                      echecs   944/18867 ( 5.00 %)  sous marge  1461  marge min  -4.81 in
+   ==> realiste : 679 echecs, 1019 sous marge ; complet : 944 echecs
+== aucune () paires
+    regime 0 realiste (13942 sc.)                      echecs   651/13942 ( 4.67 %)  sous marge   994  marge min  -4.85 in
+    regime 0 complet  (18867 sc.)                      echecs  1027/18867 ( 5.44 %)  sous marge  1457  marge min  -5.97 in
+   ==> realiste : 651 echecs, 994 sous marge ; complet : 1027 echecs
+== fuel 2 regimes (1200,) libre
+    regime 0 realiste (7262 sc.)                       echecs   470/7262 ( 6.47 %)  sous marge   672  marge min  -3.72 in
+    regime 0 complet  (10671 sc.)                      echecs   653/10671 ( 6.12 %)  sous marge   903  marge min  -4.81 in
+    regime 1 realiste (6680 sc.)                       echecs    96/6680 ( 1.44 %)  sous marge   266  marge min  -1.76 in
+    regime 1 complet  (8196 sc.)                       echecs   147/8196 ( 1.79 %)  sous marge   340  marge min  -1.76 in
+   ==> realiste : 566 echecs, 938 sous marge ; complet : 800 echecs
+== fuel 2 regimes (1200,) paires
+    regime 0 realiste (7262 sc.)                       echecs   492/7262 ( 6.77 %)  sous marge   683  marge min  -4.85 in
+    regime 0 complet  (10671 sc.)                      echecs   691/10671 ( 6.48 %)  sous marge   922  marge min  -5.97 in
+    regime 1 realiste (6680 sc.)                       echecs   110/6680 ( 1.65 %)  sous marge   243  marge min  -1.76 in
+    regime 1 complet  (8196 sc.)                       echecs   165/8196 ( 2.01 %)  sous marge   327  marge min  -1.76 in
+   ==> realiste : 602 echecs, 926 sous marge ; complet : 856 echecs
+== fuel 2 regimes (1500,) libre
+    regime 0 realiste (9347 sc.)                       echecs   595/9347 ( 6.37 %)  sous marge   829  marge min  -3.72 in
+    regime 0 complet  (13192 sc.)                      echecs   765/13192 ( 5.80 %)  sous marge  1077  marge min  -4.81 in
+    regime 1 realiste (4595 sc.)                       echecs    39/4595 ( 0.85 %)  sous marge   128  marge min  -1.32 in
+    regime 1 complet  (5675 sc.)                       echecs    59/5675 ( 1.04 %)  sous marge   160  marge min  -1.32 in
+   ==> realiste : 634 echecs, 957 sous marge ; complet : 824 echecs
+== fuel 2 regimes (1500,) paires
+    regime 0 realiste (9347 sc.)                       echecs   559/9347 ( 5.98 %)  sous marge   811  marge min  -4.85 in
+    regime 0 complet  (13192 sc.)                      echecs   796/13192 ( 6.03 %)  sous marge  1100  marge min  -5.97 in
+    regime 1 realiste (4595 sc.)                       echecs    39/4595 ( 0.85 %)  sous marge   128  marge min  -1.32 in
+    regime 1 complet  (5675 sc.)                       echecs    79/5675 ( 1.39 %)  sous marge   185  marge min  -2.75 in
+   ==> realiste : 598 echecs, 939 sous marge ; complet : 875 echecs
+== fuel 3 regimes (1000, 1700) libre
+    regime 0 realiste (5745 sc.)                       echecs   417/5745 ( 7.26 %)  sous marge   558  marge min  -3.72 in
+    regime 0 complet  (8848 sc.)                       echecs   577/8848 ( 6.52 %)  sous marge   771  marge min  -4.81 in
+    regime 1 realiste (4839 sc.)                       echecs   133/4839 ( 2.75 %)  sous marge   244  marge min  -2.42 in
+    regime 1 complet  (5869 sc.)                       echecs   137/5869 ( 2.33 %)  sous marge   291  marge min  -2.42 in
+    regime 2 realiste (3358 sc.)                       echecs    25/3358 ( 0.74 %)  sous marge    63  marge min  -0.93 in
+    regime 2 complet  (4150 sc.)                       echecs    35/4150 ( 0.84 %)  sous marge    83  marge min  -0.93 in
+   ==> realiste : 575 echecs, 865 sous marge ; complet : 749 echecs
+== fuel 3 regimes (1000, 1700) paires
+    regime 0 realiste (5745 sc.)                       echecs   443/5745 ( 7.71 %)  sous marge   576  marge min  -4.85 in
+    regime 0 complet  (8848 sc.)                       echecs   640/8848 ( 7.23 %)  sous marge   807  marge min  -5.97 in
+    regime 1 realiste (4839 sc.)                       echecs   136/4839 ( 2.81 %)  sous marge   252  marge min  -2.62 in
+    regime 1 complet  (5869 sc.)                       echecs   153/5869 ( 2.61 %)  sous marge   279  marge min  -2.62 in
+    regime 2 realiste (3358 sc.)                       echecs    20/3358 ( 0.60 %)  sous marge    76  marge min  -0.69 in
+    regime 2 complet  (4150 sc.)                       echecs    42/4150 ( 1.01 %)  sous marge   106  marge min  -1.79 in
+   ==> realiste : 599 echecs, 904 sous marge ; complet : 835 echecs
+== masse paras 2 regimes (1100,) libre
+    regime 0 realiste (11887 sc.)                      echecs   123/11887 ( 1.03 %)  sous marge   268  marge min  -1.25 in
+    regime 0 complet  (15966 sc.)                      echecs   193/15966 ( 1.21 %)  sous marge   438  marge min  -1.25 in
+    regime 1 realiste (2055 sc.)                       echecs   534/2055 (25.99 %)  sous marge   719  marge min  -3.72 in
+    regime 1 complet  (2901 sc.)                       echecs   698/2901 (24.06 %)  sous marge   939  marge min  -4.81 in
+   ==> realiste : 657 echecs, 987 sous marge ; complet : 891 echecs
+== masse paras 2 regimes (1100,) paires
+    regime 0 realiste (11887 sc.)                      echecs   120/11887 ( 1.01 %)  sous marge   258  marge min  -1.72 in
+    regime 0 complet  (15966 sc.)                      echecs   239/15966 ( 1.50 %)  sous marge   436  marge min  -1.75 in
+    regime 1 realiste (2055 sc.)                       echecs   612/2055 (29.78 %)  sous marge   825  marge min  -4.26 in
+    regime 1 complet  (2901 sc.)                       echecs   813/2901 (28.02 %)  sous marge  1076  marge min  -4.81 in
+   ==> realiste : 732 echecs, 1083 sous marge ; complet : 1052 echecs
+== masse paras 2 regimes (1300,) libre
+    regime 0 realiste (13145 sc.)                      echecs   281/13145 ( 2.14 %)  sous marge   550  marge min  -2.62 in
+    regime 0 complet  (17581 sc.)                      echecs   421/17581 ( 2.39 %)  sous marge   738  marge min  -2.62 in
+    regime 1 realiste (797 sc.)                        echecs   324/797 (40.65 %)  sous marge   403  marge min  -3.72 in
+    regime 1 complet  (1286 sc.)                       echecs   472/1286 (36.70 %)  sous marge   605  marge min  -4.81 in
+   ==> realiste : 605 echecs, 953 sous marge ; complet : 893 echecs
+== masse paras 2 regimes (1300,) paires
+    regime 0 realiste (13145 sc.)                      echecs   299/13145 ( 2.27 %)  sous marge   551  marge min  -2.62 in
+    regime 0 complet  (17581 sc.)                      echecs   468/17581 ( 2.66 %)  sous marge   770  marge min  -2.62 in
+    regime 1 realiste (797 sc.)                        echecs   348/797 (43.66 %)  sous marge   403  marge min  -4.85 in
+    regime 1 complet  (1286 sc.)                       echecs   512/1286 (39.81 %)  sous marge   599  marge min  -5.97 in
+   ==> realiste : 647 echecs, 954 sous marge ; complet : 980 echecs
+== masse paras 3 regimes (900, 1300) libre
+    regime 0 realiste (10063 sc.)                      echecs    21/10063 ( 0.21 %)  sous marge    58  marge min  -0.93 in
+    regime 0 complet  (13521 sc.)                      echecs    21/13521 ( 0.16 %)  sous marge    65  marge min  -0.93 in
+    regime 1 realiste (3082 sc.)                       echecs   284/3082 ( 9.21 %)  sous marge   494  marge min  -2.42 in
+    regime 1 complet  (4060 sc.)                       echecs   317/4060 ( 7.81 %)  sous marge   572  marge min  -2.42 in
+    regime 2 realiste (797 sc.)                        echecs   324/797 (40.65 %)  sous marge   403  marge min  -3.72 in
+    regime 2 complet  (1286 sc.)                       echecs   472/1286 (36.70 %)  sous marge   605  marge min  -4.81 in
+   ==> realiste : 629 echecs, 955 sous marge ; complet : 810 echecs
+== masse paras 3 regimes (900, 1300) paires
+    regime 0 realiste (10063 sc.)                      echecs    33/10063 ( 0.33 %)  sous marge    88  marge min  -1.32 in
+    regime 0 complet  (13521 sc.)                      echecs    35/13521 ( 0.26 %)  sous marge   114  marge min  -1.32 in
+    regime 1 realiste (3082 sc.)                       echecs   261/3082 ( 8.47 %)  sous marge   460  marge min  -2.62 in
+    regime 1 complet  (4060 sc.)                       echecs   304/4060 ( 7.49 %)  sous marge   524  marge min  -2.62 in
+    regime 2 realiste (797 sc.)                        echecs   348/797 (43.66 %)  sous marge   403  marge min  -4.85 in
+    regime 2 complet  (1286 sc.)                       echecs   512/1286 (39.81 %)  sous marge   599  marge min  -5.97 in
+   ==> realiste : 642 echecs, 951 sous marge ; complet : 851 echecs
+== masse paras 3 regimes (1000, 1400) libre
+    regime 0 realiste (11161 sc.)                      echecs    67/11161 ( 0.60 %)  sous marge   195  marge min  -1.85 in
+    regime 0 complet  (14950 sc.)                      echecs    91/14950 ( 0.61 %)  sous marge   283  marge min  -1.85 in
+    regime 1 realiste (2369 sc.)                       echecs   345/2369 (14.56 %)  sous marge   558  marge min  -3.70 in
+    regime 1 complet  (3160 sc.)                       echecs   403/3160 (12.75 %)  sous marge   648  marge min  -3.70 in
+    regime 2 realiste (412 sc.)                        echecs   203/412 (49.27 %)  sous marge   232  marge min  -3.72 in
+    regime 2 complet  (757 sc.)                        echecs   340/757 (44.91 %)  sous marge   391  marge min  -4.81 in
+   ==> realiste : 615 echecs, 985 sous marge ; complet : 834 echecs
+== masse paras 3 regimes (1000, 1400) paires
+    regime 0 realiste (11161 sc.)                      echecs    55/11161 ( 0.49 %)  sous marge   158  marge min  -0.93 in
+    regime 0 complet  (14950 sc.)                      echecs   143/14950 ( 0.96 %)  sous marge   277  marge min  -0.94 in
+    regime 1 realiste (2369 sc.)                       echecs   447/2369 (18.87 %)  sous marge   647  marge min  -3.70 in
+    regime 1 complet  (3160 sc.)                       echecs   518/3160 (16.39 %)  sous marge   774  marge min  -3.70 in
+    regime 2 realiste (412 sc.)                        echecs   220/412 (53.40 %)  sous marge   243  marge min  -4.85 in
+    regime 2 complet  (757 sc.)                        echecs   366/757 (48.35 %)  sous marge   417  marge min  -5.97 in
+   ==> realiste : 722 echecs, 1048 sous marge ; complet : 1027 echecs

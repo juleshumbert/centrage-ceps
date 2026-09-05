@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Placement des paras par programmation linéaire en nombres entiers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: {inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']]},
+  svg: {fontCache: 'global'}
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+  @page { size: A4; margin: 16mm 17mm 18mm 17mm;
+          @bottom-center { content: counter(page) " / " counter(pages); font: 8.5pt "Source Sans 3", "DejaVu Sans", sans-serif; color: #777; }
+          @top-right { content: "Placement MILP · CEPS Ariège · 4 septembre 2026"; font: 8pt "Source Sans 3", "DejaVu Sans", sans-serif; color: #999; } }
+  :root { --ink: #1c1c1c; --navy: #1f3a5f; --accent: #b3541e; --rule: #cfd6df; --bg: #f3f6fa; --muted: #5a6470; }
+  html { font-size: 10.4pt; }
+  body { font-family: "Source Serif 4", "DejaVu Serif", Georgia, serif; color: var(--ink); line-height: 1.42; margin: 0; }
+  h1, h2, h3, h4, table, .box, figcaption, .meta, .toc { font-family: "Source Sans 3", "DejaVu Sans", Arial, sans-serif; }
+  h1 { font-size: 21pt; line-height: 1.15; color: var(--navy); margin: 0 0 4pt 0; font-weight: 700; }
+  .subtitle { font-size: 12.5pt; color: var(--muted); margin: 0 0 8pt 0; font-family: "Source Sans 3", "DejaVu Sans", sans-serif; }
+  .meta { font-size: 9pt; color: var(--muted); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 4pt 0; margin: 0 0 14pt 0; }
+  h2 { font-size: 14pt; color: var(--navy); margin: 20pt 0 6pt 0; padding-top: 6pt; border-top: 2px solid var(--navy); break-after: avoid; }
+  h3 { font-size: 11.3pt; color: var(--navy); margin: 13pt 0 4pt 0; break-after: avoid; }
+  h4 { font-size: 10.4pt; margin: 9pt 0 3pt 0; break-after: avoid; }
+  p { margin: 0 0 6pt 0; text-align: justify; hyphens: auto; }
+  ul, ol { margin: 0 0 6pt 0; padding-left: 18pt; }
+  li { margin-bottom: 2.5pt; }
+  li p { margin: 0; }
+  table { border-collapse: collapse; font-size: 9.2pt; margin: 6pt 0 9pt 0; width: 100%; break-inside: avoid; }
+  table.long { break-inside: auto; }
+  table.long tr { break-inside: avoid; }
+  table.long thead { display: table-header-group; }
+  th, td { border-bottom: 1px solid var(--rule); padding: 2.6pt 5pt; vertical-align: top; text-align: left; }
+  th { background: var(--bg); color: var(--navy); font-weight: 600; border-bottom: 1.5px solid var(--navy); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.total td { font-weight: 600; }
+  .box { background: var(--bg); border-left: 3px solid var(--navy); padding: 6pt 9pt; margin: 8pt 0 9pt 0; font-size: 9.6pt; break-inside: avoid; }
+  .box.warn { border-left-color: var(--accent); }
+  .box .t { font-weight: 700; color: var(--navy); display: block; margin-bottom: 2pt; }
+  .box.warn .t { color: var(--accent); }
+  code, .mono { font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace; font-size: 8.9pt; background: #f4f4f2; padding: 0 2pt; border-radius: 2px; }
+  pre { font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace; font-size: 8.6pt; background: #f4f4f2; padding: 6pt 8pt; border-radius: 3px; margin: 4pt 0 8pt 0; white-space: pre-wrap; break-inside: avoid; }
+  figure { margin: 8pt 0 10pt 0; break-inside: avoid; }
+  figure img { width: 100%; display: block; }
+  figcaption { font-size: 8.8pt; color: var(--muted); margin-top: 3pt; }
+  .eq { margin: 2pt 0 6pt 0; }
+  .two { columns: 2; column-gap: 18pt; }
+  .toc { font-size: 9.4pt; columns: 2; column-gap: 18pt; margin: 0 0 6pt 0; }
+  .toc div { margin-bottom: 1.5pt; }
+  .toc span { color: var(--muted); margin-right: 4pt; }
+  .small { font-size: 9pt; color: var(--muted); }
+  .verdict { display: inline-block; font-family: "Source Sans 3", "DejaVu Sans", sans-serif; font-size: 8.4pt; font-weight: 600; padding: 0.5pt 5pt; border-radius: 3px; color: white; vertical-align: middle; }
+  .v1 { background: #2e7d4f; } .v2 { background: #4a7fb5; } .v3 { background: #9a9a9a; } .v4 { background: #b3541e; }
+  .sources { font-size: 8.9pt; }
+  .sources li { margin-bottom: 2pt; word-break: break-word; }
+  .sources a { color: var(--navy); text-decoration: none; }
+  .pb { break-before: page; }
+  mjx-container[display="true"] { margin: 4pt 0 6pt 0 !important; }
+</style>
+</head>
+<body>
+
+<h1>Placement des paras par programmation linéaire en nombres entiers</h1>
+<p class="subtitle">Comment le modèle est posé, pourquoi la preuve d'optimalité est lente, et ce que la littérature propose pour l'accélérer</p>
+<div class="meta">CEPS Ariège · étude <code>heuristique_remplissage</code> · script <code>placement_milp.py</code> (HiGHS via <code>scipy.optimize.milp</code>) · rédigé le 4 septembre 2026</div>
+
+<div class="toc">
+<div><span>1</span> Le problème à résoudre</div>
+<div><span>2</span> Pourquoi le centrage est linéaire</div>
+<div><span>3</span> Le modèle, contrainte par contrainte</div>
+<div><span>4</span> Comment HiGHS résout, et où ça coince</div>
+<div><span>5</span> Pistes d'accélération : revue et applicabilité</div>
+<div><span>6</span> Recommandation et plan d'essai</div>
+<div><span>7</span> Note sur l'intégration dans un binaire Rust ou C++</div>
+<div><span>8</span> Sources</div>
+</div>
+
+<div class="box"><span class="t">En deux phrases</span>
+Le placement « qui s'assoit où » se pose comme une affectation binaire para × place, avec le centrage écrit comme une bande linéaire sur le moment des paras (la masse totale ne dépend pas du placement). HiGHS trouve une bonne solution en quelques secondes ; le temps se perd à <em>prouver</em> l'optimum parce que la relaxation continue est faible (borne 26,5 pour un optimum à 41,8 sur l'exemple à 16 paras). Les techniques utiles ici sont donc celles qui resserrent la borne ou suppriment les symétries, pas celles qui accélèrent la recherche de solutions.</div>
+
+<h2>1. Le problème à résoudre</h2>
+<p>Un manifeste donne l'avion (C208B-A ou C208B-B : masse à vide et moment à vide), la masse du pilote, le carburant au décollage et la liste des $N$ paras équipés avec, pour chacun, sa masse $m_p$, éventuellement un groupe (qui saute ensemble et veut s'asseoir ensemble), un rang de sortie (ex aequo permis) et, pour les tandems, le rôle porteur ou passager. La cabine offre $S = 20$ places fixes, celles de la disposition N=20 des planches : siège copilote, sept places à droite, cinq au centre, sept à gauche (tableau 1). On cherche la place de chaque para telle que :</p>
+<ul>
+<li>le centrage reste dans l'enveloppe au décollage, avec une marge ;</li>
+<li>il y reste encore pendant le largage, après la sortie de chaque para, ceux qui restent ne bougeant pas ;</li>
+<li>les règles métier sont respectées : tandem passager juste devant son porteur, groupes assis ensemble, groupe qui sort en premier près de la porte ;</li>
+<li>et parmi les placements admissibles, on préfère le plus « réaliste » : chaque para le plus près possible du rang de porte qui correspond à son rang de sortie, chaque groupe dans la boîte la plus compacte.</li>
+</ul>
+
+<table>
+<caption class="small" style="caption-side: top; text-align: left; margin-bottom: 3pt;">Tableau 1 · Les 20 places fixes (bras $a_s$ en pouces depuis la référence, position latérale $y_s$). Porte à 307 in, côté gauche.</caption>
+<tr><th>Rangée</th><th>Indices $s$</th><th>Bras $a_s$ (in)</th><th class="num">$y_s$ (in)</th></tr>
+<tr><td>copilote</td><td>0</td><td>135,5</td><td class="num">+16</td></tr>
+<tr><td>droite</td><td>1 à 7</td><td>155,4 · 180,7 · 205,9 · 231,2 · 256,5 · 281,7 · 307,0</td><td class="num">+16</td></tr>
+<tr><td>centre</td><td>8 à 12</td><td>168,0 · 199,6 · 231,2 · 262,8 · 294,4</td><td class="num">0</td></tr>
+<tr><td>gauche</td><td>13 à 19</td><td>155,4 · 180,7 · 205,9 · 231,2 · 256,5 · 281,7 · 307,0</td><td class="num">&minus;16</td></tr>
+</table>
+
+<p>L'enveloppe du C208B (cellule 2 des notebooks) est une limite arrière constante à $204{,}35$ in, une limite avant qui recule avec la masse (179,6 in à 5500 lbs, 193,37 in à 8000 lbs, 199,15 in à la MTOW de 9062 lbs, interpolation linéaire entre ces points) et la MTOW. Contrairement aux planches, qui ne vérifient que la limite arrière et la MTOW, le modèle vérifie aussi la limite avant, qui est la contrainte active pendant le largage.</p>
+
+<h2>2. Pourquoi le centrage est linéaire</h2>
+<p>Tout repose sur une observation simple. Notons $W_0$ et $M_0$ la masse et le moment (en lbs et lbs·in/1000) de l'avion vide, du pilote et du carburant, connus avant tout placement. Une fois les paras à bord, la masse totale vaut</p>
+<div class="eq">$$W = W_0 + \sum_p m_p ,$$</div>
+<p>quel que soit le placement. Seul le moment dépend des places : si le para $p$ est en $s$, il apporte $m_p a_s / 1000$. Le centre de gravité est le quotient $\mathrm{CG} = M / W$, et la condition d'enveloppe $\mathrm{av}(W) \le \mathrm{CG} \le \mathrm{ar}$ devient, en multipliant par $W$ qui est une constante :</p>
+<div class="eq">$$\underbrace{\frac{W\,\mathrm{av}(W)}{1000} - M_0}_{\ell} \;\le\; \sum_p \frac{m_p\, a_{s(p)}}{1000} \;\le\; \underbrace{\frac{W\cdot 204{,}35}{1000} - M_0}_{h} .$$</div>
+<p>L'enveloppe est donc une <em>bande admissible sur le moment des paras</em>, dont les deux bornes $\ell$ et $h$ sont des nombres calculés une fois pour toutes. C'est pour cela que le programme est linéaire : la limite avant, pourtant fonction de la masse, est évaluée à une masse connue, et il n'y a jamais de produit de deux inconnues. Une marge $\mu$ (en pouces de CG) se traite de même : « $\mathrm{CG} - \mathrm{av} \ge \mu$ » multiplié par $W/1000$ donne un terme $-\mu W/1000$ linéaire en $\mu$.</p>
+<p>La même chose vaut à chaque étape du largage : après la sortie des $k$ premiers paras, l'ensemble $R_k$ de ceux qui restent est connu (l'ordre de sortie est une donnée), donc $W_k = W_0 + \sum_{p \in R_k} m_p$ est connu, et la bande $[\ell_k, h_k]$ aussi.</p>
+
+<h2>3. Le modèle, contrainte par contrainte</h2>
+<h3>3.1 Variables</h3>
+<ul>
+<li>$x_{p,s} \in \{0,1\}$ : le para $p$ occupe la place $s$ ($N \times S$ variables binaires, 320 pour 16 paras).</li>
+<li>$\mu \in [-50, 50]$ : marge de CG au décollage, en pouces (continue).</li>
+<li>Par groupe $g$ : $M^{\min}_g, M^{\max}_g$ (bras mini et maxi occupés) et $Y^{\min}_g, Y^{\max}_g$ (latéral), continues, bornées par les extrêmes de la cabine.</li>
+</ul>
+<p>Les tandems n'ajoutent pas de variable : on met à zéro la borne supérieure des $x_{p,s}$ interdits, ce qui revient à supprimer ces variables.</p>
+
+<h3>3.2 Affectation</h3>
+<div class="eq">$$\sum_{s} x_{p,s} = 1 \quad \forall p, \qquad\qquad \sum_{p} x_{p,s} \le 1 \quad \forall s .$$</div>
+<p>Chaque para a exactement une place, chaque place au plus un para. Sans les contraintes qui suivent, ce serait un problème d'affectation classique dont la relaxation continue a toujours une solution entière : toute la difficulté vient des contraintes « de côté ».</p>
+
+<h3>3.3 Centrage au décollage, avec marge</h3>
+<div class="eq">$$\sum_{p}\sum_{s} \frac{m_p a_s}{1000}\, x_{p,s} - \frac{W}{1000}\,\mu \;\ge\; \ell, \qquad\qquad \sum_{p}\sum_{s} \frac{m_p a_s}{1000}\, x_{p,s} + \frac{W}{1000}\,\mu \;\le\; h .$$</div>
+<p>Deux lignes pour tout le centrage. Les masses sont converties en lbs, les bras sont en pouces, le facteur 1000 garde les coefficients du même ordre que les autres (bon conditionnement numérique).</p>
+
+<h3>3.4 Centrage pendant le largage (option <code>--sequence</code>)</h3>
+<div class="eq">$$\ell_k \;\le\; \sum_{p \in R_k}\sum_{s} \frac{m_p a_s}{1000}\, x_{p,s} \;\le\; h_k \qquad k = 1, \dots, N-1 .$$</div>
+<p>Une ligne par étape, sans marge (on exige seulement de rester dans l'enveloppe en vol). Les ex aequo de rang de sortie sont ordonnés par leur position dans le manifeste ; les paras sans rang sortent en dernier. C'est cette famille de contraintes qui bloque en pratique : quand les groupes de queue sont sortis, les paras restants sont tous à l'avant et le CG vient buter sur la limite avant.</p>
+
+<h3>3.5 Tandems</h3>
+<p>Le porteur ne peut occuper qu'une place latérale ayant une place devant elle (rangs 2 à 7 de chaque côté), le passager que la place « juste devant » d'une de celles-là. Pour chaque place porteur admissible $s$ et sa place avant $\mathrm{dev}(s)$ :</p>
+<div class="eq">$$x_{\text{passager},\,\mathrm{dev}(s)} = x_{\text{porteur},\,s} .$$</div>
+<p>Fixer le porteur fixe le passager. Six paras sur seize n'ont plus que douze positions possibles au lieu de vingt, et les deux variables sont liées une à une : c'est la raison pour laquelle l'exemple avec tandems se prouve en 20 s là où l'exemple sans tandems ne se prouve pas en 60 s.</p>
+
+<h3>3.6 Cohésion des groupes : la boîte englobante</h3>
+<p>Pour chaque groupe $g$ et chaque membre $p \in g$, la boîte doit contenir la place de $p$. Le script écrit chaque condition sous deux formes, une agrégée et une désagrégée par place :</p>
+<div class="eq">$$\sum_s a_s x_{p,s} \le M^{\max}_g, \qquad\qquad M^{\max}_g \;\ge\; a_{\min} + (a_s - a_{\min})\, x_{p,s} \quad \forall s ,$$</div>
+<p>et symétriquement pour $M^{\min}_g$ (avec $a_{\max} - (a_{\max} - a_s)\,x_{p,s}$) et pour le latéral. Les deux formes sont équivalentes sur les solutions entières ; la forme désagrégée est plus forte sur la relaxation continue, parce qu'elle impose l'implication place par place au lieu de la moyenne (c'est la recette classique « désagréger les contraintes de big-M »). S'y ajoute une borne inférieure exacte sur la taille de la boîte :</p>
+<div class="eq">$$M^{\max}_g - M^{\min}_g \;\ge\; \sigma(n_g), \qquad \sigma(n) = \min_i \big(a_{(i+n-1)} - a_{(i)}\big),$$</div>
+<p>la plus petite fenêtre de bras contenant $n_g$ places (bras triés, fenêtre glissante) ; idem latéralement. Sans elle, la relaxation mettrait la boîte à taille nulle.</p>
+
+<h3>3.7 Groupes ordonnés (option <code>--groupes-ordonnes</code>)</h3>
+<div class="eq">$$M^{\min}_g \;\ge\; M^{\max}_h \qquad \text{si } g \text{ sort avant } h .$$</div>
+<p>Un groupe qui sort avant est entièrement en arrière d'un groupe qui sort après. C'est une coupe « dure » : elle enlève des solutions admissibles (un groupe imbriqué dans un autre), mais toutes celles qu'elle enlève sont peu réalistes, et elle divise le temps de preuve par trois (section 4).</p>
+
+<h3>3.8 Variante : cohésion par ancre (option <code>--cohesion ancre</code>)</h3>
+<p>Une place d'ancrage $z_{g,t} \in \{0,1\}$ par groupe, et des variables produit $y_{p,s,t} = x_{p,s} \cdot z_{g,t}$ linéarisées par $\sum_t y_{p,s,t} = x_{p,s}$ et $y_{p,s,t} \le z_{g,t}$ ; chaque membre paie $\sum_{s,t} d(s,t)\, y_{p,s,t}$, sa distance à l'ancre. C'est la formulation des problèmes de localisation, dont la relaxation est réputée plus serrée, mais elle coûte $S^2 = 400$ variables par membre. Sur le banc, elle donne des boîtes plus compactes mais ne se prouve pas mieux avec HiGHS : le modèle est trop gros.</p>
+
+<h3>3.9 Le coût de réalisme</h3>
+<p>Soit $r_s$ le rang de la place $s$ par distance croissante à la porte (1 = la plus proche) et $t_p$ le rang de sortie cible du para $p$ (rang moyen en cas d'ex aequo). Le coût est</p>
+<div class="eq">$$C(x) \;=\; w_s \sum_{p} \sum_{s} \lvert r_s - t_p \rvert\; x_{p,s} \;+\; \frac{w_g}{25} \sum_{g} \Big[ \big(M^{\max}_g - M^{\min}_g\big) + w_l \big(Y^{\max}_g - Y^{\min}_g\big) \Big],$$</div>
+<p>avec par défaut $w_s = 1$, $w_g = 2$, $w_l = 0{,}5$, et 25 in (le pas entre deux places) pour exprimer les boîtes en « pas ». Comme la place est binaire, la valeur absolue $\lvert r_s - t_p \rvert$ est une constante par couple $(p,s)$ : le premier terme est linéaire sans variable auxiliaire. Le para qui sort premier vise la place la plus proche de la porte, le suivant la deuxième, et ainsi de suite.</p>
+
+<h3>3.10 Les trois phases</h3>
+<ol>
+<li><strong>Marge maximale</strong> : $\max \mu$ sous 3.2 à 3.8. La valeur $\mu^*$ répond exactement à « existe-t-il un placement valide » et dit de combien. Instantané (0,3 s en moyenne, 0,6 s au pire sur le banc).</li>
+<li><strong>Réalisme</strong> : $\min C(x) - 10^{-3}\mu$ sous les mêmes contraintes et $\mu \ge \min(\mu^*, 0{,}5)$. Le terme en $\mu$ départage les ex aequo vers la marge la plus large. C'est cette phase qui est longue.</li>
+<li><strong>CG avant</strong> (option) : $\min \sum m_p a_s x_{p,s}$ sous $C(x) \le (1+\tau)\, C_2$. Le banc montre que c'est un compromis : avancer le CG au décollage se paie en ordre de sortie, et la marge en vol reste nulle quelle que soit $\tau$.</li>
+</ol>
+
+<h3>3.11 Taille du modèle</h3>
+<p>Sur l'exemple de référence (C208B-A, pilote 80 kg, 800 lbs, 16 paras pour 1421 kg, groupes A de 4, B de 3, C de 5, quatre solos) avec <code>--sequence</code> :</p>
+<table>
+<tr><th>Bloc</th><th class="num">Lignes</th><th>Commentaire</th></tr>
+<tr><td>Affectation (3.2)</td><td class="num">36</td><td>16 paras + 20 places</td></tr>
+<tr><td>Décollage (3.3)</td><td class="num">2</td><td>avec la marge $\mu$</td></tr>
+<tr><td>Largage (3.4)</td><td class="num">15</td><td>une par étape</td></tr>
+<tr><td>Boîtes (3.6)</td><td class="num">990</td><td>12 membres × (2 agrégées + 4 × 20 désagrégées) + 3 × 2 tailles mini</td></tr>
+<tr><td>Groupes ordonnés (3.7)</td><td class="num">3</td><td>A avant B, A avant C, B avant C</td></tr>
+<tr class="total"><td>Total</td><td class="num">1046</td><td>333 variables dont 320 binaires ; 6124 coefficients non nuls</td></tr>
+</table>
+<p>C'est un petit modèle : la relaxation continue se résout en 20 ms. La difficulté n'est pas la taille, c'est la combinatoire.</p>
+
+<figure>
+<img src="output/placement_exemple_groupes.png" alt="plan cabine">
+<figcaption>Figure 1 · Solution de la phase 2 sur l'exemple de référence (boîtes + groupes ordonnés) : groupe A (sortie 1) sur les places 282 à 307 près de la porte, B au milieu, C en zone 2, les solos et le dernier sortant (120 kg) à l'avant. CG 203,6 in, marge 0,7 in au décollage, 0,0 in au pire pendant le largage.</figcaption>
+</figure>
+
+<h2>4. Comment HiGHS résout, et où ça coince</h2>
+<h3>4.1 Le branch and bound en trois lignes</h3>
+<p>Le solveur commence par la <em>relaxation continue</em> : le même programme avec $x_{p,s} \in [0,1]$ au lieu de $\{0,1\}$. C'est un programme linéaire, résolu exactement par le simplexe, et sa valeur est une <em>borne inférieure</em> du coût entier optimal (on a agrandi l'ensemble des solutions, donc le minimum ne peut que baisser). Si la solution est entière, c'est fini. Sinon on choisit une variable fractionnaire et on crée deux sous-problèmes, $x_{p,s} = 0$ et $x_{p,s} = 1$ : c'est le <em>branchement</em>, qui construit un arbre. Chaque nœud est de nouveau relaxé ; un nœud dont la borne dépasse la meilleure solution entière connue est <em>élagué</em>, il ne peut rien contenir de mieux. Le solveur s'arrête quand l'écart relatif entre la meilleure solution (borne primale) et la plus petite borne des nœuds ouverts (borne duale) passe sous <code>mip_rel_gap</code>, 1 % ici.</p>
+<p>Un solveur moderne fait bien plus à chaque nœud : présolve (élimination de variables et de lignes redondantes), <em>coupes</em> (inégalités valides pour les solutions entières mais violées par la solution fractionnaire : Gomory, MIR, couvertures de sac à dos, cliques), heuristiques primales (arrondis, plongées, RINS, feasibility pump) qui trouvent vite de bonnes solutions entières, détection de symétries, et redémarrages. La règle générale reste : <strong>le temps total est gouverné par la qualité de la borne</strong>, c'est-à-dire par l'écart entre la relaxation continue et l'optimum entier.</p>
+
+<h3>4.2 Ce que l'on mesure sur l'exemple</h3>
+<table>
+<tr><th>Formulation (phase 2, 60 s, écart accepté 1 %)</th><th class="num">Borne LP racine</th><th class="num">Meilleure solution</th><th class="num">Borne duale finale</th><th class="num">Écart</th><th class="num">Nœuds</th><th class="num">Temps</th></tr>
+<tr><td>boîte</td><td class="num">26,55</td><td class="num">39,33</td><td class="num">31,75</td><td class="num">19 %</td><td class="num">1417</td><td class="num">60&nbsp;s (limite)</td></tr>
+<tr><td>boîte + groupes ordonnés</td><td class="num">26,55</td><td class="num">41,80</td><td class="num">41,38</td><td class="num">1 %</td><td class="num">460</td><td class="num">20,7&nbsp;s, prouvé</td></tr>
+</table>
+<p>Le journal de HiGHS (<code>disp=True</code>) donne la chronologie. Formulation boîte seule : relaxation à 26,55 en 0,1 s, remontée à 28,55 par les coupes de la racine en 2 s, solution à 39,33 trouvée par une heuristique à 7 s, puis 53 s à faire monter la borne duale de 28,6 à 31,9 par branchement (83 s de temps cumulé en strong branching, l'essentiel du travail). Avec « groupes ordonnés » : le présolve élimine 59 variables binaires sur 320 grâce à l'ordre des boîtes, les coupes de racine portent la borne à 29,4, la solution à 41,80 apparaît à 18 s et la preuve tombe à 19,5 s.</p>
+<p>Trois enseignements. D'abord la borne à la racine est très basse : 26,5 pour un optimum à 41,8, soit un écart d'intégrité de 36 %. Ensuite la coupe « groupes ordonnés » ne change <em>pas</em> la relaxation continue (même 26,55) : elle agit sur le présolve et sur l'arbre, en supprimant des sous-arbres équivalents, et divise le nombre de nœuds par trois. Enfin la borne duale monte lentement (31,7 après 1417 nœuds) : c'est bien la preuve qui coûte, pas la recherche.</p>
+
+<h3>4.3 Pourquoi la relaxation triche</h3>
+<p>Dans la relaxation, un para peut être « à moitié » sur deux places. Cela lui permet de satisfaire la bande de moment exactement (un demi-para près de la porte, un demi-para à l'avant) tout en payant un coût de rang moyen plus faible que n'importe quelle place entière. Pour les boîtes c'est pire : avec un membre réparti à 0,5 sur deux places aux deux bouts de la cabine, les contraintes désagrégées ne demandent qu'un $M^{\max}$ à mi-chemin et un $M^{\min}$ à mi-chemin, et la boîte redescend à sa taille minimale $\sigma(n_g)$. Sur l'exemple, la relaxation paie environ 6 pour les boîtes (le minimum théorique) contre 12,8 dans la solution entière, et 20,5 pour les rangs de sortie contre 29. Les deux termes trichent, et le solveur doit brancher jusqu'à ce que les paras soient entiers pour que la borne rejoigne la réalité.</p>
+
+<div class="box warn"><span class="t">Conséquence pratique</span>
+Les solutions entières de bonne qualité apparaissent dans les premières secondes (heuristiques primales). Le reste du temps est passé à remonter la borne duale pour prouver qu'il n'existe rien de mieux. Si l'usage opérationnel se contente d'un placement « bon à 10 % près » sur un coût de réalisme qui est lui-même une convention, un <code>mip_rel_gap</code> de 0,1 et un temps limite court donnent la même solution en quelques secondes. Les techniques ci-dessous ne valent que si l'on tient à la preuve, ou si les instances grossissent (deux avions, une journée entière).</div>
+
+<h2>5. Pistes d'accélération : revue et applicabilité</h2>
+<p>Le tableau 2 résume la revue ; chaque piste est ensuite détaillée avec ce qu'elle donnerait <em>ici</em>. Les verdicts vont de <span class="verdict v1">à faire</span> (gain probable, effort faible) à <span class="verdict v4">sans objet</span>.</p>
+<table class="long">
+<caption class="small" style="caption-side: top; text-align: left; margin-bottom: 3pt;">Tableau 2 · Techniques d'accélération et applicabilité au placement.</caption>
+<tr><th style="width:19%">Technique</th><th style="width:31%">Principe</th><th style="width:34%">Ce que ça donnerait ici</th><th>Effort</th><th>Verdict</th></tr>
+<tr><td>Formulation plus serrée (fenêtres candidates)</td><td>Remplacer la boîte continue par le choix d'une fenêtre parmi quelques centaines, coût exact par fenêtre</td><td>Convexifie la cohésion : borne racine de 26,5 à 30,9 et 5 à 20 fois moins de nœuds, mais modèle six fois plus dense, temps total équivalent (5.10)</td><td>fait, à alléger</td><td><span class="verdict v2">mitigé</span></td></tr>
+<tr><td>Coupes métier et symétries</td><td>Interdire les solutions équivalentes ou peu réalistes avant de brancher</td><td>Déjà en place (groupes ordonnés, tandems) : ×3. Reste : ex aequo de même groupe, masses égales au forfait</td><td>heures</td><td><span class="verdict v1">à faire</span></td></tr>
+<tr><td>CP-SAT (OR-Tools)</td><td>Solveur SAT + propagation + LNS + relaxation LP, portefeuille parallèle</td><td>Souvent meilleur que les MILP sur l'affectation à contraintes logiques ; test en une journée</td><td>1 jour en Python</td><td><span class="verdict v1">à tester</span></td></tr>
+<tr><td>Réglages du branch and bound</td><td><code>mip_rel_gap</code>, <code>mip_heuristic_effort</code>, threads, warm start, cutoff</td><td>Marginal : les solutions sont déjà trouvées vite, c'est la borne qui manque</td><td>heures (highspy ou Rust)</td><td><span class="verdict v2">utile, marginal</span></td></tr>
+<tr><td>Prétraitement</td><td>Éliminer les $x_{p,s}$ impossibles, les étapes de largage redondantes</td><td>Réduit un peu l'arbre ; utile pour les grands manifestes</td><td>heures</td><td><span class="verdict v2">utile, marginal</span></td></tr>
+<tr><td>Benders logique / branch and check</td><td>Maître : fenêtres par groupe et réalisme ; sous-problème : places individuelles sous centrage ; coupes « no-good » renforcées</td><td>Borne exacte sur le réalisme dans le maître, sous-problème minuscule ; mais boucle itérative sans callback dans HiGHS</td><td>2 à 3 jours</td><td><span class="verdict v2">2e option</span></td></tr>
+<tr><td>Génération de colonnes / branch-and-price</td><td>Une colonne = placement complet d'un groupe ; maître = une colonne par groupe + capacités + bandes de moment ; pricing = petite affectation</td><td>Borne de Dantzig-Wolfe strictement meilleure ; mais il faut coder l'arbre soi-même</td><td>1 à 2 semaines</td><td><span class="verdict v3">si les instances grossissent</span></td></tr>
+<tr><td>Relaxation lagrangienne</td><td>Dualiser les bandes de moment ; le reste est une affectation résolue en combinatoire</td><td>Borne égale à celle de la relaxation LP (propriété d'intégrité) ; intéressant seulement pour un binaire sans solveur</td><td>1 semaine</td><td><span class="verdict v3">sans solveur seulement</span></td></tr>
+<tr><td>Benders classique</td><td>Variables entières dans le maître, sous-problème continu dualisé</td><td>Le sous-problème (boîtes, $\mu$) est trivial : les coupes ne feraient que réécrire les contraintes 3.6 une à une</td><td></td><td><span class="verdict v4">sans objet</span></td></tr>
+</table>
+
+<h3>5.1 Resserrer la formulation : fenêtres candidates pour les groupes</h3>
+<p>C'est la piste la plus directe parce qu'elle s'attaque à la cause mesurée en 4.3. Pour un groupe de $n_g$ membres, on énumère à l'avance les <em>fenêtres</em> $w = [a^{\text{lo}}_w, a^{\text{hi}}_w] \times [y^{\text{lo}}_w, y^{\text{hi}}_w]$ dont les bornes sont des bras et des latéraux de places, qui contiennent au moins $n_g$ places, et dont les bornes sont atteintes par une place intérieure (sinon la fenêtre est dominée par une plus petite). Avec 12 bras distincts et 3 rangées cela fait au plus $78 \times 6 = 468$ fenêtres avant filtrage. Une variable binaire $u_{g,w}$ par fenêtre, et :</p>
+<div class="eq">$$\sum_{w} u_{g,w} = 1, \qquad x_{p,s} \le \sum_{w \ni s} u_{g,w} \quad \forall p \in g,\ \forall s, \qquad \sum_{s \in w} x_{p,s} \ge u_{g,w} \quad \forall p \in g,\ \forall w,$$</div>
+<p>et le coût de cohésion devient $\frac{w_g}{25}\sum_g \sum_w \big[(a^{\text{hi}}_w - a^{\text{lo}}_w) + w_l (y^{\text{hi}}_w - y^{\text{lo}}_w)\big] u_{g,w}$, exact par fenêtre. Les variables de boîte disparaissent ; « groupes ordonnés » s'écrit $\sum_w a^{\text{lo}}_w u_{g,w} \ge \sum_w a^{\text{hi}}_w u_{h,w}$. Sur la relaxation, le coût d'un groupe est une combinaison convexe de coûts de fenêtres réelles, et tous les membres doivent être dans les mêmes fenêtres avec les mêmes proportions : c'est exactement la <em>convexification</em> que produirait une décomposition de Dantzig-Wolfe de la sous-structure « boîte d'un groupe », obtenue ici sans génération de colonnes parce que les colonnes se comptent en centaines. La borne ne peut qu'augmenter (l'ensemble relâché est inclus dans celui de la formulation boîte). Il faut rester lucide : la relaxation peut encore répartir un groupe à moitié sur deux petites fenêtres opposées, donc le gain sur la borne n'est pas garanti a priori, et le modèle grossit. Le résultat mesuré est en 5.10 : borne nettement meilleure, temps équivalent.</p>
+
+<h3>5.2 Symétries et coupes métier</h3>
+<p>Deux solutions sont symétriques quand elles se déduisent l'une de l'autre par une permutation qui ne change ni le coût ni la faisabilité ; le branch and bound les explore toutes les deux en pure perte. La revue de Pfetsch et Rehn (six méthodes comparées : inégalités de rupture de symétrie, orbital fixing, orbital branching, isomorphism pruning, orbitopes) conclut à un gain modeste en moyenne sur MIPLIB, de l'ordre de 15 %, mais de 10 à 100 fois sur les instances fortement symétriques. HiGHS détecte les symétries automatiquement (<code>mip_detect_symmetry</code>, activé par défaut), mais uniquement les symétries <em>exactes</em> du modèle.</p>
+<p>Or le placement a surtout des <em>quasi</em>-symétries : deux membres d'un même groupe ont le même rang de sortie cible, donc le même coût sur toutes les places ; seule leur masse les distingue, à travers les bandes de moment. Le solveur ne peut pas les fusionner, et l'arbre explore toutes les permutations des membres dans la fenêtre du groupe. Trois remèdes, du plus sûr au plus agressif :</p>
+<ul>
+<li><strong>Symétries exactes</strong> : deux paras de même masse, même groupe et même rang (fréquent au forfait, où toutes les masses sont égales) sont interchangeables ; imposer $\sum_s s\, x_{p,s} \le \sum_s s\, x_{p',s}$ (ordre lexicographique des places) ne perd aucune solution distincte.</li>
+<li><strong>Règles de dominance</strong> : « groupes ordonnés » en est une, et elle divise le temps par trois sans toucher à la borne LP. Dans le même esprit : dans un groupe, le plus lourd le plus en arrière (ou en avant) selon le signe de la marge disponible, ou le passager de tandem toujours le plus léger. Ce sont des coupes dures : elles enlèvent des solutions, à valider avec les utilisateurs.</li>
+<li><strong>Branchement sur les fenêtres</strong> (5.1) : brancher sur $u_{g,w}$ d'abord fixe la région du groupe avant les places individuelles, ce qui neutralise les permutations internes tant que la région n'est pas décidée.</li>
+</ul>
+
+<h3>5.3 CP-SAT</h3>
+<p>CP-SAT (OR-Tools, Apache 2.0) est un solveur hybride : propagation de contraintes, apprentissage de clauses SAT (lazy clause generation), relaxation LP pour les bornes, recherche à grand voisinage (LNS) pour les solutions, et un portefeuille de stratégies en parallèle. Le primer de Krupke le présente comme « compétitif et parfois supérieur aux solveurs MIP », surtout sur les problèmes à contraintes logiques nombreuses et sans variable continue ; les MIP gardent l'avantage quand la relaxation linéaire est forte. Le placement est dans la première catégorie : tout est entier (bras en dixièmes de pouce, masses en dixièmes de lb), l'affectation s'écrit avec <code>AddExactlyOne</code> et <code>AddAtMostOne</code>, les boîtes avec <code>AddMinEquality</code> et <code>AddMaxEquality</code> sans aucune linéarisation, les tandems avec <code>OnlyEnforceIf</code> au lieu de big-M, et une solution de départ (le plan A à E de l'heuristique) se passe par <code>AddHint</code>. Le primer recommande de toujours comparer à HiGHS ou Gurobi sur son propre problème : c'est un essai d'une journée avec <code>pip install ortools</code>, à faire sur l'exemple de référence et le banc de manifestes aléatoires. Pour un binaire Rust ou C++, la contrepartie est une compilation lourde (Abseil, protobuf).</p>
+
+<h3>5.4 Réglages du branch and bound et warm start</h3>
+<p>La discussion de référence sur le dépôt HiGHS est sans ambiguïté : <code>mip_heuristic_effort</code> (0,05 par défaut, plus d'effort sur les heuristiques primales) et <code>mip_rel_gap</code> « couvrent l'essentiel de ce que l'on peut faire par réglage » ; les mainteneurs ajoutent que la formulation « peut toujours aider ». Un warm start (donner au solveur une solution entière de départ) permet de couper dès la racine tout ce qui dépasse son coût et aide le présolve, mais, dit la même source, « l'effort principal est de remonter la borne duale, donc l'adjectif <em>warm</em> est généreux ». Ici les heuristiques trouvent déjà la solution finale en quelques secondes : ces réglages ne changeront pas l'ordre de grandeur. Notons que <code>scipy.optimize.milp</code> n'expose ni <code>mip_heuristic_effort</code>, ni le warm start (<code>setSolution</code>), ni le cutoff : il faut passer par <code>highspy</code>, ou par le crate <code>highs</code> en Rust, qui donnent accès à toutes les options.</p>
+
+<h3>5.5 Prétraitement</h3>
+<p>Avant de résoudre, on peut éliminer les $x_{p,s}$ qui ne peuvent appartenir à aucune solution admissible : fixer $x_{p,s} = 1$ et vérifier si les bornes de moment atteignables par les autres paras (tri des masses contre les bras, comme <code>para_moment_bounds</code>) coupent encore chaque bande $[\ell_k, h_k]$ ; sinon la variable est fixée à zéro. De même, une étape de largage dont la bande contient tout le moment atteignable est redondante et peut être retirée. Ce sont des gains d'arbre modestes, comparables à ce que fait déjà le présolve, mais explicites et donc contrôlables.</p>
+
+<h3>5.6 Décomposition de Benders classique</h3>
+<p>Le schéma de Benders (1962) traite $\min\{c^\top x + d^\top y \mid Ax + By \ge b,\ y \in Y,\ x \ge 0\}$ en gardant les variables compliquantes $y$ (entières) dans un maître et en projetant les $x$ continues : pour $\bar y$ fixé, le sous-problème est un programme linéaire dont la solution duale $\bar u$ fournit une <em>coupe d'optimalité</em> $z \ge (b - By)^\top \bar u$ (ou une coupe de faisabilité $(b - By)^\top \bar u \le 0$ si le sous-problème est infaisable), ajoutée au maître, et on itère. La revue de Rahmaniani et al. recense les accélérations (coupes Pareto-optimales de Magnanti-Wong, multi-coupes, inégalités valides dans le maître, branch-and-Benders-cut avec contraintes paresseuses, local branching) et rappelle que plus de 90 % du temps se passe en général dans le maître.</p>
+<p>Ici la structure n'y est pas. Une fois les $x_{p,s}$ fixés, les seules variables continues sont $\mu$ et les bornes de boîtes, et le sous-problème se résout en lisant le min et le max des bras occupés. Les coupes de Benders ne feraient que reconstruire, une itération à la fois, les contraintes 3.6 que le modèle compact écrit d'emblée, avec une relaxation plus faible en prime. Benders classique est fait pour des sous-problèmes continus <em>gros</em> (conception de réseaux, programmes stochastiques à deux étapes), pas pour celui-ci.</p>
+
+<h3>5.7 Benders logique (LBBD) et branch and check</h3>
+<p>Hooker généralise Benders au cas où le sous-problème est un problème d'optimisation quelconque : la coupe vient d'un <em>dual d'inférence</em>, c'est-à-dire de la preuve d'optimalité ou d'infaisabilité du sous-problème, et elle doit être conçue pour chaque classe de problème. Le motif canonique, celui qui a donné des accélérations « de plusieurs ordres de grandeur » en planification-ordonnancement, est : maître MILP d'affectation, sous-problèmes de faisabilité résolus par programmation par contraintes, coupes « no-good » renforcées, et, condition de succès soulignée par l'auteur, une <em>relaxation du sous-problème exprimée dans les variables du maître</em>.</p>
+<p>Le placement se découpe naturellement de cette façon :</p>
+<ul>
+<li><strong>Maître</strong> : les fenêtres $u_{g,w}$ de 5.1 et les rangs de porte, c'est-à-dire tout le coût de réalisme, sans les places individuelles ; plus une relaxation du centrage écrite avec les fenêtres (le moment d'un groupe est au moins $\sum_{p\in g} m_p\, a^{\text{lo}}_w /1000$ et au plus $\sum m_p\, a^{\text{hi}}_w / 1000$, d'où des bandes de moment agrégées).</li>
+<li><strong>Sous-problème</strong> : fenêtres fixées, placer les individus dans leurs fenêtres sous les bandes de moment au décollage et à chaque étape ; c'est un problème de faisabilité minuscule (quelques dizaines de binaires), MILP ou énumération.</li>
+<li><strong>Coupe</strong> : si le sous-problème est infaisable, $\sum_{(g,w) \in F} u_{g,w} \le \lvert F \rvert - 1$ où $F$ est l'ensemble des fenêtres choisies ; renforcée en retirant les groupes un à un et en revérifiant jusqu'à trouver un sous-ensemble minimal, comme le recommande Hooker (« strengthened nogood cuts »). C'est aussi le schéma des <em>combinatorial Benders cuts</em> de Codato et Fischetti, où la coupe vient d'un sous-système infaisable irréductible.</li>
+</ul>
+<p>Le maître porte alors une borne exacte sur le réalisme, ce qui règle le problème de 4.3, et le sous-problème ne coûte rien. Le risque est le nombre d'itérations si le centrage en vol rend infaisables beaucoup de combinaisons de fenêtres ; la relaxation agrégée dans le maître sert précisément à limiter cela. Le <em>branch and check</em> (une seule résolution du maître, sous-problème vérifié à chaque solution entière rencontrée, coupe ajoutée en contrainte paresseuse) est la variante efficace, mais elle suppose un solveur avec callback de contraintes paresseuses : SCIP, CBC, Gurobi ou CP-SAT le permettent, HiGHS non, ce qui impose la boucle itérative maître-sous-problème. Deux à trois jours de développement ; c'est la deuxième option si les fenêtres seules ne suffisent pas.</p>
+
+<h3>5.8 Génération de colonnes et branch-and-price</h3>
+<p>La décomposition de Dantzig-Wolfe réécrit un programme dont les contraintes se séparent en blocs faciles reliés par quelques contraintes couplantes : chaque bloc est remplacé par une combinaison convexe de ses solutions entières (les <em>colonnes</em>), et le maître ne garde que les contraintes couplantes. Comme les colonnes sont trop nombreuses pour être écrites, on résout un <em>maître restreint</em> sur un sous-ensemble, on lit ses variables duales $\pi$, et un <em>problème de pricing</em> par bloc cherche une colonne de coût réduit négatif $c_j - \pi^\top a_j \lt 0$ ; s'il n'y en a pas, la relaxation est optimale. Sa valeur est en général strictement meilleure que celle du modèle compact, parce que l'on optimise sur l'enveloppe convexe des solutions entières de chaque bloc (Lübbecke, Feillet). Pour obtenir l'optimum entier, il faut brancher en restant compatible avec le pricing (règle de Ryan-Foster sur les paires d'éléments, ou branchement sur les variables du problème original) : c'est le branch-and-price.</p>
+<p>Ici, un bloc est un groupe : une colonne est un placement complet du groupe (fenêtre et place de chaque membre), avec son coût de réalisme exact et son vecteur de moments (décollage et chaque étape). Le maître choisit une colonne par groupe et garde les solos en variables $x$, sous les capacités des places et les bandes de moment. Le pricing d'un groupe, pour des duals $\pi_s$ sur les places et $\lambda_k$ sur les bandes, est une petite affectation membres × places avec un terme linéaire en $\lambda$ : quelques millisecondes. La borne obtenue domine celle de 5.1, puisqu'elle convexifie aussi la répartition des membres, pas seulement la fenêtre. Mais HiGHS n'offre pas de branch-and-price : il faut écrire l'arbre, la gestion des colonnes et la stabilisation des duals soi-même, une à deux semaines. Pour 16 paras et 3 groupes, c'est disproportionné ; cela devient pertinent si le problème s'étend à tous les sticks d'une journée sur deux avions, où le nombre de groupes se compte en dizaines.</p>
+
+<h3>5.9 Relaxation lagrangienne</h3>
+<p>Fisher (1981) décrit la recette : garder les contraintes « faciles » (l'affectation) et déplacer les « pénibles » (les bandes de moment) dans l'objectif avec des multiplicateurs $\lambda \ge 0$ ; pour $\lambda$ fixé le problème relâché est une affectation résolue en combinatoire, et $\max_\lambda$ (par sous-gradient) donne une borne. Le théorème de Geoffrion tempère : quand le problème facile a la propriété d'intégrité (sa relaxation continue est entière, ce qui est le cas de l'affectation), la borne lagrangienne <em>égale</em> celle de la relaxation LP. On ne gagnerait donc rien en qualité de borne par rapport à ce que HiGHS calcule déjà en 20 ms. L'intérêt serait ailleurs : construire un branch and bound maison, sans aucun solveur, dans un binaire Rust pur, où chaque borne se calcule par un algorithme hongrois. C'est une semaine de travail pour un résultat au mieux équivalent, à ne considérer que si l'absence de compilateur C sur la machine cible devient une contrainte dure.</p>
+
+<h3>5.10 Premier essai de la formulation fenêtres</h3>
+<p>La formulation de 5.1 a été codée telle quelle (<code>bench_fenetres.py</code>, même exemple, même temps limite) pour mesurer plutôt que supposer :</p>
+<table>
+<tr><th>Formulation (phase 2, 60 s)</th><th class="num">Variables</th><th class="num">Lignes</th><th class="num">Borne LP racine</th><th class="num">Meilleure solution</th><th class="num">Borne duale finale</th><th class="num">Nœuds</th><th class="num">Temps</th></tr>
+<tr><td>boîte</td><td class="num">333</td><td class="num">1043</td><td class="num">26,55</td><td class="num">39,33</td><td class="num">31,75</td><td class="num">1417</td><td class="num">60&nbsp;s, écart&nbsp;19&nbsp;%</td></tr>
+<tr><td>fenêtres</td><td class="num">849</td><td class="num">2338</td><td class="num">30,93</td><td class="num">39,79</td><td class="num">33,66</td><td class="num">67</td><td class="num">60&nbsp;s, écart&nbsp;15&nbsp;%</td></tr>
+<tr><td>boîte + ordonnés</td><td class="num">333</td><td class="num">1046</td><td class="num">26,55</td><td class="num">41,80</td><td class="num">41,38</td><td class="num">460</td><td class="num">20,7&nbsp;s, prouvé</td></tr>
+<tr><td>fenêtres + ordonnés</td><td class="num">849</td><td class="num">2341</td><td class="num">30,94</td><td class="num">41,80</td><td class="num">41,47</td><td class="num">89</td><td class="num">27,4&nbsp;s, prouvé</td></tr>
+</table>
+<p>Après filtrage il reste 172, 213 et 143 fenêtres pour les groupes A, B et C. La borne racine passe de 26,5 à 30,9 (écart d'intégrité de 36 % à 26 %) et le nombre de nœuds est divisé par 5 à 20 : la relaxation est bien plus serrée, comme prévu. Mais le programme linéaire est six fois plus dense (38 000 coefficients contre 6 000) et chaque nœud coûte d'autant plus : au total, le temps de preuve est équivalent (27 s contre 21 s) et l'écart résiduel sans « ordonnés » n'est que légèrement meilleur (15 % contre 19 %). Le gain sur la borne est réel mais il est absorbé par le coût du modèle. Pour le convertir en temps, il faudrait un encodage plus léger : ne garder que le lien $x_{p,s} \le \sum_{w \ni s} u_{g,w}$ (la moitié des lignes), éliminer par dominance les fenêtres qui ne peuvent jamais être une boîte englobante optimale, ou brancher en priorité sur les $u$ (ce que HiGHS ne permet pas de dicter, mais CP-SAT si, via ses stratégies de décision). En l'état, sur cette taille d'instance, la coupe « groupes ordonnés » fait plus pour le temps de calcul que le resserrement de la formulation.</p>
+
+<h2>6. Recommandation et plan d'essai</h2>
+<ol>
+<li><strong>Décider ce que l'on veut</strong> : une solution en quelques secondes (alors <code>mip_rel_gap</code> à 10 % et 10 s de limite suffisent dès aujourd'hui) ou une preuve d'optimalité (alors ce qui suit).</li>
+<li><strong>Coupes métier et symétries</strong> (5.2) : c'est ce qui a le mieux marché (« groupes ordonnés » : ×3 et un présolve qui élimine un cinquième des binaires). Ajouter les symétries exactes au forfait, puis proposer aux utilisateurs une ou deux règles de dominance supplémentaires (plus lourd du groupe en arrière, passager de tandem le plus léger) et mesurer sur <code>test_placement.py</code>.</li>
+<li><strong>Essai CP-SAT</strong> (5.3) sur les mêmes instances : une journée. C'est le solveur dont le profil colle le mieux au problème (tout entier, contraintes logiques, boîtes natives, branchement sur les fenêtres dictable). Si CP-SAT prouve en quelques secondes, la question est réglée côté Python ; côté binaire, HiGHS reste plus simple à embarquer.</li>
+<li><strong>Alléger la formulation fenêtres</strong> (5.10) : n'en garder que le lien montant et filtrer les fenêtres par dominance, pour transformer en temps le gain de borne déjà mesuré.</li>
+<li><strong>Passer à highspy ou au crate Rust</strong> (5.4) pour le warm start par le plan A à E, le cutoff et <code>mip_heuristic_effort</code> : une demi-journée, gain marginal mais gratuit.</li>
+<li><strong>Benders logique</strong> (5.7) seulement si 2 à 4 laissent encore des instances non prouvées en 60 s.</li>
+<li><strong>Branch-and-price</strong> (5.8) seulement pour un changement d'échelle du problème.</li>
+</ol>
+
+<h2>7. Note sur l'intégration dans un binaire Rust ou C++</h2>
+<p>Le modèle se transporte tel quel : c'est une matrice creuse en triplets (ligne, colonne, coefficient), des bornes de lignes et de variables, un vecteur de coût et un masque d'intégrité, exactement ce que construit <code>build()</code>. En Rust, le crate <code>highs</code> (bindings sûrs, compile HiGHS par cmake via <code>highs-sys</code>) prend ces triplets directement ; <code>good_lp</code> offre une couche de modélisation par expressions avec HiGHS en backend et permet de basculer sur CBC, SCIP (<code>russcip</code>) ou microlp par simple feature. En C++, HiGHS s'ajoute par <code>add_subdirectory</code> ou <code>FetchContent</code> et se lie en statique ; son API C (<code>Highs_passMip</code>, <code>Highs_setSolution</code>, <code>Highs_setDoubleOptionValue</code>) couvre le warm start et toutes les options de la section 5.4. Dans les deux cas il faut un compilateur C++ sur la machine de build, ce qui manque sur le poste actuel ; la bibliothèque statique peut être construite ailleurs avec la même cible musl et liée via <code>build.rs</code>.</p>
+
+<h2>8. Sources</h2>
+<ol class="sources">
+<li>J. N. Hooker, <em>Logic-based Benders decomposition for large-scale optimization</em>, 2019. <a href="https://arxiv.org/abs/1910.11944">arxiv.org/abs/1910.11944</a></li>
+<li>R. Rahmaniani, T. G. Crainic, M. Gendreau, W. Rei, <em>The Benders decomposition algorithm: a literature review</em>, CIRRELT-2016-30 (European Journal of Operational Research, 2017). <a href="https://www.cirrelt.ca/documentstravail/cirrelt-2016-30.pdf">cirrelt.ca/documentstravail/cirrelt-2016-30.pdf</a></li>
+<li>G. Codato, M. Fischetti, <em>Combinatorial Benders' cuts for mixed-integer linear programming</em>, Operations Research 54(4), 2006. <a href="https://pubsonline.informs.org/doi/10.1287/opre.1060.0286">pubsonline.informs.org/doi/10.1287/opre.1060.0286</a></li>
+<li>M. E. Lübbecke, <em>Selected topics in column generation</em>, 2002 ; et Lübbecke, Desrosiers, Operations Research 53(6), 2005. <a href="https://optimization-online.org/wp-content/uploads/2002/12/580.pdf">optimization-online.org/wp-content/uploads/2002/12/580.pdf</a></li>
+<li>D. Feillet, <em>A tutorial on column generation and branch-and-price for vehicle routing problems</em>, 4OR 8, 2010. <a href="https://link.springer.com/article/10.1007/s10288-010-0130-z">link.springer.com/article/10.1007/s10288-010-0130-z</a></li>
+<li>M. E. Pfetsch, T. Rehn, <em>A computational comparison of symmetry handling methods for mixed integer programs</em>, Mathematical Programming Computation 11, 2019. <a href="https://optimization-online.org/wp-content/uploads/2015/11/5209.pdf">optimization-online.org/wp-content/uploads/2015/11/5209.pdf</a></li>
+<li>M. L. Fisher, <em>The Lagrangian relaxation method for solving integer programming problems</em>, Management Science 27(1), 1981. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.27.1.1">pubsonline.informs.org/doi/10.1287/mnsc.27.1.1</a></li>
+<li>HiGHS, options du solveur MIP. <a href="https://ergo-code.github.io/HiGHS/dev/options/definitions/">ergo-code.github.io/HiGHS/dev/options/definitions</a> ; discussion « parameter tuning to make the MIP solve faster » #2661. <a href="https://github.com/ERGO-Code/HiGHS/discussions/2661">github.com/ERGO-Code/HiGHS/discussions/2661</a> ; warm start, discussion #2309. <a href="https://github.com/ERGO-Code/HiGHS/discussions/2309">github.com/ERGO-Code/HiGHS/discussions/2309</a></li>
+<li>D. Krupke, <em>The CP-SAT primer: using and understanding Google OR-Tools' CP-SAT solver</em>. <a href="https://github.com/d-krupke/cpsat-primer">github.com/d-krupke/cpsat-primer</a></li>
+<li>Wikipedia, <em>Benders decomposition</em> et <em>Branch and price</em> (formes standard). <a href="https://en.wikipedia.org/wiki/Benders_decomposition">en.wikipedia.org/wiki/Benders_decomposition</a>, <a href="https://en.wikipedia.org/wiki/Branch_and_price">en.wikipedia.org/wiki/Branch_and_price</a></li>
+<li>Masse et centrage aéronautique par MILP : <em>A mixed integer programming approach to the aircraft weight and balance problem</em>, Procedia Social and Behavioral Sciences 20, 2011. <a href="https://www.sciencedirect.com/science/article/pii/S1877042811014947">sciencedirect.com/science/article/pii/S1877042811014947</a> ; Zhao et al., <em>Optimization approach to the aircraft weight and balance problem with the centre of gravity envelope constraints</em>, IET Intelligent Transport Systems, 2021. <a href="https://ietresearch.onlinelibrary.wiley.com/doi/full/10.1049/itr2.12096">ietresearch.onlinelibrary.wiley.com/doi/full/10.1049/itr2.12096</a> ; <em>Stochastic programming for seat allocation of passengers with body weight uncertainty in aircraft load optimization</em>, Digital Transportation and Safety, 2025 (affectation par rangée, CG en bande de moment, incertitude sur les masses). <a href="https://www.maxapress.com/article/doi/10.48130/dts-0025-0010">maxapress.com/article/doi/10.48130/dts-0025-0010</a></li>
+<li>Crates Rust : <a href="https://github.com/rust-or/highs">github.com/rust-or/highs</a>, <a href="https://github.com/rust-or/good_lp">github.com/rust-or/good_lp</a>.</li>
+</ol>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+__pycache__/
+.ipynb_checkpoints/
+.claude/settings.local.json
+nul
+
+# binaires compiles (a reconstruire : voir heuristique_remplissage/README.md)
+heuristique_remplissage/enumeration/enumere
+heuristique_remplissage/placement_rs/placement
+heuristique_remplissage/placement_cpp/livrable/placement-*
+heuristique_remplissage/placement_cpp/optim_centrage.zip
+
+# sources tierces et build du binaire C++ (build.sh les recupere)
+heuristique_remplissage/placement_cpp/HiGHS/
+heuristique_remplissage/placement_cpp/build/
+heuristique_remplissage/placement_cpp/json.hpp
+heuristique_remplissage/placement_cpp/build-macos-*/
