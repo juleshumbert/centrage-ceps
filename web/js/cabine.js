@@ -39,11 +39,13 @@ export function dessinerCabine(svg, avion, paras, opts = {}) {
   svg.replaceChildren();
   const cab = avion.cabine, places = avion.places, rangees = avion.rangees || [];
   const dess = avion.dessin || { fuselage: [[cab.x0, Math.max(...cab.zones.map((z) => z.largeur)) / 2], [cab.x1, Math.max(...cab.zones.map((z) => z.largeur)) / 2]], blocs: [], graduations: [] };
+  const prim = Array.isArray(dess.primitives) ? dess.primitives : null;   // schema explicite (planches Caravan)
+  if (prim && !dess.fuselage) dess.fuselage = [[dess.vue.x0, dess.vue.demi_largeur], [dess.vue.x1, dess.vue.demi_largeur]];
   const W = 960, margeG = 56, margeD = 24;
-  const x0 = Math.min(cab.x0, dess.fuselage[0][0]), x1 = Math.max(cab.x1, dess.fuselage[dess.fuselage.length - 1][0]);
-  const demiLarg = Math.max(...dess.fuselage.map((p) => p[1]), ...cab.zones.map((z) => z.largeur / 2));
+  const x0 = prim ? dess.vue.x0 : Math.min(cab.x0, dess.fuselage[0][0]), x1 = prim ? dess.vue.x1 : Math.max(cab.x1, dess.fuselage[dess.fuselage.length - 1][0]);
+  const demiLarg = prim ? Math.max(...cab.zones.map((z) => z.largeur / 2)) : Math.max(...dess.fuselage.map((p) => p[1]), ...cab.zones.map((z) => z.largeur / 2));
   const yExt = Math.max(...rangees.map((r) => Math.abs(r.y)), demiLarg);
-  const demiTotal = Math.max(yExt + demiLarg * 0.5, (dess.empennage ? dess.empennage.demi_envergure : 0) * 0.42, demiLarg * 1.4);
+  const demiTotal = prim ? Math.max(dess.vue.demi_largeur, yExt + demiLarg * 0.3) : Math.max(yExt + demiLarg * 0.5, (dess.empennage ? dess.empennage.demi_envergure : 0) * 0.42, demiLarg * 1.4);
   const ech = (W - margeG - margeD) / (x1 - x0);
   const echY = Math.min(ech * 2.4, 300 / demiTotal);   // etirement lateral admis : c'est un schema
   const hCab = 2 * demiTotal * echY;
@@ -59,27 +61,41 @@ export function dessinerCabine(svg, avion, paras, opts = {}) {
   const r = Math.max(11, Math.min(20, pitchMin(places) * ech * 0.42));
   const demiA = (x) => { const f = dess.fuselage; if (x <= f[0][0]) return f[0][1]; for (let i = 1; i < f.length; i++) if (x <= f[i][0]) { const [xa, ya] = f[i - 1], [xb, yb] = f[i]; return ya + (yb - ya) * (x - xa) / (xb - xa); } return f[f.length - 1][1]; };
 
+  const TRAITS = { fuselage: { fill: 'var(--surface-2)', stroke: 'var(--ink-2)', w: 2.2 }, porte: { fill: 'var(--amber)', stroke: 'var(--amber)', w: 2 }, aile: { fill: '#c8d6e8', stroke: 'var(--ink-2)', w: 1.6 },
+    roue: { fill: '#5c6f82', stroke: 'var(--ink-2)', w: 1.2 }, pilote: { fill: '#2d6a9f', stroke: '#1a3a5c', w: 1.5 }, repere: { stroke: 'var(--ink)', w: 1.5, dash: '5 4' }, repere_rouge: { stroke: 'var(--danger)', w: 1.5, dash: '5 4' } };
+  if (prim) {
+    for (const q of prim) {
+      const st = TRAITS[q.trait] || TRAITS.fuselage;
+      if (q.type === 'polygone') svg.appendChild(el('polygon', { points: q.points.map(([x, y]) => `${px(x)},${py(y)}`).join(' '), fill: st.fill || 'none', stroke: st.stroke, 'stroke-width': st.w, 'stroke-linejoin': 'round' }));
+      else if (q.type === 'cercle') { svg.appendChild(el('circle', { cx: px(q.centre[0]), cy: py(q.centre[1]), r: Math.max(6, q.rayon * ech), fill: st.fill, stroke: st.stroke, 'stroke-width': st.w })); if (q.nom) svg.appendChild(el('text', { x: px(q.centre[0]), y: py(q.centre[1]) + 4, class: 'para-num', 'text-anchor': 'middle' }, q.nom)); }
+      else if (q.type === 'ligne') { svg.appendChild(el('line', { x1: px(q.x), x2: px(q.x), y1: py(-q.demi), y2: py(q.demi), stroke: st.stroke, 'stroke-width': st.w, 'stroke-dasharray': st.dash || null })); svg.appendChild(el('text', { x: px(q.x), y: py(q.demi) - 3, class: 'cab-grad', 'text-anchor': 'middle', fill: st.stroke }, q.nom || '')); }
+      if (q.etiquette) svg.appendChild(el('text', { x: px(q.etiquette[0]), y: py(q.etiquette[1]) + 4, class: 'cab-zone', 'text-anchor': 'middle', opacity: 0.6 }, q.nom));
+      if (q.trait === 'porte') svg.appendChild(el('text', { x: (px(q.points[0][0]) + px(q.points[2][0])) / 2, y: py(Math.min(...q.points.map((p) => p[1]))) + 14, class: 'cab-porte', 'text-anchor': 'middle' }, 'porte'));
+    }
+  }
   // aile et empennage (sous le fuselage)
-  if (dess.aile) {
+  if (!prim && dess.aile) {
     const env = Math.max(demiTotal, demiLarg * 1.3);
     for (const sg of [-1, 1]) svg.appendChild(el('polygon', { points: `${px(dess.aile.x0)},${py(sg * demiA(dess.aile.x0))} ${px(dess.aile.x0 + (dess.aile.x1 - dess.aile.x0) * 0.15)},${py(sg * env)} ${px(dess.aile.x1)},${py(sg * env)} ${px(dess.aile.x1)},${py(sg * demiA(dess.aile.x1))}`, fill: '#c8d6e8', stroke: 'var(--line-2)', 'stroke-width': 1 }));
   }
-  if (dess.empennage) {
+  if (!prim && dess.empennage) {
     const e = dess.empennage, env = Math.min(demiTotal, e.demi_envergure * 0.42);
     for (const sg of [-1, 1]) svg.appendChild(el('polygon', { points: `${px(e.x0)},${py(sg * demiA(e.x0))} ${px(e.x0 + (e.x1 - e.x0) * 0.4)},${py(sg * env)} ${px(e.x1)},${py(sg * env)} ${px(e.x1)},${py(sg * demiA(e.x1))}`, fill: '#c8d6e8', stroke: 'var(--line-2)', 'stroke-width': 1 }));
   }
-  // fuselage : profil en plan, symetrique
+  // fuselage : profil en plan, symetrique (mode generique)
   const f = dess.fuselage;
-  const contour = [...f.map(([x, d]) => `${px(x)},${py(-d)}`), ...f.slice().reverse().map(([x, d]) => `${px(x)},${py(d)}`)].join(' ');
-  svg.appendChild(el('polygon', { points: contour, fill: 'var(--surface-2)', stroke: 'var(--ink-2)', 'stroke-width': 1.6 }));
+  if (!prim) {
+    const contour = [...f.map(([x, d]) => `${px(x)},${py(-d)}`), ...f.slice().reverse().map(([x, d]) => `${px(x)},${py(d)}`)].join(' ');
+    svg.appendChild(el('polygon', { points: contour, fill: 'var(--surface-2)', stroke: 'var(--ink-2)', 'stroke-width': 1.6 }));
+  }
   // zones cabine (trapezes) et blocs
   for (const z of cab.zones) {
-    if (cab.zones.length > 1) {
+    if (!prim && cab.zones.length > 1) {
       svg.appendChild(el('line', { x1: px(z.x0), x2: px(z.x0), y1: py(-demiA(z.x0)), y2: py(demiA(z.x0)), stroke: 'var(--line-2)', 'stroke-width': 1 }));
       svg.appendChild(el('text', { x: (px(z.x0) + px(z.x1)) / 2, y: py(demiA((z.x0 + z.x1) / 2)) + 10, class: 'cab-zone', 'text-anchor': 'middle' }, z.nom));
     }
   }
-  svg.appendChild(el('line', { x1: px(cab.x1), x2: px(cab.x1), y1: py(-demiA(cab.x1)), y2: py(demiA(cab.x1)), stroke: 'var(--line-2)', 'stroke-width': 1 }));
+  if (!prim) svg.appendChild(el('line', { x1: px(cab.x1), x2: px(cab.x1), y1: py(-demiA(cab.x1)), y2: py(demiA(cab.x1)), stroke: 'var(--line-2)', 'stroke-width': 1 }));
   for (const b of dess.blocs || []) {
     if (b.y0 != null) svg.appendChild(el('rect', { x: px(b.x0), y: py(Math.min(b.y0, b.y1)), width: (b.x1 - b.x0) * ech, height: Math.abs(b.y1 - b.y0) * echY, fill: '#2d6a9f', opacity: 0.18 }));
   }
@@ -88,7 +104,7 @@ export function dessinerCabine(svg, avion, paras, opts = {}) {
     svg.appendChild(el('text', { x: px(rg.xmin) - 4, y: py(rg.y) + 4, class: 'cab-side', 'text-anchor': 'end' }, rg.libelle));
   }
   svg.appendChild(el('text', { x: px(x0) + 4, y: yMil - 6, class: 'cab-avant' }, 'avant'));
-  if (cab.porte) {
+  if (cab.porte && !prim) {
     const cote = cab.porte.cote === 'droite' ? 1 : -1;
     const yP = (x) => py(cote * (demiA(x) + 1.5 * (demiLarg / 30)));
     svg.appendChild(el('line', { x1: px(cab.porte.x0), x2: px(cab.porte.x1), y1: yP(cab.porte.x0), y2: yP(cab.porte.x1), stroke: 'var(--amber)', 'stroke-width': 5, 'stroke-linecap': 'round' }));

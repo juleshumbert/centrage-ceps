@@ -42,6 +42,12 @@
   .cg-lbl { font-family: var(--font-mono); font-size: 10px; font-weight: 700; fill: #fff; }
   g.para:hover circle { stroke: var(--cyan); }
   .readouts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .readouts.three { grid-template-columns: repeat(3, 1fr); }
+  .readouts.three .val { font-size: 1.25rem; }
+  h3.sous-titre { margin: 14px 0 6px; font-family: var(--font-cond); text-transform: uppercase; letter-spacing: .08em; font-size: .74rem; color: var(--ink-2); }
+  .inline.gen { gap: 10px 14px; }
+  .inline.gen label.inline { gap: 5px; }
+  .inline.gen select { width: auto; min-width: 11em; }
   @media (max-width: 760px) { .readouts { grid-template-columns: 1fr 1fr; } }
   .legende { font-size: .78rem; color: var(--muted); margin-top: 6px; }
   details summary { cursor: pointer; font-family: var(--font-cond); text-transform: uppercase; letter-spacing: .06em; font-size: .72rem; color: var(--ink-2); font-weight: 600; }
@@ -95,17 +101,23 @@
         <div class="inline" id="porteBloc" style="margin-top:8px" hidden>
           <label class="inline"><input type="checkbox" id="inPorte"> <span id="porteLibelle">porte ouverte</span> <span class="muted">(appliquee aux etapes apres le decollage)</span></label>
         </div>
-        <div class="inline" style="margin-top:10px">
-          <span>Paras : <b id="nbParas">0</b> (<span id="totalParas">0 kg</span>)</span>
-          <span class="spacer"></span>
-          <input type="number" id="genN" value="10" min="1" max="30" style="width:4em" title="nombre de paras">
-          <span>x</span>
-          <input type="number" id="genKg" value="90" min="40" max="150" style="width:4.5em" title="masse equipee (kg)">
-          <span>kg</span>
-          <button class="btn ghost mini" id="btnGenerer" title="remplace la liste par N paras a cette masse">Generer</button>
-          <button class="btn ghost mini" id="btnAjouter">+ para</button>
-          <button class="btn ghost mini" id="btnExemple" title="stick de demonstration : groupes, tandem, paire">Exemple</button>
+        <div class="readouts three" style="margin-top:12px">
+          <div class="readout" id="roBase"><span class="lbl">Avion + pilote + kero</span><span class="val">-</span><span class="unit"></span></div>
+          <div class="readout" id="roReste"><span class="lbl">Marge sous MTOW</span><span class="val">-</span><span class="unit"></span></div>
+          <div class="readout hl" id="roMax"><span class="lbl">Paras possibles</span><span class="val">-</span><span class="unit"></span></div>
         </div>
+        <h3 class="sous-titre">Stick</h3>
+        <div class="inline gen">
+          <label class="inline">paras de <input type="number" id="genKg" value="90" min="40" max="150" step="1" style="width:4.6em" title="masse forfaitaire d'un para equipe (kg)"> kg</label>
+          <label class="inline">nombre <input type="number" id="genN" min="0" max="40" style="width:4em" title="nombre de paras du stick genere"> <button class="btn ghost mini" id="btnGenMax" title="le maximum sous la MTOW avec ce carburant">max <span id="genMax"></span></button></label>
+          <label class="inline">organisation
+            <select id="genGroupe"><option value="4">groupes de 4</option><option value="2">groupes de 2</option><option value="5">groupes de 5</option><option value="0">sans groupe, un rang par para</option><option value="1">un seul groupe</option></select>
+          </label>
+          <button class="btn accent mini" id="btnGenerer" title="remplace le stick par N paras a cette masse, avec le carburant saisi">Generer le stick</button>
+          <button class="btn ghost mini" id="btnExemple" title="stick de demonstration (groupes, tandem, paire), limite au nombre demande">Stick de demonstration</button>
+          <button class="btn ghost mini" id="btnAjouter">+ para</button>
+        </div>
+        <div class="status-bar status-ok" id="stickBilan" style="margin-top:8px"></div>
         <div class="tbl-wrap" style="margin-top:8px">
           <table id="tblParas">
             <thead><tr><th>Nom</th><th>kg</th><th>Groupe</th><th title="rang de sortie : les ex aequo sortent ensemble, le plus petit rang en premier">Sortie</th><th title="identifiant du tandem (porteur + passager)">Tandem</th><th>Role</th><th title="place copilote interdite">COPI x</th><th title="verrouille le para sur une place ou sur sa position libre : le solveur ne le deplacera pas">Verrou</th><th>Place</th><th></th></tr></thead>

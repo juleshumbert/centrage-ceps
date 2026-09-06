@@ -117,3 +117,15 @@ test('options par defaut dans l unite de l avion', async () => {
   const s = stickPourSolveur(EU, { piloteKg: 80, carburant: 200 }, [{ nom: 'A', masseKg: 90 }]);
   assert.equal(s.options.marge_avant_min, 0.013); assert.equal(s.options.pas, 0.6);
 });
+
+test('capacite et generation de stick sous la MTOW', async () => {
+  const { capacite, genererStick } = await import('../js/centrage.js');
+  const c = capacite(BK, { piloteKg: 80, carburant: 900 }, 90);
+  const attendu = Math.floor((BK.mtow - BK.masse_vide - 80 * 2.20462 - 900) / (90 * 2.20462));
+  assert.equal(c.limiteParMasse, attendu); assert.equal(c.maxParas, Math.min(attendu, 20));
+  const st = genererStick(c.maxParas, 90, 4);
+  assert.equal(st.length, c.maxParas); assert.equal(st[0].groupe, 'G1'); assert.equal(st[4].sortie, 2);
+  const { etapes: et } = etapes(BK, { piloteKg: 80, carburant: 900 }, st.map((p, i) => ({ ...p, place: BK.places[i].id })), BK.places);
+  assert.ok(et[0].masse <= BK.mtow, 'sous la MTOW');
+  assert.equal(genererStick(3, 85, 0)[2].sortie, 3);
+});

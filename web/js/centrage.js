@@ -199,3 +199,25 @@ export function normaliserEnveloppe(env) {
   if (avant.length < 1 || arriere.length < 1) return null;
   return { avant, arriere };
 }
+
+/** Bilan avant paras : masse de base (avion + pilote + carburant) et nombre max de paras de `kg` sous la MTOW et le nombre de places. */
+export function capacite(avion, params, kg) {
+  const fuel = carburantMasse(avion, params.carburant);
+  const base_ = avion.masse_vide + masseNative(avion, params.piloteKg) + fuel;
+  const reste = avion.mtow - base_;
+  const parMasse = Math.max(0, Math.floor(reste / masseNative(avion, kg) + 1e-9));
+  return { masseBase: base_, reste, resteKg: reste * avion.kg_par_unite_masse, maxParas: Math.min(parMasse, avion.places.length), limiteParMasse: parMasse, nbPlaces: avion.places.length };
+}
+
+/**
+ * Stick fictif : n paras de `kg` (kg), organises en groupes de `tailleGroupe` (0 = sans groupe, un
+ * rang de sortie par para) ; les groupes sortent dans l'ordre.
+ */
+export function genererStick(n, kg, tailleGroupe = 4) {
+  const paras = [];
+  for (let i = 0; i < n; i++) {
+    const g = tailleGroupe > 0 ? Math.floor(i / tailleGroupe) : i;
+    paras.push({ nom: `P${i + 1}`, masseKg: kg, groupe: tailleGroupe > 1 ? `G${g + 1}` : '', sortie: g + 1, tandem: '', role: '', interdit: [], verrou: null, place: null, pos: null });
+  }
+  return paras;
+}

@@ -39,6 +39,30 @@ def enveloppe_depuis_sommets(vertices, mtow):
     return {'avant': [list(p) for p in fwd], 'arriere': [[0.0, float(aft)], [float(mtow), float(aft)]]}
 
 
+
+def schema_planches_caravan(zones, lemac, mac, porte, roues, nez):
+    """Schema du Caravan des planches du club (plot_conf du notebook) et de l ancienne page
+    centrage.html : trapezes entre zones, derniere zone effilee, porte en barre cote gauche, aile de
+    LEMAC a LEMAC + MAC sur les deux bords, roues, reperes 204 (limite arriere) et 250, pilote."""
+    z = sorted(zones, key=lambda q: q['x0'])
+    prims = []
+    for i, q in enumerate(z):
+        if i < len(z) - 1:
+            nxt = z[i + 1]
+            pts = [[q['x0'], -q['largeur'] / 2], [q['x0'], q['largeur'] / 2], [q['x1'], nxt['largeur'] / 2], [q['x1'], -nxt['largeur'] / 2]]
+        else:
+            pts = [[q['x0'], -q['largeur'] / 2], [q['x0'], q['largeur'] / 2], [q['x1'], q['largeur'] / 2 - 5], [q['x1'], -q['largeur'] / 2 + 5]]
+        prims.append({'type': 'polygone', 'points': pts, 'trait': 'fuselage', 'nom': q['nom'], 'etiquette': [(q['x0'] + q['x1']) / 2, 0]})
+    prims.append({'type': 'polygone', 'points': [[nez[0], -nez[1] / 2], [nez[0], nez[1] / 2], [z[0]['x0'], z[0]['largeur'] / 2], [z[0]['x0'], -z[0]['largeur'] / 2]], 'trait': 'fuselage', 'nom': 'Z-1'})
+    zi = next(q for q in z if q['x0'] <= porte['x0'] < q['x1']); zf = next(q for q in z if q['x0'] < porte['x1'] <= q['x1'])
+    prims.append({'type': 'polygone', 'points': [[porte['x0'], -zi['largeur'] / 2 + 2], [porte['x0'], -zi['largeur'] / 2], [porte['x1'], -zf['largeur'] / 2], [porte['x1'], -zf['largeur'] / 2 + 2]], 'trait': 'porte', 'nom': 'porte'})
+    za = next(q for q in z if q['x0'] <= lemac < q['x1']); zb = next(q for q in z if q['x0'] < lemac + mac <= q['x1'])
+    for sg in (1, -1):
+        prims.append({'type': 'polygone', 'points': [[lemac, sg * (za['largeur'] / 2 + 1)], [lemac, sg * (za['largeur'] / 2 + 30)], [lemac + mac, sg * (zb['largeur'] / 2 + 20)], [lemac + mac, sg * zb['largeur'] / 2]], 'trait': 'aile', 'nom': 'aile'})
+        prims.append({'type': 'polygone', 'points': [[roues[1], sg * 75], [roues[0], sg * 75], [roues[0], sg * 65], [roues[1], sg * 65]], 'trait': 'roue', 'nom': 'roue'})
+    prims.append({'type': 'cercle', 'centre': [(z[0]['x0'] + z[0]['x1']) / 2, -z[0]['largeur'] / 4], 'rayon': 10, 'trait': 'pilote', 'nom': 'P'})
+    return prims
+
 # ------------------------------------------------------------------ Cessna 208B
 def caravan_208b():
     pc = lit('c208b', 'planches_club.json')
@@ -86,11 +110,11 @@ def caravan_208b():
                     {'id': 'G', 'libelle': 'gauche', 'y': -16.0, 'xmin': 154.0, 'xmax': 352.0},
                     {'id': 'EXT', 'libelle': 'exterieur (porte)', 'y': -(demi + 14.0), 'xmin': 270.0, 'xmax': 356.0, 'exterieur': True}],
         'cabine': {'x0': 100.0, 'x1': 356.0, 'zones': zones, 'porte': {'x0': 282.0, 'x1': 332.0, 'cote': 'gauche'}},
-        'dessin': {'fuselage': [[70.0, 20.0], [100.0, 26.5], [118.0, 26.5], [155.4, 31.0], [246.8, 32.0], [282.0, 28.5], [307.0, 26.5], [332.0, 23.0], [356.0, 20.0], [420.0, 12.0], [470.0, 8.0]],
-                   'aile': {'x0': 177.57, 'x1': 177.57 + 66.40}, 'empennage': {'x0': 430.0, 'x1': 470.0, 'demi_envergure': 60.0},
-                   'blocs': [{'nom': 'porte cargo', 'x0': 282.0, 'x1': 332.0, 'cote': 'gauche'}],
-                   'train': [{'nom': 'train principal', 'x0': 200.0, 'x1': 228.0, 'y': 70.0}, {'nom': 'roue avant', 'x0': 62.0, 'x1': 86.0, 'y': 0.0}],
-                   'graduations': [150, 175, 200, 225, 250, 275, 300, 325, 350]},
+        'dessin': {'vue': {'x0': 70.0, 'x1': 400.0, 'demi_largeur': 80.0},
+                   'primitives': schema_planches_caravan(zones, pc['mac']['lemac_in'], pc['mac']['length_in'], {'x0': 282.0, 'x1': 332.0}, (200.0, 228.0), (100.0, 53.0))
+                                 + [{'type': 'ligne', 'x': 204.35, 'demi': 32.0, 'trait': 'repere', 'nom': 'limite arriere 204.35'}, {'type': 'ligne', 'x': 250.0, 'demi': 32.0, 'trait': 'repere_rouge', 'nom': '250'}],
+                   'graduations': [100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400],
+                   'source': 'schema des planches du club (plot_conf) et de l ancienne page centrage.html'},
         'variantes': variantes, 'variante_defaut': 'ape2',
         'source': 'places et pesees : planches du club ; zones cabine et porte cargo FS 282 a 332 : POH 208B ; schema repris de l ancienne IHM centrage_c208',
     }
@@ -131,11 +155,11 @@ def caravan_208a():
                     {'id': 'G', 'libelle': 'gauche', 'y': -16.0, 'xmin': 154.0, 'xmax': 302.0},
                     {'id': 'EXT', 'libelle': 'exterieur (porte)', 'y': -(32.0 + 14.0), 'xmin': d0 - 12.0, 'xmax': float(st['aft_wall']), 'exterieur': True}],
         'cabine': {'x0': 100.0, 'x1': float(st['aft_wall']), 'zones': zones, 'porte': {'x0': d0, 'x1': d1, 'cote': 'gauche'}},
-        'dessin': {'fuselage': [[70.0, 20.0], [100.0, 26.5], [118.0, 26.5], [155.4, 31.0], [180.0, 32.0], [234.0, 32.0], [284.0, 26.5], [308.0, 23.0], [370.0, 12.0], [420.0, 8.0]],
-                   'aile': {'x0': 157.57, 'x1': 157.57 + 66.40}, 'empennage': {'x0': 382.0, 'x1': 420.0, 'demi_envergure': 60.0},
-                   'blocs': [{'nom': 'porte cargo', 'x0': d0, 'x1': d1, 'cote': 'gauche'}],
-                   'train': [{'nom': 'train principal', 'x0': 180.0, 'x1': 208.0, 'y': 70.0}, {'nom': 'roue avant', 'x0': 62.0, 'x1': 86.0, 'y': 0.0}],
-                   'graduations': [125, 150, 175, 200, 225, 250, 275, 300]},
+        'dessin': {'vue': {'x0': 70.0, 'x1': 350.0, 'demi_largeur': 80.0},
+                   'primitives': schema_planches_caravan(zones, 157.57, 66.40, {'x0': d0, 'x1': d1}, (180.0, 208.0), (100.0, 53.0))
+                                 + [{'type': 'ligne', 'x': 184.35, 'demi': 32.0, 'trait': 'repere', 'nom': 'limite arriere 184.35'}],
+                   'graduations': [100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350],
+                   'source': 'meme schema que le 208B, transpose sur la cabine courte (zones du Spec & Description)'},
         'variantes': [{'id': 'poh', 'libelle': f'POH / TCDS, MTOW {mtow} lb', 'mtow': mtow, 'enveloppe': enveloppe_depuis_sommets(e['vertices'], mtow), 'source': e['source']}],
         'variante_defaut': 'poh',
         'a_verifier': ['masse a vide 4230 lb et bras 166 in : estimation, saisir la pesee reelle',

@@ -15,6 +15,7 @@ function defaut() {
     piloteKg: a.pilote.masse_kg_defaut, carburant: a.carburant.defaut, porteOuverte: false,
     paras: genererParas(10, 90),
     options: { ...C.optionsDefaut(a), temps_max_s: 8, rapide: false },
+    gen: { kg: 90, n: null, groupe: 4 },            // generateur de stick : n null = maximum sous la MTOW
     enveloppes: {},            // cle avionId:varianteId -> {mtow, enveloppe} modifies dans l'application
     resultat: null, placementSolveur: null, modifie: false, derniereEntree: null,
   };
@@ -66,10 +67,29 @@ function render() {
   $('#optEtapes').value = state.options.etapes; $('#optTemps').value = state.options.temps_max_s;
   $('#optGroupes').checked = !!state.options.groupes_ordonnes; $('#optRapide').checked = !!state.options.rapide;
   $('#optMargeUnit').textContent = a.unites.bras; $('#optTolUnit').textContent = a.unites.bras;
+  renderGenerateur(a);
   renderParas(a);
   renderEnveloppe(a);
   renderResultats(a);
   sauver();
+}
+
+function renderGenerateur(a) {
+  const g = state.gen || (state.gen = { kg: 90, n: null, groupe: 4 });
+  const cap = C.capacite(a, params(), g.kg);
+  const u = a.unites.masse, k = a.kg_par_unite_masse;
+  const ro = (id, v, unit, cls) => { const e = $(id); e.querySelector('.val').textContent = v; e.querySelector('.unit').textContent = unit; e.className = 'readout' + (cls ? ' ' + cls : ''); };
+  ro('#roBase', cap.masseBase.toFixed(0), `${u} · ${(cap.masseBase * k).toFixed(0)} kg`);
+  ro('#roReste', cap.reste.toFixed(0), `${u} · ${cap.resteKg.toFixed(0)} kg`, cap.reste < 0 ? 'danger' : '');
+  ro('#roMax', String(cap.maxParas), `paras de ${g.kg} kg · ${cap.nbPlaces} places` + (cap.limiteParMasse < cap.nbPlaces ? ' · limite par la MTOW' : ' · limite par les places'), 'hl');
+  $('#genKg').value = g.kg; $('#genN').value = g.n == null ? cap.maxParas : g.n; $('#genMax').textContent = cap.maxParas; $('#genGroupe').value = String(g.groupe);
+  const totalKg = state.paras.reduce((s, p) => s + (Number(p.masseKg) || 0), 0);
+  const deco = cap.masseBase + C.masseNative(a, totalKg);
+  const pct = deco / a.mtow * 100;
+  const bar = $('#stickBilan');
+  bar.className = 'status-bar ' + (deco > a.mtow ? 'status-danger' : pct > 97 ? 'status-warn' : 'status-ok');
+  bar.textContent = state.paras.length === 0 ? 'Aucun para : genere un stick ou ajoute des paras.'
+    : `Stick : ${state.paras.length} paras, ${totalKg.toFixed(0)} kg · masse au decollage ${deco.toFixed(0)} ${u} (${(deco * k).toFixed(0)} kg), ${pct.toFixed(1)} % de la MTOW ${a.mtow}` + (deco > a.mtow ? ` : depassement de ${(deco - a.mtow).toFixed(0)} ${u}` : ` : marge ${(a.mtow - deco).toFixed(0)} ${u}`);
 }
 
 function renderParas(a) {
@@ -92,8 +112,6 @@ function renderParas(a) {
     const sv = tr.querySelector('select[data-k="verrou"]'); sv.value = p.verrou || ''; if (p.verrou === 'libre' && !p.pos) sv.value = '';
     tb.appendChild(tr);
   });
-  $('#nbParas').textContent = state.paras.length;
-  $('#totalParas').textContent = `${state.paras.reduce((s, p) => s + (Number(p.masseKg) || 0), 0).toFixed(0)} kg`;
 }
 
 function renderEnveloppe(a) {
@@ -268,14 +286,22 @@ function brancher() {
     render();
   });
   $('#tblParas').addEventListener('click', (e) => { const b = e.target.closest('button[data-k="suppr"]'); if (!b) return; state.paras.splice(Number(b.dataset.i), 1); render(); });
-  $('#btnAjouter').addEventListener('click', () => { const n = state.paras.length + 1; state.paras.push({ ...genererParas(1, Number($('#genKg').value) || 90)[0], nom: `P${n}` }); render(); });
-  $('#btnGenerer').addEventListener('click', () => { state.paras = genererParas(Number($('#genN').value) || 10, Number($('#genKg').value) || 90); state.resultat = null; state.placementSolveur = null; state.modifie = false; render(); });
+  $('#btnAjouter').addEventListener('click', () => { const n = state.paras.length + 1; state.paras.push({ ...genererParas(1, state.gen.kg || 90)[0], nom: `P${n}` }); render(); });
+  $('#genKg').addEventListener('change', (e) => { state.gen.kg = Math.max(30, Number(e.target.value) || 90); render(); });
+  $('#genN').addEventListener('change', (e) => { state.gen.n = e.target.value === '' ? null : Math.max(0, Number(e.target.value) || 0); render(); });
+  $('#btnGenMax').addEventListener('click', () => { state.gen.n = null; render(); });
+  $('#genGroupe').addEventListener('change', (e) => { state.gen.groupe = Number(e.target.value); sauver(); });
+  $('#btnGenerer').addEventListener('click', () => {
+    const a = avion(); const cap = C.capacite(a, params(), state.gen.kg);
+    const n = Math.min(state.gen.n == null ? cap.maxParas : state.gen.n, a.places.length);
+    state.paras = C.genererStick(n, state.gen.kg, state.gen.groupe); state.resultat = null; state.placementSolveur = null; state.modifie = false; render();
+  });
   $('#btnVider').addEventListener('click', () => { for (const p of state.paras) { p.place = null; p.pos = null; p.verrou = null; } state.modifie = !!state.placementSolveur; render(); });
   $('#btnExemple').addEventListener('click', () => {
     // exemple sur l'avion courant, avec le nombre de paras demande (les 15 du stick de demonstration,
     // tronques ou completes par des paras a la masse forfaitaire, rang de sortie a la suite)
-    const a = avion(); const n = Math.max(1, Math.min(Number($('#genN').value) || 15, a.places.length));
-    const kg = Number($('#genKg').value) || 90;
+    const a = avion(); const cap = C.capacite(a, params(), state.gen.kg); const n = Math.max(1, Math.min(state.gen.n == null ? cap.maxParas : state.gen.n, a.places.length));
+    const kg = state.gen.kg || 90;
     const paras = EXEMPLE.paras.slice(0, n).map((p) => ({ groupe: '', sortie: '', tandem: '', role: '', interdit: [], verrou: null, place: null, pos: null, ...p }));
     if (a.id !== EXEMPLE.avionId) for (const p of paras) p.interdit = [];
     let rang = Math.max(0, ...paras.map((p) => Number(p.sortie) || 0)) + 1;
