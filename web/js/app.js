@@ -14,7 +14,7 @@ function defaut() {
     avionId: a.id, varianteId: a.variante_defaut, peseeId: (a.pesees && a.pesees[0] ? a.pesees[0].id : null), nomLocal: '', masseVide: null, brasVide: null,
     piloteKg: a.pilote.masse_kg_defaut, carburant: a.carburant.defaut, porteOuverte: false,
     paras: genererParas(10, 90),
-    options: { marge_avant_min: 0.5, tolerance_marge: 0.25, etapes: 'premier_groupe', temps_max_s: 8, groupes_ordonnes: false, rapide: false },
+    options: { ...C.optionsDefaut(a), temps_max_s: 8, rapide: false },
     enveloppes: {},            // cle avionId:varianteId -> {mtow, enveloppe} modifies dans l'application
     resultat: null, placementSolveur: null, modifie: false, derniereEntree: null,
   };
@@ -62,6 +62,7 @@ function render() {
   $('#avionNotes').hidden = !notes.length;
   if (notes.length) $('#avionNotes').innerHTML = '<b>A verifier avant usage reel :</b><ul>' + notes.map((t) => `<li>${esc(t)}</li>`).join('') + '</ul>';
   $('#optMarge').value = state.options.marge_avant_min; $('#optTol').value = state.options.tolerance_marge;
+  $('#optMarge').step = a.unites.bras === 'm' ? 0.001 : 0.05; $('#optTol').step = a.unites.bras === 'm' ? 0.001 : 0.05;
   $('#optEtapes').value = state.options.etapes; $('#optTemps').value = state.options.temps_max_s;
   $('#optGroupes').checked = !!state.options.groupes_ordonnes; $('#optRapide').checked = !!state.options.rapide;
   $('#optMargeUnit').textContent = a.unites.bras; $('#optTolUnit').textContent = a.unites.bras;
@@ -227,7 +228,9 @@ function telecharger() {
 
 function changerAvion(id) {
   const a = AVIONS.find((x) => x.id === id); if (!a) return;
+  const avant = base();
   state.avionId = id; state.varianteId = a.variante_defaut; state.peseeId = a.pesees && a.pesees[0] ? a.pesees[0].id : null; state.masseVide = null; state.brasVide = null; state.carburant = a.carburant.defaut; state.piloteKg = a.pilote.masse_kg_defaut; state.porteOuverte = false;
+  if (avant.unites.bras !== a.unites.bras) { const d = C.optionsDefaut(a); state.options = { ...state.options, marge_avant_min: d.marge_avant_min, tolerance_marge: d.tolerance_marge, pas: d.pas }; }   // marges dans la nouvelle unite
   for (const p of state.paras) { p.place = null; p.pos = null; p.verrou = null; }
   state.resultat = null; state.placementSolveur = null; state.modifie = false; render();
 }

@@ -109,3 +109,11 @@ test('mise en place du 1er groupe : dehors et au droit de la porte', () => {
   assert.equal(out[3].place, 'G1');                                           // rang 2 inchange
   assert.ok(out[0].pos.x <= ext.xmax && out[0].pos.x >= ext.xmin);
 });
+
+test('options par defaut dans l unite de l avion', async () => {
+  const { optionsDefaut } = await import('../js/centrage.js');
+  assert.equal(optionsDefaut(BK).marge_avant_min, 0.5);
+  assert.equal(optionsDefaut(EU).marge_avant_min, 0.013);
+  const s = stickPourSolveur(EU, { piloteKg: 80, carburant: 200 }, [{ nom: 'A', masseKg: 90 }]);
+  assert.equal(s.options.marge_avant_min, 0.013); assert.equal(s.options.pas, 0.6);
+});

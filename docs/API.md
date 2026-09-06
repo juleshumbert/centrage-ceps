@@ -49,6 +49,8 @@ Identifiants d'avion : `c208b`, `c208a`, `pc6`, `pac750xl`, `dhc6`.
 - `sortie` : rang de sortie ; les ex aequo sortent ensemble, le plus petit rang en premier. Les
   etapes sont : decollage, (porte ouverte), apres la sortie du premier groupe, ou apres chaque
   rang avec `options.etapes = "toutes"`.
+- `options.marge_avant_min` et `tolerance_marge` sont dans l'unite de bras de l'avion : par defaut
+  0.5 et 0.25 in (Cessna, PAC, DHC-6), 0.013 et 0.006 m (PC-6).
 - Solveur : marge arriere maximale au decollage sous marge avant garantie (`marge_avant_min`) au
   decollage et apres le premier groupe ; puis, a `tolerance_marge` pres, le placement le plus
   realiste (groupes proches, premiers sortants pres de la porte, passager tandem devant son

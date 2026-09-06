@@ -139,8 +139,14 @@ export function stickPourSolveur(avion, params, paras, options = {}) {
       if (interdit.length) q.interdit = [...new Set(interdit)];
       return q;
     }),
-    options: { etapes: 'premier_groupe', marge_avant_min: 0.5, tolerance_marge: 0.25, groupes_ordonnes: false, temps_max_s: 10, ...options },
+    options: { ...optionsDefaut(avion), ...options },
   };
+}
+
+/** Options du solveur par defaut, dans l'unite de bras de l'avion (0.5 in de marge, soit 0.013 m). */
+export function optionsDefaut(avion) {
+  const m = avion.unites && avion.unites.bras === 'm';
+  return { etapes: 'premier_groupe', marge_avant_min: m ? 0.013 : 0.5, tolerance_marge: m ? 0.006 : 0.25, pas: m ? 0.6 : 25, groupes_ordonnes: false, temps_max_s: 10 };
 }
 
 /**
