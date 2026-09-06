@@ -307,4 +307,12 @@ if __name__ == '__main__':
           '// puis relancer le script. Aucune immatriculation ici : un modele par type, pesees par lettre.\n'
           'export const AVIONS = ' + json.dumps(avions, indent=1, ensure_ascii=False) + ';\n')
     (ROOT / 'web' / 'js' / 'avions.js').write_text(js)
-    print('ecrit web/js/avions.js :', [(a['id'], len(a['places']), [v['id'] for v in a['variantes']], [p['id'] for p in a['pesees']]) for a in avions])
+    # copies pour la Cloud Function (le paquet deploye ne contient que functions/) : memes modules,
+    # extension .mjs ; functions/lib.test.js verifie qu'elles sont a jour.
+    lib = ROOT / 'functions' / 'lib'; lib.mkdir(exist_ok=True)
+    (lib / 'avions.mjs').write_text(js)
+    (lib / 'centrage.mjs').write_text((ROOT / 'web' / 'js' / 'centrage.js').read_text())
+    spec = ROOT / 'docs' / 'openapi.json'
+    if spec.exists():
+        (lib / 'openapi.json').write_text(spec.read_text())
+    print('ecrit web/js/avions.js et functions/lib/ :', [(a['id'], len(a['places']), [v['id'] for v in a['variantes']], [p['id'] for p in a['pesees']]) for a in avions])

@@ -75,6 +75,15 @@ navigateur (web/)  --POST /api/placement (stick JSON)-->  Cloud Function (functi
   exacte), verrou sur une place ou une position libre ; le solveur ne deplace que les paras non
   verrouilles.
 
+## API REST
+
+`https://ceps09-centrage.web.app/api/v1` : modeles d'avions (`GET /avions`, `GET /avions/{id}`),
+etapes de centrage d'un placement donne (`POST /avions/{id}/centrage`), placement optimal par le
+solveur a partir du modele (`POST /avions/{id}/placement`), stick brut (`POST /placement`).
+Documentation : [`docs/API.md`](docs/API.md), specification [`docs/openapi.json`](docs/openapi.json)
+(servie aussi sur `/api/v1/openapi.json`). Sans authentification, CORS ouvert, memes limites que
+l'IHM (12 calculs par minute et par IP, cache des demandes identiques).
+
 ## Tout lancer
 
 Prerequis : Python 3 (avec `numpy`, `scipy`, `matplotlib` pour l'etude), Node 20 ou plus, un

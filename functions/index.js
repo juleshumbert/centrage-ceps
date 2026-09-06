@@ -12,7 +12,7 @@
  * plafond de temps du solveur (sanitize.js). Le cout maximal est donc borne par
  * maxInstances x simultanes x temps max.
  *
- * Routes (rewrite Hosting /api/placement{,/**} -> placement) :
+ * Routes (rewrite Hosting /api/placement{,/**} -> placement ; /api/v1/** -> api, voir api.js) :
  *   POST /api/placement            corps = stick JSON (voir solveur/README.md), reponse = resultat JSON
  *   GET  /api/placement/version    version du binaire et limites (sante)
  */
@@ -24,6 +24,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { sanitize, InputError, LIMITS } = require('./sanitize');
 const { Limiteur, origineAutorisee, DEFAUTS } = require('./protection');
+const { handleApi } = require('./api');
 
 setGlobalOptions({ region: 'europe-west1', maxInstances: 3 });
 
@@ -110,3 +111,7 @@ exports.placement = onRequest({ cors: false, timeoutSeconds: 60, memory: '1GiB',
   // code 0 = placement rendu, 1 = aucun placement valide (le JSON explique) : les deux sont des reponses normales.
   res.status(200).json(out);
 });
+
+/** API REST publique /api/v1 (docs/API.md). Memes protections que l'IHM, sans controle d'origine (CORS ouvert). */
+exports.api = onRequest({ cors: false, timeoutSeconds: 60, memory: '1GiB', cpu: 1, concurrency: 4 }, (req, res) =>
+  handleApi(req, res, { runSolver, limiteur, ip: ipDe(req) }));

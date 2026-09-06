@@ -1,6 +1,6 @@
 {
   "name": "centrage-functions",
-  "description": "Cloud Function centrage.ceps09.com : /api/placement, execute le solveur C++ placement (HiGHS) sur un stick",
+  "description": "Cloud Functions centrage : /api/placement (IHM) et /api/v1 (API REST), executent le solveur C++ placement (HiGHS)",
   "private": true,
   "main": "index.js",
   "engines": {

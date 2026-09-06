@@ -12,7 +12,8 @@
     "public": "web",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "tools/**", "test/**", "package.json"],
     "rewrites": [
-      { "source": "/api/placement{,/**}", "function": { "functionId": "placement", "region": "europe-west1" } }
+      { "source": "/api/placement{,/**}", "function": { "functionId": "placement", "region": "europe-west1" } },
+      { "source": "/api/v1{,/**}", "function": { "functionId": "api", "region": "europe-west1" } }
     ],
     "headers": [
       {
