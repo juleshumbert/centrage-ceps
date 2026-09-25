@@ -7,7 +7,9 @@ modele par type, les pesees connues sont listees par lettre.
 
 Modele d'un avion :
   id, libelle, type, famille, unites, kg_par_unite_masse,
-  pesees [{id, libelle, masse_vide, bras_vide, source}]   (la premiere est celle par defaut),
+  pesees [{id, libelle, masse_vide, bras_vide, source, places_sans_para?, rangees_xmin?}]   (la premiere est
+          celle par defaut ; places_sans_para : ids de places qui existent mais ou aucun para ne s'assoit, ex. un
+          vrai siege copilote ; rangees_xmin : debut de rangee avance en consequence pour la position libre),
   pilote {bras, masse_kg_defaut}, carburant {capacite, defaut, table [[masse, bras]]},
   porte {x, y, cote, moment_ouverture?}, places [{id, x, y, copilote?, centre?}],
   rangees [{id, libelle, y, xmin, xmax, exterieur?}]   (placement libre ; la rangee exterieure est
@@ -92,8 +94,16 @@ def caravan_208b():
                           'enveloppe': {'avant': [[float(q['weight_lb']), float(q['arm_in'])] for q in a['cg_forward_limit']],
                                         'arriere': [[0.0, a['cg_aft_limit_in']], [float(a['mtow_lb']), a['cg_aft_limit_in']]]},
                           'source': f"avions/c208b/stc_ape.json : {a['designation']}, STC FAA {a['faa_stc']}, limites CG du rapport TSB A14W0181 (limite avant 200.23 in a 9062 lb, arriere 204.35 in)" + (' ; MLW 9000 lb (non modelisee ici)' if vid == 'ape3' else '')})
-    pesees = [{'id': l, 'libelle': f'pesee {l}', 'masse_vide': r['ew_lb'], 'bras_vide': r['ew_cg_in'], 'source': 'planches du club'}
-              for l, (_, r) in zip('AB', pc['registrations'].items())]
+    pesees = []
+    for l, (_, r) in zip('AB', pc['registrations'].items()):
+        pe = {'id': l, 'libelle': f'pesee {l}', 'masse_vide': r['ew_lb'], 'bras_vide': r['ew_cg_in'], 'source': 'planches du club'}
+        if not r.get('copilote_para', True):
+            # vrai siege copilote (planches : COPILOTE_PARA = False) : la place reste dessinee mais aucun para
+            # ne s'y assoit, et la rangee droite commence au droit de la rangee gauche (derriere le pilote)
+            pe['libelle'] += ', siege copilote sans para'
+            pe['places_sans_para'] = ['COPI']
+            pe['rangees_xmin'] = {'D': 154.0}
+        pesees.append(pe)
     demi = max(z['largeur'] for z in zones) / 2
     return {
         'id': 'c208b', 'libelle': 'Cessna 208B Grand Caravan', 'type': 'Cessna 208B Grand Caravan', 'famille': 'c208',

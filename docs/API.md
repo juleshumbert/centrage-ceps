@@ -15,7 +15,7 @@ CG et marges sont en unites natives.
 |---|---|---|
 | GET | `/version` | version de l'API et du solveur, limites |
 | GET | `/openapi.json` | la specification |
-| GET | `/avions` | liste des modeles (id, libelle, unites, variantes, pesees, nombre de places) |
+| GET | `/avions` | liste des modeles (id, libelle, unites, variantes, pesees, nombre de places) ; une pesee peut porter `places_sans_para` (ex. `["COPI"]` : vrai siege copilote), places alors retirees du placement pour cette pesee |
 | GET | `/avions/{id}` | un modele complet : places (id, bras `x`, lateral `y`), rangees (dont la ligne exterieure cote porte), cabine, dessin, MAC, carburant, porte, variantes (MTOW et enveloppe), pesees, points a verifier |
 | POST | `/avions/{id}/centrage` | etapes de centrage d'un placement donne, calcul pur (aucun appel au solveur, pas de limite) |
 | POST | `/avions/{id}/placement` | placement optimal par le solveur a partir du modele ; reponse enrichie (placement, etapes) |

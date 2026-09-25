@@ -15,10 +15,16 @@ export const AVIONS = [
   "pesees": [
    {
     "id": "A",
-    "libelle": "pesee A",
+    "libelle": "pesee A, siege copilote sans para",
     "masse_vide": 4890,
     "bras_vide": 188.99,
-    "source": "planches du club"
+    "source": "planches du club",
+    "places_sans_para": [
+     "COPI"
+    ],
+    "rangees_xmin": {
+     "D": 154.0
+    }
    },
    {
     "id": "B",

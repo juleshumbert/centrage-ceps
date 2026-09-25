@@ -66,6 +66,13 @@ reference/notebooks/          snapshot of centrage_c208 notebooks, executed cell
   `dessin` schema (fuselage profile to the tail, wing, empennage, blocs). `miseEnPlace()` moves the
   first exit group to the door (2 outside, others inside at the door). PC-6 `porte.moment_ouverture`
   (+21 kg.m, AFM supplement 1824) applies to post-takeoff stages when the door switch is on.
+- Per-weighing cabin fit-out: a `pesees[]` entry may carry `places_sans_para` (seat ids that exist but
+  never take a para, e.g. a real copilot seat) and `rangees_xmin` (row start moved aft for free
+  positions). `appliquerVariante()` (via `amenagement()`) drops those seats from `places` (so solver,
+  drag and drop, locks, stages and capacity never see them) and keeps them in `places_sans_para` for
+  the drawing only. Source flag: `copilote_para` per registration in `avions/c208b/planches_club.json`
+  (C208B pesee A = false since 2026-09-25, pesee B = true); `extract_planches_club.py` reads it from
+  `COPILOTE_PARA` in the notebooks' config cell (the current snapshot predates it, value set by hand).
 - A para is either on a seat (`place`) or at a free position (`pos:{x,y}` along a row); a lock is
   the seat id or `'libre'` (virtual place `L-<nom>` sent to the solver).
 

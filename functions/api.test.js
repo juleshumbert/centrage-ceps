@@ -38,7 +38,11 @@ test('POST /avions/c208b/centrage : etapes coherentes avec le solveur de referen
   const stick = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'solveur', 'exemples', 'exemple_stick.json')));
   const ref = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'solveur', 'exemples', 'exemple_stick_resultat.json')));
   const paras = stick.paras.map((p) => ({ nom: p.nom, masse_kg: p.masse / 2.20462, sortie: p.sortie, place: ref.placement.find((q) => q.nom === p.nom).place }));
-  const body = { variante: 'ape2', pesee: 'A', pilote_kg: stick.pilote.masse / 2.20462, carburant: 900, paras };
+  // l'exemple met un para sur le siege copilote : refuse avec la pesee A (vrai siege copilote), on garde donc
+  // la pesee B (copilote para) en imposant la masse et le bras a vide de la pesee A de l'exemple
+  const refus = res(); await handleApi(req('POST', '/api/v1/avions/c208b/centrage', { variante: 'ape2', pesee: 'A', carburant: 900, paras }), refus, deps());
+  assert.equal(refus.code, 400); assert.match(refus.body.message, /aucun para sur la place COPI/);
+  const body = { variante: 'ape2', pesee: 'B', masse_vide: 4890, bras_vide: 188.99, pilote_kg: stick.pilote.masse / 2.20462, carburant: 900, paras };
   const r = res(); await handleApi(req('POST', '/api/v1/avions/c208b/centrage', body), r, deps());
   assert.equal(r.code, 200, JSON.stringify(r.body));
   assert.equal(r.body.etapes.length, 2);
@@ -61,6 +65,24 @@ test('POST /avions/{id}/placement : stick construit, verrou respecte, etapes ren
   assert.equal(r.body.avion.mtow, 9062);
   const r2 = res(); await handleApi(req('POST', '/api/v1/avions/c208b/placement', body), r2, deps()); // meme demande, meme limiteur ? non : nouveau limiteur, pas de cache
   assert.equal(r2.code, 200);
+});
+
+test('pesee A (siege copilote sans para) : aucun para sur COPI, meme avec 19 paras', async () => {
+  const r = res(); await handleApi(req('GET', '/api/v1/avions'), r, deps());
+  const c = r.body.avions.find((a) => a.id === 'c208b');
+  assert.deepEqual(c.pesees.find((p) => p.id === 'A').places_sans_para, ['COPI']);
+  assert.equal(c.pesees.find((p) => p.id === 'B').places_sans_para, undefined);
+  const paras = Array.from({ length: 19 }, (_, i) => ({ nom: `P${i + 1}`, masse_kg: 70, sortie: 1 + Math.floor(i / 4) }));
+  let stick = null;
+  const d = deps(); const run = d.runSolver; d.runSolver = async (a, s) => { if (s) stick = JSON.parse(s); return run(a, s); };
+  const r2 = res(); await handleApi(req('POST', '/api/v1/avions/c208b/placement', { pesee: 'A', carburant: 300, paras }), r2, d);
+  assert.equal(r2.code, 200, JSON.stringify(r2.body));
+  assert.ok(!stick.places.some((p) => p.id === 'COPI' || p.copilote), 'COPI absent du stick envoye au solveur');
+  assert.ok(!r2.body.placement.some((p) => p.place === 'COPI'));
+  const r3 = res(); await handleApi(req('POST', '/api/v1/avions/c208b/centrage', { pesee: 'A', paras: [{ masse_kg: 90, verrou: 'COPI' }] }), r3, deps());
+  assert.equal(r3.code, 400);
+  const r4 = res(); await handleApi(req('POST', '/api/v1/avions/c208b/centrage', { pesee: 'B', paras: [{ masse_kg: 90, place: 'COPI' }] }), r4, deps());
+  assert.equal(r4.code, 200, 'pesee B : copilote para inchange');
 });
 
 test('erreurs : corps invalide, para trop lourd, variante inconnue, limite par minute', async () => {

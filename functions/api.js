@@ -32,7 +32,7 @@ class HttpError extends Error { constructor(status, message) { super(message); t
 function resumeAvion(a) {
   return { id: a.id, libelle: a.libelle, type: a.type, famille: a.famille, unites: a.unites, nb_places: a.places.length,
     variantes: a.variantes.map((v) => ({ id: v.id, libelle: v.libelle, mtow: v.mtow })), variante_defaut: a.variante_defaut,
-    pesees: a.pesees.map((p) => ({ id: p.id, libelle: p.libelle, masse_vide: p.masse_vide, bras_vide: p.bras_vide })) };
+    pesees: a.pesees.map((p) => ({ id: p.id, libelle: p.libelle, masse_vide: p.masse_vide, bras_vide: p.bras_vide, ...(p.places_sans_para ? { places_sans_para: p.places_sans_para } : {}) })) };
 }
 
 function num(v, nom, opts = {}) {
@@ -70,6 +70,8 @@ function preparer({ AVIONS, C }, id, corps) {
   if (!Array.isArray(corps.paras) || corps.paras.length === 0) throw new HttpError(400, 'paras : liste non vide attendue');
   if (corps.paras.length > LIMITS.maxParas) throw new HttpError(400, `paras : au plus ${LIMITS.maxParas}`);
   const ids = new Set(avion.places.map((p) => p.id));
+  const sansPara = new Set((avion.places_sans_para || []).map((p) => p.id));
+  const inconnue = (champ, id) => new HttpError(400, sansPara.has(id) ? `${champ} : aucun para sur la place ${id} (pesee ${peseeId})` : `${champ} : place inconnue (${id})`);
   const noms = new Set();
   const paras = corps.paras.map((p, i) => {
     if (!p || typeof p !== 'object') throw new HttpError(400, `paras[${i}] : objet attendu`);
@@ -81,10 +83,10 @@ function preparer({ AVIONS, C }, id, corps) {
       role: p.role === 'passager' ? 'passager' : (p.tandem ? 'porteur' : ''), interdit: Array.isArray(p.interdit) ? p.interdit.map(String) : [],
       verrou: null, place: null, pos: null };
     if (p.devant_de) q.devant_de = String(p.devant_de);
-    if (p.place != null) { if (!ids.has(p.place)) throw new HttpError(400, `paras[${i}].place inconnue : ${p.place}`); q.place = p.place; }
+    if (p.place != null) { if (!ids.has(p.place)) throw inconnue(`paras[${i}].place`, p.place); q.place = p.place; }
     if (p.pos && p.pos.x != null) q.pos = { x: num(p.pos.x, `paras[${i}].pos.x`), y: num(p.pos.y, `paras[${i}].pos.y`, { defaut: 0 }) };
     if (p.verrou === true) q.verrou = q.place || (q.pos ? 'libre' : null);
-    else if (p.verrou) { if (p.verrou !== 'libre' && !ids.has(p.verrou)) throw new HttpError(400, `paras[${i}].verrou inconnu : ${p.verrou}`); q.verrou = p.verrou; if (p.verrou !== 'libre') q.place = p.verrou; }
+    else if (p.verrou) { if (p.verrou !== 'libre' && !ids.has(p.verrou)) throw inconnue(`paras[${i}].verrou`, p.verrou); q.verrou = p.verrou; if (p.verrou !== 'libre') q.place = p.verrou; }
     return q;
   });
   const mode = corps.options && corps.options.etapes === 'toutes' ? 'toutes' : 'premier_groupe';

@@ -48,7 +48,7 @@ function render() {
   const sel = $('#selVariante'); sel.innerHTML = (b.variantes || []).map((v) => `<option value="${esc(v.id)}">${esc(v.libelle)}</option>`).join(''); sel.value = state.varianteId;
   $('#varianteSource').textContent = a.variante ? a.variante.source || '' : '';
   const selP = $('#selPesee'); selP.innerHTML = (b.pesees || []).map((q) => `<option value="${esc(q.id)}">${esc(q.libelle)} : ${q.masse_vide} ${a.unites.masse} a ${q.bras_vide} ${a.unites.bras}</option>`).join(''); selP.value = state.peseeId || '';
-  $('#peseeSource').textContent = a.pesee ? a.pesee.source || '' : '';
+  $('#peseeSource').textContent = (a.pesee ? a.pesee.source || '' : '') + ((a.places_sans_para || []).length ? ` ; ${a.places_sans_para.some((s) => s.copilote) ? 'siege copilote reserve' : 'places ' + a.places_sans_para.map((s) => s.id).join(', ')} : aucun para dessus, ${a.places.length} places` : '');
   $('#porteBloc').hidden = !(a.porte && a.porte.moment_ouverture);
   if (a.porte && a.porte.moment_ouverture) { $('#inPorte').checked = !!state.porteOuverte; $('#porteLibelle').textContent = a.porte.moment_ouverture.libelle; }
   $('#inNomLocal').value = state.nomLocal || '';

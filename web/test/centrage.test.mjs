@@ -85,6 +85,35 @@ test('position libre : bras = x de la position, para libre verrouille = place vi
   assert.equal(s.paras[1].interdit, undefined);
 });
 
+test('pesee A (siege copilote sans para) : aucun para BK sur le siege copilote', async () => {
+  const { capacite, genererStick } = await import('../js/centrage.js');
+  const base = AVIONS.find((a) => a.id === 'c208b');
+  const LA = appliquerVariante(base, 'ape2', null, 'B');
+  // declaration par pesee, la place reste dessinee
+  assert.ok(!BK.places.some((p) => p.id === 'COPI' || p.copilote));
+  assert.equal(BK.places.length, 19);
+  assert.deepEqual(BK.places_sans_para.map((p) => p.id), ['COPI']);
+  assert.equal(base.places.length, 20, 'le modele de base garde les 20 places');
+  // pesee B inchangee : copilote para
+  assert.ok(LA.places.some((p) => p.id === 'COPI' && p.copilote)); assert.equal(LA.places.length, 20); assert.equal(LA.places_sans_para.length, 0);
+  // position libre : la rangee droite commence derriere le siege copilote
+  const d = BK.rangees.find((r) => r.id === 'D');
+  assert.ok(d.xmin > 135.5 + 10, `rangee D xmin ${d.xmin}`);
+  assert.equal(LA.rangees.find((r) => r.id === 'D').xmin, base.rangees.find((r) => r.id === 'D').xmin);
+  // solveur : COPI n'est jamais proposee, meme verrouillee ou avec autant de paras que de places
+  const st = genererStick(19, 70, 4); st[0].verrou = 'COPI';
+  const s = stickPourSolveur(BK, { piloteKg: 80, carburant: 300 }, st);
+  assert.ok(!s.places.some((p) => p.id === 'COPI' || p.copilote));
+  assert.equal(s.paras[0].interdit, undefined, 'verrou sur une place absente : ignore');
+  // capacite : 19 places au plus ; etapes : un para laisse sur COPI n'est pas compte
+  assert.equal(capacite(BK, { piloteKg: 80, carburant: 0 }, 50).nbPlaces, 19);
+  const { nonPlaces } = etapes(BK, { piloteKg: 80, carburant: 900 }, [{ nom: 'A', masseKg: 90, place: 'COPI' }], BK.places);
+  assert.equal(nonPlaces, 1);
+  // mise en place : jamais vers l'avant de la rangee
+  const out = miseEnPlace(BK, [{ nom: 'A', masseKg: 90, place: 'D1', sortie: 1 }, { nom: 'B', masseKg: 90, place: 'D2', sortie: 1 }, { nom: 'C', masseKg: 90, place: 'D3', sortie: 1 }], 2);
+  assert.ok(out.every((p) => p.place !== 'COPI' && (!p.pos || p.pos.x > 150)));
+});
+
 test('normaliserEnveloppe trie et filtre', () => {
   const e = normaliserEnveloppe({ avant: [['9000', '199'], [5500, 179.6], ['x', 1]], arriere: [[0, 204.35]] });
   assert.deepEqual(e.avant, [[5500, 179.6], [9000, 199]]);
@@ -122,7 +151,7 @@ test('capacite et generation de stick sous la MTOW', async () => {
   const { capacite, genererStick } = await import('../js/centrage.js');
   const c = capacite(BK, { piloteKg: 80, carburant: 900 }, 90);
   const attendu = Math.floor((BK.mtow - BK.masse_vide - 80 * 2.20462 - 900) / (90 * 2.20462));
-  assert.equal(c.limiteParMasse, attendu); assert.equal(c.maxParas, Math.min(attendu, 20));
+  assert.equal(c.limiteParMasse, attendu); assert.equal(c.maxParas, Math.min(attendu, BK.places.length));
   const st = genererStick(c.maxParas, 90, 4);
   assert.equal(st.length, c.maxParas); assert.equal(st[0].groupe, 'G1'); assert.equal(st[4].sortie, 2);
   const { etapes: et } = etapes(BK, { piloteKg: 80, carburant: 900 }, st.map((p, i) => ({ ...p, place: BK.places[i].id })), BK.places);

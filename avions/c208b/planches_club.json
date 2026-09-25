@@ -20,12 +20,14 @@
   "C208B-A": {
    "ew_lb": 4890,
    "ew_moment_1000": 924.161,
-   "ew_cg_in": 188.99
+   "ew_cg_in": 188.99,
+   "copilote_para": false
   },
   "C208B-B": {
    "ew_lb": 4986,
    "ew_moment_1000": 930.11184,
-   "ew_cg_in": 186.54
+   "ew_cg_in": 186.54,
+   "copilote_para": true
   }
  },
  "envelopes": [

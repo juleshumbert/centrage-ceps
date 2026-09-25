@@ -20,7 +20,7 @@ corrigent dans l'application.
 
 | Dossier | Type | Documents obtenus | Enveloppe(s) dans l'IHM | Places |
 |---|---|---|---|---|
-| `avions/c208b` | Cessna 208B Grand Caravan | POH 208B G1000 complet, TCDS FAA et EASA, STC APE (rapports TSB) | POH 8750 lb ; STC APE II 9062 lb ; STC APE III (MLW 9000) | 20 (planches club) |
+| `avions/c208b` | Cessna 208B Grand Caravan | POH 208B G1000 complet, TCDS FAA et EASA, STC APE (rapports TSB) | POH 8750 lb ; STC APE II 9062 lb ; STC APE III (MLW 9000) | 20 (planches club) ; pesee A : 19, siege copilote reserve (aucun para) |
 | `avions/c208b` (section 208) | Cessna 208A Caravan (fuselage court) | TCDS, extrait POH sections 1 a 4, Spec & Description | POH / TCDS 8000 lb | 15 (par analogie, a verifier) |
 | `avions/pc6-b2h4`, `avions/pc6-b2h2` | Pilatus PC-6 Turbo Porter | AFM 1820 rev. 8, TCDS OFAC F 56-10, brochures, DT FFP 33 | B2-H4 2800 kg ; B2-H2 2200 kg | 10 (planches club) ; porte coulissante ouverte +21 kg.m |
 | `avions/pac750xl` | Pacific Aerospace 750XL | POH complet (278 p.), TCDS EASA IM.A.081 | POH, deux variantes de reservoirs | 17 : 10 cote copilote, 7 derriere le pilote (configuration club) |
@@ -71,6 +71,10 @@ navigateur (web/)  --POST /api/placement (stick JSON)-->  Cloud Function (functi
 - Variantes par avion (masse max et enveloppe) : Caravan POH 8750 lb, STC APE II 9062 lb, STC
   APE III ; PC-6 B2-H4 / B2-H2 ; l'enveloppe et la MTOW se modifient dans l'application (tableau
   ou sommets deplacables), memorisees dans le navigateur.
+- Amenagement par pesee : une pesee peut declarer des places ou aucun para ne s'assoit
+  (`places_sans_para`, lu dans `planches_club.json` : `copilote_para: false`). C208B pesee A : vrai
+  siege copilote, dessine mais jamais propose (solveur, glisser-deposer, verrou, capacite : 19 places),
+  rangee droite ouverte a partir de 154 in ; pesee B : para copilote comme avant.
 - Placement : sur une place fixe ou en **position libre** le long d'une rangee (bras = position
   exacte), verrou sur une place ou une position libre ; le solveur ne deplace que les paras non
   verrouilles.

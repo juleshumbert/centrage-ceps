@@ -32,7 +32,7 @@ def load(name):
     for src in cells:
         for line in src.splitlines():
             m = re.match(r'\s*(EW_LBS|EW_KG|EW_MOMENT|MTOW_LBS|MTOW_KG|DATUM_LINE|MAC|'
-                         r'TARGET_CG_IN|TARGET_CG_M|IMMAT|FUEL_PER_ROTATION|FUEL_RESERVE)\s*=\s*([^#]+)', line)
+                         r'TARGET_CG_IN|TARGET_CG_M|IMMAT|FUEL_PER_ROTATION|FUEL_RESERVE|COPILOTE_PARA)\s*=\s*([^#]+)', line)
             if m:
                 try:   # la derniere affectation litterale gagne (cellule de configuration)
                     consts[m.group(1)] = eval(m.group(2).strip(), {})
@@ -66,10 +66,14 @@ def caravan():
                 'formula': '%MAC = (CG_in - lemac_in) / length_in * 100'},
         'limits': {'mtow_lb': mtow, 'target_cg_in': c_bk['TARGET_CG_IN']},
         'registrations': {
+            # copilote_para : COPILOTE_PARA du notebook (False = vrai siege copilote, aucun para dessus ;
+            # absent des anciens notebooks, d'ou True par defaut)
             c_bk['IMMAT']: {'ew_lb': c_bk['EW_LBS'], 'ew_moment_1000': c_bk['EW_MOMENT'],
-                            'ew_cg_in': round(c_bk['EW_MOMENT'] * 1000 / c_bk['EW_LBS'], 2)},
+                            'ew_cg_in': round(c_bk['EW_MOMENT'] * 1000 / c_bk['EW_LBS'], 2),
+                            'copilote_para': bool(c_bk.get('COPILOTE_PARA', True))},
             c_la['IMMAT']: {'ew_lb': c_la['EW_LBS'], 'ew_moment_1000': c_la['EW_MOMENT'],
-                            'ew_cg_in': round(c_la['EW_MOMENT'] * 1000 / c_la['EW_LBS'], 2)},
+                            'ew_cg_in': round(c_la['EW_MOMENT'] * 1000 / c_la['EW_LBS'], 2),
+                            'copilote_para': bool(c_la.get('COPILOTE_PARA', True))},
         },
         'envelopes': [{
             'name': 'planches club (limite avant lineaire par morceaux, limite arriere constante)',

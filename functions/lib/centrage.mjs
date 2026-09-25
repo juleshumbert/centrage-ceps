@@ -150,6 +150,22 @@ export function optionsDefaut(avion) {
 }
 
 /**
+ * Amenagement propre a une pesee (un avion reel) : les places de `places_sans_para` (ex. un vrai siege
+ * copilote) sortent de `places`, donc du solveur, du glisser-deposer, des etapes et de la capacite, et
+ * passent dans `places_sans_para` pour le seul dessin ; `rangees_xmin` recule le debut des rangees
+ * concernees (position libre). Retourne {places, places_sans_para, rangees}.
+ */
+export function amenagement(avion, pesee) {
+  const exclues = new Set((pesee && pesee.places_sans_para) || []);
+  const xmin = (pesee && pesee.rangees_xmin) || {};
+  return {
+    places: avion.places.filter((p) => !exclues.has(p.id)),
+    places_sans_para: avion.places.filter((p) => exclues.has(p.id)).map((p) => ({ ...p })),
+    rangees: (avion.rangees || []).map((r) => (Number.isFinite(xmin[r.id]) ? { ...r, xmin: Math.max(r.xmin, xmin[r.id]) } : r)),
+  };
+}
+
+/**
  * Avion effectif : variante choisie (MTOW et enveloppe) puis surcharge eventuelle
  * {mtow, enveloppe} editee dans l'application. Ne modifie pas l'objet d'origine.
  */
@@ -157,7 +173,7 @@ export function appliquerVariante(avion, varianteId, surcharge, peseeId) {
   const v = (avion.variantes || []).find((x) => x.id === varianteId) || (avion.variantes || [])[0];
   const out = { ...avion };
   const pe = (avion.pesees || []).find((x) => x.id === peseeId) || (avion.pesees || [])[0];
-  if (pe) { out.masse_vide = pe.masse_vide; out.bras_vide = pe.bras_vide; out.pesee = pe; }
+  if (pe) { out.masse_vide = pe.masse_vide; out.bras_vide = pe.bras_vide; out.pesee = pe; Object.assign(out, amenagement(avion, pe)); }
   if (v) { out.mtow = v.mtow; out.enveloppe = JSON.parse(JSON.stringify(v.enveloppe)); out.variante = v; }
   if (surcharge) {
     if (Number.isFinite(surcharge.mtow)) out.mtow = surcharge.mtow;

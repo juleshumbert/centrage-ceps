@@ -147,6 +147,14 @@ export function dessinerCabine(svg, avion, paras, opts = {}) {
     g.appendChild(el('text', { x: px(s.x), y: py(s.y) + 4, class: 'place-id', 'text-anchor': 'middle' }, s.id));
     gPlaces.appendChild(g);
   }
+  // places sans para (vrai siege copilote de certains avions) : dessinees comme le siege pilote, aucun depot possible
+  for (const s of avion.places_sans_para || []) {
+    const g = el('g', { class: 'place-sans-para', 'data-place': s.id });
+    g.appendChild(el('title', {}, `${s.copilote ? 'siege copilote' : 'place ' + s.id} : aucun para sur cet avion`));
+    g.appendChild(el('circle', { cx: px(s.x), cy: py(s.y), r, fill: TRAITS.pilote.fill, stroke: TRAITS.pilote.stroke, 'stroke-width': TRAITS.pilote.w, opacity: 0.55 }));
+    g.appendChild(el('text', { x: px(s.x), y: py(s.y) + 4, class: 'para-num', 'text-anchor': 'middle' }, s.copilote ? 'CP' : s.id));
+    gPlaces.appendChild(g);
+  }
   svg.appendChild(gPlaces);
   if (nonPlaces.length) {
     const yB = yG + 58 + 34;
